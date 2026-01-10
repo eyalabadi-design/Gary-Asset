@@ -1,0 +1,3265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gary AI news</title>
+    <style>
+        /* Macan Font Faces */
+        @font-face {
+            font-family: 'Macan';
+            src: url('Macan-Light_1122843920.otf') format('opentype');
+            font-weight: 300;
+            font-style: normal;
+        }
+        
+        @font-face {
+            font-family: 'Macan';
+            src: url('Macan-Regular_226099180.otf') format('opentype');
+            font-weight: 400;
+            font-style: normal;
+        }
+        
+        @font-face {
+            font-family: 'Macan';
+            src: url('Macan-Semibold_2770528074.otf') format('opentype');
+            font-weight: 600;
+            font-style: normal;
+        }
+        
+        @font-face {
+            font-family: 'Macan';
+            src: url('Macan-Bold_851798424.otf') format('opentype');
+            font-weight: 700;
+            font-style: normal;
+        }
+        
+        @font-face {
+            font-family: 'Macan';
+            src: url('Macan-Black_1412642037.otf') format('opentype');
+            font-weight: 900;
+            font-style: normal;
+        }
+        
+        @font-face {
+            font-family: 'Macan';
+            src: url('Macan-Regular-Italic_2293576054.otf') format('opentype');
+            font-weight: 400;
+            font-style: italic;
+        }
+
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --primary-hover: #1d4ed8;
+            --secondary-color: #64748b;
+            --text-color: #1e293b;
+            --text-light: #64748b;
+            --bg-color: #ffffff;
+            --bg-light: #f8fafc;
+            --border-color: #e2e8f0;
+            --border-radius: 8px;
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
+        }
+
+        body {
+            font-family: 'Macan', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #FFFFFF;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+
+        /* Header */
+        .header {
+            background-color: #FFF;
+            position: sticky;
+            top: 16px;
+            z-index: 1000; /* Higher z-index to ensure content scrolls behind */
+            margin-left: 312px; /* 16px (wrapper padding) + 280px (sidebar width) + 16px (gap) */
+            margin-right: 16px;
+            width: calc(100% - 312px - 16px);
+            box-sizing: border-box;
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            min-height: 76px;
+            backdrop-filter: blur(0); /* Optional: for smoother scrolling effect */
+        }
+        
+        /* Add white background to the area above sticky header when scrolling */
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -16px; /* Cover the 16px gap above header */
+            left: 0;
+            right: 0;
+            height: 16px;
+            background-color: #FFF;
+            z-index: -1;
+        }
+
+        .header-content {
+            display: block !important;
+            width: 100%;
+            min-height: 76px;
+            background-color: #FFF; /* Ensure solid background so content doesn't show through */
+        }
+
+        /* Feed Header */
+        .header-feed {
+            display: flex;
+            padding: 32px 44px 32px 16px;
+            justify-content: space-between;
+            align-items: center;
+            align-self: stretch;
+            border-bottom: 1px solid #F5F5F5;
+            background: #FFF;
+            min-height: 76px;
+            width: 100%;
+        }
+
+        .header-feed-title {
+            color: #222325;
+            font-family: Macan, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 36px;
+            font-style: normal;
+            font-weight: 280;
+            line-height: 28px;
+            margin: 0;
+        }
+
+        /* Company Header */
+        .header-company {
+            display: flex;
+            padding: 32px 44px 32px 16px;
+            align-items: center;
+            gap: 10px;
+            align-self: stretch;
+            border-bottom: 1px solid #F5F5F5;
+            background: #FFF;
+        }
+
+        .header-company-icon {
+            width: 32px;
+            height: 32px;
+            flex-shrink: 0;
+            object-fit: contain;
+        }
+
+        .header-company-title {
+            color: #222325;
+            font-family: Macan, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 36px;
+            font-style: normal;
+            font-weight: 280;
+            line-height: 28px;
+            margin: 0;
+        }
+
+        /* Product Header */
+        .header-product {
+            display: flex;
+            padding: 32px 44px 32px 16px;
+            align-items: baseline; /* Align to baseline so text and link align properly */
+            gap: 10px;
+            align-self: stretch;
+            border-bottom: 1px solid #F5F5F5;
+            background: #FFF;
+        }
+
+        .header-product-title {
+            color: #222325;
+            font-family: Macan, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 36px;
+            font-style: normal;
+            font-weight: 280;
+            line-height: 1.2; /* Better line-height for baseline alignment */
+            margin: 0;
+            padding-bottom: 0;
+        }
+
+        .header-product-link {
+            color: #62646A;
+            font-family: Macan, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 1.5;
+            text-decoration-line: underline;
+            text-decoration-style: solid;
+            transition: color 0.2s;
+            padding-bottom: 0;
+            margin-bottom: 0;
+            vertical-align: baseline; /* Ensure baseline alignment with product title */
+        }
+
+        .header-product-link:hover {
+            color: #0067E9;
+        }
+
+        /* Sidebar Wrapper */
+        .sidebar-wrapper {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            right: auto;
+            width: auto;
+            z-index: 1000;
+            padding: 16px;
+            box-sizing: border-box;
+            pointer-events: none; /* Allow clicks to pass through wrapper */
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .sidebar-wrapper > * {
+            pointer-events: auto; /* Re-enable clicks on sidebar */
+        }
+
+        /* Left Sidebar Navigation */
+        .sidebar {
+            position: relative;
+            width: 280px;
+            height: 100%;
+            max-height: 100%;
+            margin: 0; /* No margin - wrapper handles positioning */
+            display: flex;
+            padding: 8px; /* 8px padding on all sides inside sidebar */
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 24px;
+            box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.09), 0 0.37px 4.426px 0 rgba(0, 0, 0, 0.05), 0 0.14px 2.293px 0 rgba(0, 0, 0, 0.03);
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 24px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .sidebar-header {
+            padding: 0; /* No padding - sidebar padding (8px) handles spacing */
+            margin: 0 8px; /* 8px horizontal margin to match nav-tree padding */
+            font-size: 20px;
+            font-weight: 700;
+            color: #222325;
+            flex-shrink: 0;
+        }
+
+        .nav-tree {
+            display: flex;
+            padding: 0 8px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+            align-self: stretch;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .nav-item {
+            display: flex;
+            cursor: pointer;
+            transition: background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+                        color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+                        font-weight 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            user-select: none;
+            text-decoration: none;
+            color: #222325;
+            will-change: background-color, color;
+            border-radius: 8px;
+            gap: 0; /* No gap between label and chevron area */
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* First hierarchy (Feed, Companies, Products) */
+        .nav-item:not(.nav-item-indented):not(.nav-item-indented-2) {
+            width: 248px;
+            padding: 12px;
+            align-items: center;
+            gap: 8px;
+            margin: 0;
+        }
+
+        .nav-item:not(.nav-item-indented):not(.nav-item-indented-2):hover {
+            align-items: center;
+            background: #F5F0F0;
+        }
+
+        .nav-item:not(.nav-item-indented):not(.nav-item-indented-2).nav-item-selected {
+            align-items: center;
+            background: #0067E9;
+            color: #FFFFFF;
+        }
+
+        .nav-item:not(.nav-item-indented):not(.nav-item-indented-2).nav-item-sub-selected {
+            align-items: center;
+            background: #E5EBEE;
+            color: #222325;
+        }
+
+        /* Companies list (second level) */
+        .nav-item-indented {
+            width: 218px;
+            padding: 8px 12px;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 6px;
+            margin: 0 0 0 30px;
+        }
+
+        .nav-item-indented:hover {
+            background: #F5F0F0;
+        }
+
+        .nav-item-indented.nav-item-selected {
+            background: #0067E9 !important;
+            color: #FFFFFF !important;
+        }
+
+        .nav-item-indented.nav-item-selected .nav-item-text {
+            color: #FFFFFF !important;
+            font-weight: 600 !important;
+        }
+
+        .nav-item-indented.nav-item-sub-selected {
+            background: #E5EBEE;
+            color: #222325;
+        }
+
+        /* Product list (third level) */
+        .nav-item-indented-2 {
+            width: 190px;
+            padding: 4px 4px 4px 8px;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 6px;
+            margin: 0 0 2px 58px;
+        }
+
+        .nav-item-indented-2:hover {
+            background: #F5F0F0;
+        }
+
+        .nav-item-indented-2:hover .nav-item-text {
+            font-weight: 600;
+        }
+
+        .nav-item-indented-2.nav-item-selected {
+            background: #0067E9;
+            color: #FFFFFF;
+        }
+
+        .nav-item-indented-2.nav-item-selected:hover {
+            background: #0067E9;
+        }
+
+        .nav-item-indented-2.nav-item-selected:hover .nav-item-text {
+            color: #FFFFFF;
+        }
+
+        .nav-item-label {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            gap: 8px;
+            min-width: 0;
+            cursor: pointer;
+            margin: 0; /* Remove all margins */
+            padding: 0; /* Remove all padding */
+        }
+        
+        .nav-item-label:hover {
+            cursor: pointer;
+        }
+
+        /* First level label gap */
+        .nav-item:not(.nav-item-indented):not(.nav-item-indented-2) .nav-item-label {
+            gap: 8px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        /* Second level label gap - company list */
+        .nav-item-indented .nav-item-label {
+            gap: 8px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        /* Third level label gap - product list */
+        .nav-item-indented-2 .nav-item-label {
+            gap: 6px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .nav-item-text {
+            flex: 1;
+            font-size: 16px;
+            font-weight: 400;
+            color: #222325;
+        }
+
+        /* First level text */
+        .nav-item:not(.nav-item-indented):not(.nav-item-indented-2) .nav-item-text {
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 22px;
+        }
+
+        .nav-item:not(.nav-item-indented):not(.nav-item-indented-2):hover .nav-item-text {
+            font-weight: 600;
+        }
+
+        .nav-item:not(.nav-item-indented):not(.nav-item-indented-2).nav-item-selected .nav-item-text {
+            font-weight: 600;
+            color: #FFFFFF;
+        }
+
+        .nav-item:not(.nav-item-indented):not(.nav-item-indented-2).nav-item-sub-selected .nav-item-text {
+            font-weight: 400;
+            color: #222325;
+        }
+
+        /* Only Feed icon white when selected - folder icons change state instead */
+        .nav-item[data-item-type="feed"].nav-item-selected .nav-item-icon img {
+            filter: brightness(0) invert(1);
+        }
+
+        /* Second level text */
+        .nav-item-indented .nav-item-text {
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 22px;
+        }
+
+        .nav-item-indented:hover .nav-item-text {
+            font-weight: 600;
+        }
+
+        .nav-item-indented.nav-item-selected .nav-item-text {
+            font-weight: 600;
+            color: #FFFFFF;
+        }
+
+        .nav-item-indented.nav-item-sub-selected .nav-item-text {
+            font-weight: 400;
+            color: #222325;
+        }
+
+        /* Third level text */
+        .nav-item-indented-2 .nav-item-text {
+            font-size: 16px;
+            font-weight: 400;
+        }
+
+        .nav-item-indented-2.nav-item-selected .nav-item-text {
+            font-weight: 600;
+            color: #FFFFFF;
+        }
+
+        .nav-item-icon {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+        }
+
+        .nav-item-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        /* First level icons (Feed, Companies, Products) */
+        .nav-item:not(.nav-item-indented):not(.nav-item-indented-2) .nav-item-icon {
+            width: 22px;
+            height: 22px;
+        }
+
+        /* Company logos stay 16x16 */
+        .nav-item-indented .nav-item-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        .nav-item-indented-2 .nav-item-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        .nav-item-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block !important;
+        }
+
+        /* Hide icons for products (third level) */
+        .nav-item-indented-2 .nav-item-icon {
+            display: none;
+        }
+
+        /* Chevron area - right side for expand/collapse (less than half) */
+        .nav-item-chevron-area {
+            width: 72px; /* Reduced by 8px from 80px */
+            max-width: 45%;
+            min-width: 52px; /* Reduced by 8px from 60px */
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 0;
+            padding-left: 0; /* No padding on left side */
+            margin-right: 0;
+            margin-left: 0; /* No space between label and chevron */
+            cursor: pointer;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 10;
+            transition: opacity 0.15s ease;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .nav-item-chevron-area:hover {
+            opacity: 0.9;
+        }
+        
+        .nav-item-chevron-area:active {
+            opacity: 0.7;
+        }
+
+        .nav-item-chevron {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) ease-in-out, 
+                        opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1) ease-in-out;
+            color: #222325;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Chevron visible when folder is expanded (Folder_open.svg shown) */
+        .nav-item.nav-folder-expanded .nav-item-chevron:not(.nav-item-chevron-hidden) {
+            opacity: 1;
+        }
+
+        /* Chevron visible for indented items when expanded */
+        .nav-item-indented.nav-folder-expanded .nav-item-chevron:not(.nav-item-chevron-hidden) {
+            opacity: 1;
+        }
+
+        /* Chevron visibility is controlled by hover state - default opacity: 0, hover: opacity: 1 */
+
+        /* Hide chevron only if explicitly hidden */
+        .nav-item-indented .nav-item-chevron.nav-item-chevron-hidden {
+            display: none !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+        }
+
+        /* First level chevron */
+        .nav-item:not(.nav-item-indented):not(.nav-item-indented-2):hover .nav-item-chevron:not(.nav-item-chevron-hidden) {
+            opacity: 1;
+            color: #222325;
+        }
+
+        .nav-item:not(.nav-item-indented):not(.nav-item-indented-2).nav-item-selected .nav-item-chevron {
+            opacity: 1;
+            color: #FFFFFF;
+        }
+
+        /* Chevron stays white when selected and hovered */
+        .nav-item:not(.nav-item-indented):not(.nav-item-indented-2).nav-item-selected:hover .nav-item-chevron {
+            color: #FFFFFF;
+        }
+
+        .nav-item:not(.nav-item-indented):not(.nav-item-indented-2).nav-item-sub-selected .nav-item-chevron {
+            opacity: 1;
+            color: #222325;
+        }
+
+        /* Second level chevron */
+        .nav-item-indented:hover .nav-item-chevron:not(.nav-item-chevron-hidden) {
+            opacity: 1;
+            color: #222325;
+        }
+
+        .nav-item-indented.nav-item-selected .nav-item-chevron {
+            opacity: 1 !important;
+            color: #FFFFFF !important;
+            display: flex !important;
+        }
+
+        /* Chevron stays white when selected and hovered */
+        .nav-item-indented.nav-item-selected:hover .nav-item-chevron {
+            color: #FFFFFF !important;
+        }
+
+        .nav-item-indented.nav-item-sub-selected .nav-item-chevron {
+            opacity: 1;
+            color: #222325;
+        }
+
+        .nav-item-chevron svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Chevron rotation - down by default, up when expanded */
+        .nav-folder-expanded .nav-item-chevron {
+            transform: rotate(180deg);
+        }
+        
+        /* Skeleton Loading Styles */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s ease-in-out infinite;
+            border-radius: 8px;
+        }
+        
+        @keyframes skeleton-loading {
+            0% {
+                background-position: 200% 0;
+            }
+            100% {
+                background-position: -200% 0;
+            }
+        }
+        
+        .skeleton-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+        
+        .skeleton-line {
+            height: 16px;
+            margin-bottom: 12px;
+            border-radius: 4px;
+        }
+        
+        .skeleton-line:last-child {
+            margin-bottom: 0;
+        }
+        
+        .skeleton-line.short {
+            width: 60%;
+        }
+        
+        .skeleton-line.medium {
+            width: 80%;
+        }
+        
+        .skeleton-line.long {
+            width: 100%;
+        }
+        
+        .skeleton-header {
+            height: 24px;
+            width: 200px;
+            margin-bottom: 16px;
+            border-radius: 4px;
+        }
+        
+        .content-loading {
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        
+        .content-loading.show {
+            opacity: 1;
+        }
+
+        .nav-item-chevron-hidden {
+            display: none;
+        }
+
+        /* Nested items */
+        .nav-folder-children {
+            display: none;
+            flex-direction: column;
+            margin-top: 0;
+            gap: 4px;
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+            transform: translateY(-4px);
+            transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1) ease-in-out, 
+                        opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1) ease-in-out,
+                        margin-top 0.35s cubic-bezier(0.4, 0, 0.2, 1) ease-in-out,
+                        transform 0.35s cubic-bezier(0.4, 0, 0.2, 1) ease-in-out;
+        }
+
+        /* First level children (companies list) - no margin-top, gap from nav-tree handles spacing */
+        .nav-item:not(.nav-item-indented).nav-folder-expanded + .nav-folder-children {
+            margin-top: 0;
+            display: flex !important;
+            max-height: 5000px; /* Large enough for any list */
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Nested children (product lists) - need margin-top and force display */
+        /* Space between company and first product: 4px */
+        .nav-item-indented.nav-folder-expanded + .nav-folder-children {
+            margin-top: 4px !important;
+            gap: 2px !important;
+            display: flex !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            max-height: 5000px; /* Large enough for any list */
+            transform: translateY(0);
+        }
+
+        /* Show children when parent is expanded - use adjacent sibling selector */
+        .nav-item.nav-folder-expanded + .nav-folder-children {
+            display: flex !important;
+            max-height: 5000px; /* Large enough for any list */
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Force product lists to show when they have inline style */
+        .nav-folder-children[style*="display: flex"] {
+            display: flex !important;
+            visibility: visible !important;
+        }
+
+        /* Main Content */
+        .main-content {
+            min-height: calc(100vh - 200px);
+            padding: var(--spacing-lg) 0;
+            margin-left: 312px; /* 16px (wrapper padding) + 280px (sidebar width) + 16px (gap) */
+            margin-top: 16px; /* 16px from top to match sidebar */
+            margin-right: 16px; /* 16px from right edge */
+        }
+
+        /* Filters Section */
+        .filters-section {
+            background-color: var(--bg-color);
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-group label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .filter-select {
+            padding: 0.625rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            font-size: 0.9375rem;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        .filter-select:hover {
+            border-color: var(--primary-color);
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .btn-clear {
+            padding: 0.625rem 1.25rem;
+            background-color: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            color: var(--text-color);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-clear:hover {
+            background-color: var(--border-color);
+        }
+
+        /* Loading and Error */
+        .loading, .error {
+            text-align: center;
+            padding: var(--spacing-lg);
+            font-size: 1.125rem;
+        }
+
+        .loading {
+            color: var(--text-light);
+        }
+
+        .error {
+            color: #dc2626;
+            background-color: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: var(--border-radius);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Posts Grid */
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: var(--spacing-md);
+            max-width: 100%;
+            justify-items: start;
+        }
+
+        @media (max-width: 1000px) {
+            .posts-grid {
+                grid-template-columns: 1fr;
+                justify-items: stretch;
+            }
+            
+            .post-card {
+                max-width: 100%;
+            }
+        }
+
+        .post-card {
+            width: 100%;
+            max-width: 450px;
+            min-height: 318px;
+            background-color: #FFFFFF;
+            border-radius: 30px;
+            padding: 16px;
+            box-shadow: 0 0.08px 2.56px 0 rgba(0, 0, 0, 0.0525), 0 1.28px 5.58px 0 rgba(0, 0, 0, 0.0775), 0 3px 10px 0 rgba(0, 0, 0, 0.13);
+            display: flex;
+            flex-direction: column;
+            font-family: 'Macan', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            position: relative;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .post-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 30px;
+            padding: 1px;
+            background: linear-gradient(135deg, #BFC3FF 6%, #324EFF 100%);
+            -webkit-mask: 
+                linear-gradient(#fff 0 0) content-box, 
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .post-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .post-card:hover {
+            box-shadow: 0 5px 17px 0 rgba(0, 0, 0, 0.17), 0 0.893px 3.797px 0 rgba(0, 0, 0, 0.10), 0 0.266px 1.131px 0 rgba(0, 0, 0, 0.08);
+        }
+
+        .post-card:hover::before {
+            opacity: 1;
+        }
+
+        .post-card:not(.post-card-expanded) {
+            height: 318px;
+            overflow: hidden;
+        }
+
+        .post-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 24px;
+            flex-shrink: 0;
+        }
+        
+        /* When title is inline (product page), align items to top and reduce spacing */
+        .post-card-top:has(.post-title-inline) {
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+        
+        .post-card-top .post-date {
+            align-self: flex-start;
+            padding-top: 8px;
+        }
+
+        .post-company-product {
+            display: flex;
+            align-items: center;
+            gap: 0;
+        }
+
+        .post-company-btn {
+            height: 44px;
+            padding: 8px 0 8px 8px;
+            background: #F9F9F9;
+            border-top-left-radius: 16px;
+            border-bottom-left-radius: 16px;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #62646A;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 22px;
+            transition: background-color 0.2s;
+            position: relative;
+        }
+
+        .post-company-btn:hover {
+            background: #F5F0F0;
+        }
+
+        .post-company-btn img {
+            width: 28px;
+            height: 28px;
+            border-radius: 4px;
+        }
+
+        .post-company-divider {
+            width: 2px;
+            height: 16px;
+            background: #DADBDD;
+            border-radius: 1px;
+            flex-shrink: 0;
+            margin: 0;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+        
+        /* Fade divider when hovering over company or product button */
+        .post-company-product:hover .post-company-divider {
+            opacity: 0;
+        }
+
+        .post-product-btn {
+            height: 44px;
+            padding: 8px 12px 8px 8px;
+            background: #F9F9F9;
+            border-top-right-radius: 16px;
+            border-bottom-right-radius: 16px;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #62646A;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 22px;
+            transition: background-color 0.2s;
+        }
+
+        /* Standalone product button on company page (when it's the only child) */
+        .post-company-product > .post-product-btn:only-child {
+            padding: 8px 12px;
+            border-radius: 12px;
+        }
+
+        .post-product-btn:hover {
+            background: #F5F0F0;
+        }
+
+        .post-date {
+            padding: 8px;
+            color: #62646A;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 22px;
+        }
+
+        .post-content {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+            min-height: 0;
+            overflow: hidden;
+        }
+
+        .post-title {
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 28px;
+            color: #222325;
+            margin: 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        /* Inline title for product page (aligned with date at top) */
+        .post-title-inline {
+            flex: 1;
+            display: block;
+            line-height: 28px;
+            font-size: 20px;
+            font-weight: 700;
+            color: #222325;
+            margin: 0;
+            padding: 8px 0;
+            align-self: flex-start;
+        }
+
+        .post-title a {
+            color: #222325;
+            text-decoration: none;
+        }
+
+        .post-title-inline a {
+            color: #222325;
+        }
+
+        .post-title a:hover {
+            color: #222325;
+            opacity: 0.8;
+        }
+
+        .post-title-inline a:hover {
+            color: #222325;
+            opacity: 0.8;
+        }
+
+        .post-summary-wrapper {
+            position: relative;
+            margin-bottom: 0;
+            flex: 1;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .post-summary {
+            color: #707581;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 24px;
+            margin: 0;
+            position: relative;
+            flex: 1;
+            min-height: 0;
+            overflow: hidden;
+        }
+
+        .post-summary-truncated {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .post-summary-truncated::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3em;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.72) 26%, white 100%);
+            pointer-events: none;
+        }
+
+        .post-summary-expanded {
+            display: block;
+            -webkit-line-clamp: unset;
+            line-clamp: unset;
+            overflow: visible;
+        }
+
+        .post-summary-expanded::after {
+            display: none;
+        }
+
+        .read-more-btn {
+            background: none;
+            border: none;
+            color: #222325;
+            cursor: pointer;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-decoration: underline;
+            line-height: 17px;
+            letter-spacing: 0.5px;
+            padding: 0;
+            padding-left: 4px;
+            margin: 0;
+            margin-top: 8px;
+            transition: color 0.2s;
+            flex-shrink: 0;
+            align-self: flex-start;
+        }
+
+        .read-more-btn:hover {
+            color: #63656A;
+        }
+
+        .post-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: 24px;
+            flex-shrink: 0;
+        }
+
+        .post-tags {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+        }
+
+        .tag {
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            line-height: 17px;
+            letter-spacing: 0.5px;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .post-arrow {
+            width: 32px;
+            height: 32px;
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .post-arrow img,
+        .post-arrow svg {
+            width: 32px;
+            height: 32px;
+            display: block;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+            transform-origin: center;
+        }
+        
+        .post-arrow svg path {
+            stroke: #222325;
+        }
+        
+        /* Rotate arrow icon 25 degrees upward on hover */
+        .post-arrow:hover svg,
+        .post-arrow:hover img {
+            transform: rotate(-25deg);
+        }
+
+        .no-posts {
+            text-align: center;
+            padding: var(--spacing-xl);
+            color: var(--text-light);
+            font-size: 1.125rem;
+        }
+
+        /* Page Header */
+        .page-header {
+            background-color: var(--bg-color);
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-color);
+        }
+
+        .page-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-light);
+            margin-top: var(--spacing-xs);
+        }
+
+        .page-subtitle a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .page-subtitle a:hover {
+            text-decoration: underline;
+        }
+
+        .company-logo {
+            max-width: 150px;
+            max-height: 150px;
+            margin: var(--spacing-md) 0;
+            border-radius: var(--border-radius);
+        }
+
+        .page-summary {
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-top: var(--spacing-sm);
+        }
+
+        /* Load More */
+        .load-more-container {
+            text-align: center;
+            margin-top: var(--spacing-lg);
+        }
+
+        .btn-load-more {
+            padding: 0.875rem 2rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-load-more:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-load-more:active {
+            transform: scale(0.98);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--bg-color);
+            border-top: 1px solid var(--border-color);
+            padding: var(--spacing-md) 0;
+            margin-top: var(--spacing-xl);
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.875rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header .container {
+                flex-direction: column;
+                gap: var(--spacing-sm);
+            }
+
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .post-footer {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .page-title {
+                font-size: 1.5rem;
+            }
+
+            .container {
+                padding: 0 var(--spacing-sm);
+            }
+        }
+
+        /* Category and Post Type specific styles */
+        .tag-llm { background-color: #ECDDFB; color: #56288A; }
+        .tag-video-editing { background-color: #fce7f3; color: #9f1239; }
+        .tag-image-editing { background-color: #fef3c7; color: #92400e; }
+        .tag-sound { background-color: #e0e7ff; color: #3730a3; }
+        .tag-research { background-color: #d1fae5; color: #065f46; }
+        .tag-development { background-color: #f3e8ff; color: #6b21a8; }
+        .tag-web-browsing { background-color: #fed7aa; color: #9a3412; }
+        .tag-automation { background-color: #ddd6fe; color: #5b21b6; }
+        .tag-design-tools { background-color: #fecdd3; color: #991b1b; }
+        .tag-security { background-color: #fee2e2; color: #991b1b; }
+        .tag-business { background-color: #cffafe; color: #164e63; }
+        .tag-general { background-color: #f1f5f9; color: #475569; }
+
+        .tag-news { background-color: #dbeafe; color: #1e40af; }
+        .tag-product-launch { background-color: #fce7f3; color: #9f1239; }
+        .tag-update { background-color: #D0F7E6; color: #005C25; }
+        .tag-tutorial { background-color: #d1fae5; color: #065f46; }
+        .tag-benchmark { background-color: #e0e7ff; color: #3730a3; }
+        .tag-opinion { background-color: #f3e8ff; color: #6b21a8; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Left Sidebar Navigation -->
+        <div class="sidebar-wrapper">
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-header">Gary AI news</div>
+            <nav class="nav-tree" id="nav-tree"></nav>
+        </aside>
+        </div>
+
+        <header class="header" id="header">
+            <div class="header-content" id="header-content">
+                <div class="header-feed">
+                    <h1 class="header-feed-title">Feed</h1>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="container">
+                <!-- Filters Section -->
+                <div id="filters-section" class="filters-section">
+                    <div class="filters-grid">
+                        <div class="filter-group">
+                            <label for="company-filter">Company</label>
+                            <select id="company-filter" class="filter-select">
+                                <option value="">All Companies</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="product-filter">Product</label>
+                            <select id="product-filter" class="filter-select">
+                                <option value="">All Products</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="category-filter">Category</label>
+                            <select id="category-filter" class="filter-select">
+                                <option value="">All Categories</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="post-type-filter">Post Type</label>
+                            <select id="post-type-filter" class="filter-select">
+                                <option value="">All Types</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button id="clear-filters" class="btn-clear">Clear Filters</button>
+                </div>
+
+                <!-- Loading Indicator -->
+                <div id="loading" class="loading hidden">Loading...</div>
+
+                <!-- Error Message -->
+                <div id="error" class="error hidden"></div>
+
+                <!-- Content Area -->
+                <div id="content"></div>
+
+                <!-- Load More Button -->
+                <div id="load-more-container" class="load-more-container hidden">
+                    <button id="load-more" class="btn-load-more">Load More</button>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="container">
+                <p>&copy; 2024 Gary AI news. Read-only news aggregation.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Prevent multiple executions in Apps Script
+        if (window.AINewsAppInitialized) {
+            console.log('App already initialized, skipping...');
+        } else {
+            window.AINewsAppInitialized = true;
+            
+            // Wrap everything in IIFE to prevent variable conflicts in Apps Script
+            (function() {
+            'use strict';
+            
+            // Wait for Supabase to load
+            function waitForSupabase() {
+                return new Promise((resolve, reject) => {
+                    if (window.supabase) {
+                        resolve(window.supabase);
+                        return;
+                    }
+                    
+                    let attempts = 0;
+                    const maxAttempts = 50;
+                    const interval = setInterval(() => {
+                        attempts++;
+                        if (window.supabase) {
+                            clearInterval(interval);
+                            resolve(window.supabase);
+                        } else if (attempts >= maxAttempts) {
+                            clearInterval(interval);
+                            reject(new Error('Supabase library failed to load'));
+                        }
+                    }, 100);
+                });
+            }
+
+            // Supabase configuration
+            const SUPABASE_URL = 'https://exzkrdamofzmuuguadrh.supabase.co';
+            const SUPABASE_KEY = 'sb_publishable_nCcLus9un19eKMEKfLdZLQ_xgGZGr-Q';
+
+            // Initialize Supabase client - use window object to avoid conflicts
+            let supabaseClient;
+
+        // Categories enum
+        const CATEGORIES = [
+            'LLM',
+            'Video Editing',
+            'Image Editing',
+            'Sound',
+            'Research',
+            'Development',
+            'Web Browsing',
+            'Automation',
+            'Design Tools',
+            'Security',
+            'Business',
+            'General'
+        ];
+
+        // Post types enum
+        const POST_TYPES = [
+            'News',
+            'Product Launch',
+            'Update',
+            'Tutorial',
+            'Benchmark',
+            'Opinion',
+            'General'
+        ];
+
+        // Simple client-side router
+        class Router {
+            constructor() {
+                this.routes = {};
+                this.currentRoute = null;
+                this.init();
+            }
+
+            init() {
+                // Handle browser back/forward
+                window.addEventListener('popstate', () => {
+                    this.handleRoute();
+                });
+
+                // Handle link clicks
+                document.addEventListener('click', (e) => {
+                    const link = e.target.closest('a[data-route]');
+                    if (link) {
+                        e.preventDefault();
+                        const route = link.getAttribute('data-route');
+                        const href = link.getAttribute('href');
+                        this.navigate(href || route);
+                    }
+                });
+            }
+
+            register(path, handler) {
+                this.routes[path] = handler;
+            }
+
+            navigate(path) {
+                window.history.pushState({}, '', path);
+                this.handleRoute();
+            }
+
+            handleRoute() {
+                const path = window.location.pathname;
+                const pathParts = path.split('/').filter(p => p);
+
+                // Home route - handle Apps Script paths like /exec, /dev, etc.
+                if (path === '/' || path === '' || path === '/exec' || path === '/dev' || pathParts.length === 0) {
+                    if (this.routes['home']) {
+                        this.currentRoute = 'home';
+                        this.routes['home']();
+                    }
+                    return;
+                }
+
+                // Companies list route: /companies
+                if (pathParts[0] === 'companies' && pathParts.length === 1) {
+                    if (this.routes['companies']) {
+                        this.currentRoute = 'companies';
+                        this.routes['companies']();
+                    }
+                    return;
+                }
+
+                // Company route: /company/:slug
+                if (pathParts[0] === 'company' && pathParts[1]) {
+                    if (this.routes['company']) {
+                        this.currentRoute = 'company';
+                        this.routes['company'](pathParts[1]);
+                    }
+                    return;
+                }
+
+                // Products list route: /products
+                if (pathParts[0] === 'products' && pathParts.length === 1) {
+                    if (this.routes['products']) {
+                        this.currentRoute = 'products';
+                        this.routes['products']();
+                    }
+                    return;
+                }
+
+                // Product route: /product/:slug
+                if (pathParts[0] === 'product' && pathParts[1]) {
+                    if (this.routes['product']) {
+                        this.currentRoute = 'product';
+                        this.routes['product'](pathParts[1]);
+                    }
+                    return;
+                }
+
+                // Default to home for any unrecognized route
+                if (this.routes['home']) {
+                    this.currentRoute = 'home';
+                    this.routes['home']();
+                }
+            }
+
+            getCurrentRoute() {
+                return this.currentRoute;
+            }
+        }
+
+        // Create global router instance
+        const router = new Router();
+
+        // Data fetching functions
+        async function fetchProductsByCompany(companyId) {
+            const { data, error } = await supabaseClient
+                .from('products')
+                .select('id, slug, name, company_id')
+                .eq('company_id', companyId)
+                .order('name', { ascending: true });
+
+            if (error) {
+                console.error('Error fetching products:', error);
+                throw error;
+            }
+
+            return data;
+        }
+
+        async function fetchPosts(options = {}) {
+            const {
+                limit = 50,
+                offset = 0,
+                companyId = null,
+                productId = null,
+                category = null,
+                postType = null
+            } = options;
+
+            // If filtering by company, first get all product IDs for that company
+            let productIds = null;
+            if (companyId && !productId) {
+                const products = await fetchProductsByCompany(companyId);
+                productIds = products.map(p => p.id);
+                if (productIds.length === 0) {
+                    return [];
+                }
+            }
+
+            let query = supabaseClient
+                .from('posts')
+                .select(`
+                    *,
+                    products!inner(
+                        id,
+                        slug,
+                        name,
+                        company_id,
+                        companies!inner(
+                            id,
+                            slug,
+                            name,
+                            logo_url,
+                            summary
+                        )
+                    )
+                `)
+                .order('date', { ascending: false })
+                .order('id', { ascending: false })
+                .range(offset, offset + limit - 1);
+
+            // Apply filters
+            if (productId) {
+                query = query.eq('product_id', productId);
+            } else if (productIds && productIds.length > 0) {
+                query = query.in('product_id', productIds);
+            }
+
+            if (category) {
+                query = query.eq('category', category);
+            }
+
+            if (postType) {
+                query = query.eq('post_type', postType);
+            }
+
+            const { data, error } = await query;
+
+            if (error) {
+                console.error('Error fetching posts:', error);
+                throw error;
+            }
+
+            return data.map(post => ({
+                ...post,
+                company: post.products.companies,
+                product: {
+                    id: post.products.id,
+                    slug: post.products.slug,
+                    name: post.products.name,
+                    company_id: post.products.company_id
+                }
+            }));
+        }
+
+        async function fetchCompanies() {
+            const { data, error } = await supabaseClient
+                .from('companies')
+                .select('id, slug, name, logo_url, summary')
+                .order('name', { ascending: true });
+
+            if (error) {
+                console.error('Error fetching companies:', error);
+                throw error;
+            }
+
+            return data;
+        }
+
+        async function fetchCompanyBySlug(slug) {
+            const { data, error } = await supabaseClient
+                .from('companies')
+                .select('id, slug, name, logo_url, summary')
+                .eq('slug', slug)
+                .single();
+
+            if (error) {
+                console.error('Error fetching company:', error);
+                throw error;
+            }
+
+            return data;
+        }
+
+        async function fetchProducts() {
+            const { data, error } = await supabaseClient
+                .from('products')
+                .select('id, slug, name, company_id')
+                .order('name', { ascending: true });
+
+            if (error) {
+                console.error('Error fetching products:', error);
+                throw error;
+            }
+
+            return data;
+        }
+
+        async function fetchProductBySlug(slug) {
+            const { data, error } = await supabaseClient
+                .from('products')
+                .select('id, slug, name, company_id')
+                .eq('slug', slug)
+                .single();
+
+            if (error) {
+                console.error('Error fetching product:', error);
+                throw error;
+            }
+
+            return data;
+        }
+
+        async function fetchCompanyById(id) {
+            const { data, error } = await supabaseClient
+                .from('companies')
+                .select('id, slug, name, logo_url, summary')
+                .eq('id', id)
+                .single();
+
+            if (error) {
+                console.error('Error fetching company:', error);
+                throw error;
+            }
+
+            return data;
+        }
+
+        // Application state
+        const state = {
+            posts: [],
+            companies: [],
+            products: [],
+            filters: {
+                companyId: null,
+                productId: null,
+                category: null,
+                postType: null
+            },
+            pagination: {
+                offset: 0,
+                limit: 50,
+                hasMore: true
+            },
+            currentPage: 'home',
+            currentCompany: null,
+            currentProduct: null,
+            navigation: {
+                companiesExpanded: false,
+                productsExpanded: false,
+                expandedCompanies: new Set(), // Set of company IDs that are expanded
+                collapsedWithSelection: new Set() // Set of folder IDs that are collapsed but have selected items inside
+            }
+        };
+
+        // DOM elements
+        const elements = {
+            content: document.getElementById('content'),
+            loading: document.getElementById('loading'),
+            error: document.getElementById('error'),
+            filtersSection: document.getElementById('filters-section'),
+            companyFilter: document.getElementById('company-filter'),
+            productFilter: document.getElementById('product-filter'),
+            categoryFilter: document.getElementById('category-filter'),
+            postTypeFilter: document.getElementById('post-type-filter'),
+            clearFiltersBtn: document.getElementById('clear-filters'),
+            loadMoreContainer: document.getElementById('load-more-container'),
+            loadMoreBtn: document.getElementById('load-more'),
+            navTree: document.getElementById('nav-tree'),
+            headerContent: document.getElementById('header-content')
+        };
+
+        // Utility functions
+        function showLoading() {
+            elements.loading.classList.remove('hidden');
+        }
+
+        function hideLoading() {
+            elements.loading.classList.add('hidden');
+        }
+        
+        function showSkeletonLoading() {
+            if (!elements.content) return;
+            const skeletonHtml = `
+                <div class="skeleton-card">
+                    <div class="skeleton skeleton-header"></div>
+                    <div class="skeleton skeleton-line long"></div>
+                    <div class="skeleton skeleton-line long"></div>
+                    <div class="skeleton skeleton-line medium"></div>
+                </div>
+                <div class="skeleton-card">
+                    <div class="skeleton skeleton-header"></div>
+                    <div class="skeleton skeleton-line long"></div>
+                    <div class="skeleton skeleton-line long"></div>
+                    <div class="skeleton skeleton-line medium"></div>
+                </div>
+                <div class="skeleton-card">
+                    <div class="skeleton skeleton-header"></div>
+                    <div class="skeleton skeleton-line long"></div>
+                    <div class="skeleton skeleton-line long"></div>
+                    <div class="skeleton skeleton-line medium"></div>
+                </div>
+            `;
+            elements.content.innerHTML = skeletonHtml;
+            elements.content.classList.remove('content-loading', 'show');
+            // Trigger reflow for smooth transition
+            void elements.content.offsetWidth;
+            elements.content.classList.add('content-loading');
+            setTimeout(() => {
+                elements.content.classList.add('show');
+            }, 10);
+        }
+        
+        function hideSkeletonLoading() {
+            if (!elements.content) return;
+            elements.content.classList.remove('content-loading', 'show');
+        }
+
+        function showError(message) {
+            elements.error.textContent = message;
+            elements.error.classList.remove('hidden');
+        }
+
+        function hideError() {
+            elements.error.classList.add('hidden');
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const day = date.getDate();
+            const month = date.getMonth() + 1;
+            const year = date.getFullYear();
+            return `${day}.${month}.${year}`;
+        }
+
+        function getCategoryClass(category) {
+            return `tag-category tag-${category.toLowerCase().replace(/\s+/g, '-')}`;
+        }
+
+        function getPostTypeClass(postType) {
+            return `tag-type tag-${postType.toLowerCase().replace(/\s+/g, '-')}`;
+        }
+
+        // Render functions
+        function renderPostCard(post, options = {}) {
+            const { showCompany = true, showProduct = true } = options;
+            const postId = `post-${post.id}`;
+            const summary = post.summary || '';
+            const needsTruncation = summary.length > 150;
+            const companyLogo = post.company?.logo_url || '';
+            const isProductPage = !showCompany && !showProduct;
+            
+            return `
+                <article class="post-card">
+                    <div class="post-card-top">
+                        ${isProductPage ? `
+                            <h2 class="post-title post-title-inline">
+                                <a href="${post.post_url}" target="_blank" rel="noopener noreferrer">
+                                    ${post.title}
+                                </a>
+                            </h2>
+                        ` : `
+                            <div class="post-company-product">
+                                ${showCompany && post.company ? `
+                                    <a href="/company/${post.company.slug}" class="post-company-btn" data-route="company">
+                                        ${companyLogo ? `<img src="${companyLogo}" alt="${post.company.name}" />` : ''}
+                                        <span>${post.company.name}</span>
+                                        ${showProduct && post.product ? `<div class="post-company-divider"></div>` : ''}
+                                    </a>
+                                ` : ''}
+                                ${showProduct && post.product ? `
+                                    <a href="/product/${post.product.slug}" class="post-product-btn" data-route="product">
+                                        <span>${post.product.name}</span>
+                                    </a>
+                                ` : ''}
+                            </div>
+                        `}
+                        <time class="post-date" datetime="${post.date}">${formatDate(post.date)}</time>
+                    </div>
+                    <div class="post-content">
+                        ${!isProductPage ? `
+                            <h2 class="post-title">
+                                <a href="${post.post_url}" target="_blank" rel="noopener noreferrer">
+                                    ${post.title}
+                                </a>
+                            </h2>
+                        ` : ''}
+                        <div class="post-summary-wrapper">
+                            <p class="post-summary ${needsTruncation ? 'post-summary-truncated' : ''}" id="${postId}-summary">
+                                ${summary}
+                            </p>
+                            ${needsTruncation ? `
+                                <button class="read-more-btn" data-post-id="${post.id}" data-expanded="false">
+                                    READ MORE
+                                </button>
+                            ` : ''}
+                        </div>
+                    </div>
+                    <div class="post-footer">
+                        <div class="post-tags">
+                            ${post.category ? `<span class="tag ${getCategoryClass(post.category)}">${post.category}</span>` : ''}
+                            ${post.post_type ? `<span class="tag ${getPostTypeClass(post.post_type)}">${post.post_type}</span>` : ''}
+                        </div>
+                        <div class="post-arrow" data-post-url="${post.post_url}" title="Open article">
+                        </div>
+                    </div>
+                </article>
+            `;
+        }
+
+        function renderPosts(posts, options = {}) {
+            if (posts.length === 0) {
+                return '<div class="no-posts">No posts found.</div>';
+            }
+            
+            return posts.map(post => renderPostCard(post, options)).join('');
+        }
+
+        function renderHomeFeed() {
+            const postsHtml = renderPosts(state.posts, {
+                showCompany: true,
+                showProduct: true
+            });
+            
+            elements.content.innerHTML = `
+                <div class="posts-grid">
+                    ${postsHtml}
+                </div>
+            `;
+            // Smooth content fade-in
+            elements.content.classList.add('content-loading');
+            requestAnimationFrame(() => {
+                elements.content.classList.add('show');
+            });
+            
+            // Attach read more button handlers
+            attachReadMoreHandlers();
+            
+            // Attach arrow icons dynamically
+            attachArrowIcons();
+            
+            if (state.pagination.hasMore) {
+                elements.loadMoreContainer.classList.remove('hidden');
+            } else {
+                elements.loadMoreContainer.classList.add('hidden');
+            }
+        }
+
+        // Use event delegation for read more buttons - works with dynamically added content
+        let readMoreDelegationSetup = false;
+        function setupReadMoreDelegation() {
+            // Only setup once to avoid duplicate listeners
+            if (readMoreDelegationSetup) {
+                return;
+            }
+            
+            const contentElement = document.getElementById('content');
+            if (contentElement) {
+                // Use a single event listener on the content container
+                contentElement.addEventListener('click', function(e) {
+                    const button = e.target.closest('.read-more-btn');
+                    if (!button) return;
+                    
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const postId = button.getAttribute('data-post-id');
+                    const summaryElement = document.getElementById(`post-${postId}-summary`);
+                    if (!summaryElement) return;
+                    
+                    const cardElement = summaryElement.closest('.post-card');
+                    const isExpanded = button.getAttribute('data-expanded') === 'true';
+                    
+                    if (isExpanded) {
+                        // Collapse
+                        summaryElement.classList.remove('post-summary-expanded');
+                        summaryElement.classList.add('post-summary-truncated');
+                        if (cardElement) {
+                            cardElement.classList.remove('post-card-expanded');
+                        }
+                        button.textContent = 'READ MORE';
+                        button.setAttribute('data-expanded', 'false');
+                    } else {
+                        // Expand
+                        summaryElement.classList.remove('post-summary-truncated');
+                        summaryElement.classList.add('post-summary-expanded');
+                        if (cardElement) {
+                            cardElement.classList.add('post-card-expanded');
+                        }
+                        button.textContent = 'READ LESS';
+                        button.setAttribute('data-expanded', 'true');
+                    }
+                });
+                
+                readMoreDelegationSetup = true;
+            }
+        }
+
+        // Keep this function for backwards compatibility but it's no longer needed
+        function attachReadMoreHandlers() {
+            // Event delegation is now handled by setupReadMoreDelegation
+            // This function is kept for compatibility but does nothing
+        }
+
+        function attachArrowIcons() {
+            const arrowContainers = document.querySelectorAll('.post-arrow');
+            arrowContainers.forEach(container => {
+                // Only create SVG if it doesn't already exist
+                if (container.querySelector('svg')) {
+                    return;
+                }
+                
+                const postUrl = container.getAttribute('data-post-url');
+                if (postUrl) {
+                    container.onclick = () => window.open(postUrl, '_blank');
+                }
+                
+                // Create SVG dynamically
+                const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                svg.setAttribute('width', '32');
+                svg.setAttribute('height', '32');
+                svg.setAttribute('viewBox', '0 0 32 32');
+                svg.setAttribute('fill', 'none');
+                svg.style.display = 'block';
+                
+                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                path.setAttribute('d', 'M21.0627 24.4375L29.5 16M29.5 16L21.0625 7.5625M29.5 16H2.5');
+                path.setAttribute('stroke', '#222325');
+                path.setAttribute('stroke-width', '3');
+                path.setAttribute('stroke-linecap', 'round');
+                path.setAttribute('stroke-linejoin', 'round');
+                path.setAttribute('fill', 'none');
+                
+                svg.appendChild(path);
+                container.appendChild(svg);
+            });
+        }
+
+        function renderHeader() {
+            // Re-fetch element in case DOM wasn't ready when script loaded
+            const headerContentEl = document.getElementById('header-content') || elements.headerContent;
+            
+            if (!headerContentEl) {
+                console.warn('Header content element not found. DOM might not be ready.');
+                return;
+            }
+            
+            let currentRoute = 'home';
+            if (router && typeof router.getCurrentRoute === 'function') {
+                currentRoute = router.getCurrentRoute();
+            }
+            
+            console.log('renderHeader called for route:', currentRoute);
+            
+            let headerHtml = '';
+            
+            if (currentRoute === 'home') {
+                // Feed header
+                headerHtml = `
+                    <div class="header-feed">
+                        <h1 class="header-feed-title">Feed</h1>
+                    </div>
+                `;
+            } else if (currentRoute === 'company' && state.currentCompany) {
+                // Company header with icon
+                const iconHtml = state.currentCompany.logo_url 
+                    ? `<img src="${state.currentCompany.logo_url}" alt="${state.currentCompany.name}" class="header-company-icon" onerror="this.style.display='none'">`
+                    : '';
+                headerHtml = `
+                    <div class="header-company">
+                        ${iconHtml}
+                        <h1 class="header-company-title">${state.currentCompany.name}</h1>
+                    </div>
+                `;
+            } else if (currentRoute === 'product' && state.currentProduct && state.currentCompany) {
+                // Product header with "By [company]" link
+                headerHtml = `
+                    <div class="header-product">
+                        <h1 class="header-product-title">${state.currentProduct.name}</h1>
+                        <a href="/company/${state.currentCompany.slug}" class="header-product-link" data-route="company">By ${state.currentCompany.name}</a>
+                    </div>
+                `;
+            } else if (currentRoute === 'companies') {
+                // Companies list header
+                headerHtml = `
+                    <div class="header-feed">
+                        <h1 class="header-feed-title">Companies</h1>
+                    </div>
+                `;
+            } else if (currentRoute === 'products') {
+                // Products list header
+                headerHtml = `
+                    <div class="header-feed">
+                        <h1 class="header-feed-title">Products</h1>
+                    </div>
+                `;
+            } else {
+                // Default: Feed header
+                headerHtml = `
+                    <div class="header-feed">
+                        <h1 class="header-feed-title">Feed</h1>
+                    </div>
+                `;
+            }
+            
+            headerContentEl.innerHTML = headerHtml;
+            console.log('Header rendered for route:', currentRoute);
+            
+            // Force a reflow to ensure visibility
+            headerContentEl.style.display = 'block';
+        }
+
+        function renderCompanyPage(company, products, posts) {
+            const companyInfo = `
+                <div class="page-header">
+                    <h1 class="page-title">${company.name}</h1>
+                    ${company.logo_url ? `<img src="${company.logo_url}" alt="${company.name} logo" class="company-logo">` : ''}
+                    ${company.summary ? `<p class="page-summary">${company.summary}</p>` : ''}
+                </div>
+            `;
+            
+            const postsHtml = renderPosts(posts, {
+                showCompany: false,
+                showProduct: true
+            });
+            
+            hideSkeletonLoading();
+            elements.content.innerHTML = `
+                ${companyInfo}
+                <div class="posts-grid">
+                    ${postsHtml}
+                </div>
+            `;
+            // Smooth content fade-in
+            elements.content.classList.add('content-loading');
+            requestAnimationFrame(() => {
+                elements.content.classList.add('show');
+            });
+            
+            // Attach read more button handlers
+            attachReadMoreHandlers();
+            
+            // Attach arrow icons dynamically
+            attachArrowIcons();
+            
+            elements.filtersSection.classList.add('hidden');
+            elements.loadMoreContainer.classList.add('hidden');
+            
+            // Update header
+            renderHeader();
+        }
+
+        function renderProductPage(product, company, posts) {
+            const productInfo = `
+                <div class="page-header">
+                </div>
+            `;
+            
+            const postsHtml = renderPosts(posts, {
+                showCompany: false,
+                showProduct: false
+            });
+            
+            hideSkeletonLoading();
+            elements.content.innerHTML = `
+                ${productInfo}
+                <div class="posts-grid">
+                    ${postsHtml}
+                </div>
+            `;
+            // Smooth content fade-in
+            elements.content.classList.add('content-loading');
+            requestAnimationFrame(() => {
+                elements.content.classList.add('show');
+            });
+            
+            // Attach read more button handlers
+            attachReadMoreHandlers();
+            
+            // Attach arrow icons dynamically
+            attachArrowIcons();
+            
+            elements.filtersSection.classList.add('hidden');
+            elements.loadMoreContainer.classList.add('hidden');
+            
+            // Update header
+            renderHeader();
+        }
+
+        function renderCompaniesPage() {
+            const companiesList = state.companies.map(company => {
+                const companyProducts = state.products.filter(p => p.company_id === company.id);
+                return `
+                    <div style="padding: 16px; border-bottom: 1px solid #e2e8f0;">
+                        <h2 style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">
+                            <a href="/company/${company.slug}" style="color: #222325; text-decoration: none;" data-route="company">
+                                ${company.logo_url ? `<img src="${company.logo_url}" alt="${company.name}" style="width: 24px; height: 24px; vertical-align: middle; margin-right: 8px;">` : ''}
+                                ${company.name}
+                            </a>
+                        </h2>
+                        <p style="color: #64748b; font-size: 14px; margin-bottom: 8px;">${company.summary || 'No description available.'}</p>
+                        <div style="font-size: 14px; color: #64748b;">
+                            Products: ${companyProducts.length}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            hideSkeletonLoading();
+            elements.content.innerHTML = `
+                <div class="page-header">
+                    <h1 class="page-title">Companies</h1>
+                    <p class="page-summary">Browse all companies</p>
+                </div>
+                <div style="background: #fff; border-radius: 8px; margin-top: 24px;">
+                    ${companiesList || '<p style="padding: 24px; text-align: center; color: #64748b;">No companies found.</p>'}
+                </div>
+            `;
+            // Smooth content fade-in
+            elements.content.classList.add('content-loading');
+            requestAnimationFrame(() => {
+                elements.content.classList.add('show');
+            });
+        }
+
+        function renderProductsPage() {
+            const productsList = state.products.map(product => {
+                const company = state.companies.find(c => c.id === product.company_id);
+                return `
+                    <div style="padding: 16px; border-bottom: 1px solid #e2e8f0;">
+                        <h2 style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">
+                            <a href="/product/${product.slug}" style="color: #222325; text-decoration: none;" data-route="product">
+                                ${product.name}
+                            </a>
+                        </h2>
+                        ${company ? `
+                            <p style="color: #64748b; font-size: 14px;">
+                                Company: <a href="/company/${company.slug}" style="color: #2563eb; text-decoration: none;" data-route="company">${company.name}</a>
+                            </p>
+                        ` : ''}
+                    </div>
+                `;
+            }).join('');
+            
+            hideSkeletonLoading();
+            elements.content.innerHTML = `
+                <div class="page-header">
+                    <h1 class="page-title">Products</h1>
+                    <p class="page-summary">Browse all products</p>
+                </div>
+                <div style="background: #fff; border-radius: 8px; margin-top: 24px;">
+                    ${productsList || '<p style="padding: 24px; text-align: center; color: #64748b;">No products found.</p>'}
+                </div>
+            `;
+            // Smooth content fade-in
+            elements.content.classList.add('content-loading');
+            requestAnimationFrame(() => {
+                elements.content.classList.add('show');
+            });
+        }
+
+        // Filter functions
+        async function populateFilters(showErrors = true) {
+            // Always populate category and post type filters (they're static)
+            elements.categoryFilter.innerHTML = '<option value="">All Categories</option>' +
+                CATEGORIES.map(c => `<option value="${c}">${c}</option>`).join('');
+
+            elements.postTypeFilter.innerHTML = '<option value="">All Types</option>' +
+                POST_TYPES.map(t => `<option value="${t}">${t}</option>`).join('');
+
+            try {
+                console.log('Fetching companies...');
+                const companies = await fetchCompanies();
+                console.log('Companies fetched:', companies.length);
+                state.companies = companies;
+                
+                // Preserve current selection
+                const currentCompanyId = elements.companyFilter.value;
+                elements.companyFilter.innerHTML = '<option value="">All Companies</option>' +
+                    companies.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+                if (currentCompanyId) {
+                    elements.companyFilter.value = currentCompanyId;
+                }
+
+                console.log('Fetching products...');
+                const products = await fetchProducts();
+                console.log('Products fetched:', products.length);
+                console.log('Products data:', products);
+                state.products = products;
+                
+                // Preserve current selection
+                const currentProductId = elements.productFilter.value;
+                elements.productFilter.innerHTML = '<option value="">All Products</option>' +
+                    products.map(p => `<option value="${p.id}">${p.name}</option>`).join('');
+                if (currentProductId) {
+                    elements.productFilter.value = currentProductId;
+                }
+
+                console.log('All filters populated successfully');
+                
+                // Re-render navigation tree now that products are loaded
+                renderNavigationTree();
+
+            } catch (error) {
+                console.error('Error populating filters:', error);
+                if (showErrors) {
+                    const errorMsg = error.message || 'Unknown error';
+                    showError('Failed to load company/product filters: ' + errorMsg + '. Category and Post Type filters are available.');
+                }
+            }
+        }
+
+        function applyFilters() {
+            state.filters.companyId = elements.companyFilter.value || null;
+            state.filters.productId = elements.productFilter.value || null;
+            state.filters.category = elements.categoryFilter.value || null;
+            state.filters.postType = elements.postTypeFilter.value || null;
+            
+            state.pagination.offset = 0;
+            state.posts = [];
+            
+            loadPosts();
+        }
+
+        // Data loading functions
+        async function loadPosts(showLoadingIndicator = true) {
+            if (showLoadingIndicator) {
+                showLoading();
+            }
+            hideError();
+            
+            try {
+                console.log('Loading posts...', {
+                    offset: state.pagination.offset,
+                    filters: state.filters
+                });
+                
+                const posts = await fetchPosts({
+                    limit: state.pagination.limit,
+                    offset: state.pagination.offset,
+                    companyId: state.filters.companyId,
+                    productId: state.filters.productId,
+                    category: state.filters.category,
+                    postType: state.filters.postType
+                });
+                
+                console.log('Posts fetched:', posts.length);
+                
+                if (state.pagination.offset === 0) {
+                    state.posts = posts;
+                } else {
+                    state.posts = [...state.posts, ...posts];
+                }
+                
+                state.pagination.hasMore = posts.length === state.pagination.limit;
+                state.pagination.offset += posts.length;
+                
+                if (state.currentPage === 'home') {
+                    console.log('Rendering home feed with', state.posts.length, 'posts');
+                    renderHomeFeed();
+                }
+                
+            } catch (error) {
+                console.error('Error loading posts:', error);
+                if (showLoadingIndicator) {
+                    const errorMsg = error.message || 'Unknown error';
+                    showError('Failed to load posts: ' + errorMsg + '. Check console for details.');
+                }
+            } finally {
+                if (showLoadingIndicator) {
+                    hideLoading();
+                }
+            }
+        }
+
+        async function loadMorePosts() {
+            await loadPosts();
+        }
+
+        async function loadCompanyPage(slug) {
+            showSkeletonLoading();
+            hideError();
+            
+            try {
+                const company = await fetchCompanyBySlug(slug);
+                state.currentCompany = company;
+                state.currentProduct = null; // Clear product when viewing company
+                
+                const products = await fetchProductsByCompany(company.id);
+                
+                const allPosts = [];
+                let offset = 0;
+                let hasMore = true;
+                
+                while (hasMore) {
+                    const posts = await fetchPosts({
+                        limit: 50,
+                        offset: offset,
+                        companyId: company.id
+                    });
+                    
+                    allPosts.push(...posts);
+                    hasMore = posts.length === 50;
+                    offset += 50;
+                }
+                
+                // Render content immediately - no delay
+                renderCompanyPage(company, products, allPosts);
+                attachReadMoreHandlers();
+                attachArrowIcons();
+                renderHeader();
+                
+                // Update navigation state (already updated on click, just ensure consistency)
+                autoExpandForRoute();
+                
+                // Re-render navigation tree immediately (selection already shown immediately on click)
+                // No delay - navigation state was already updated synchronously on click
+                renderNavigationTree();
+                
+            } catch (error) {
+                console.error('Error loading company page:', error);
+                showError('Failed to load company page. Please try again.');
+            } finally {
+                hideSkeletonLoading();
+            }
+        }
+
+        async function loadProductPage(slug) {
+            showSkeletonLoading();
+            hideError();
+            
+            try {
+                // Fetch fresh data (state.currentProduct and state.currentCompany already set immediately on click)
+                const product = await fetchProductBySlug(slug);
+                state.currentProduct = product;
+                
+                const company = await fetchCompanyById(product.company_id);
+                state.currentCompany = company;
+                
+                const allPosts = [];
+                let offset = 0;
+                let hasMore = true;
+                
+                while (hasMore) {
+                    const posts = await fetchPosts({
+                        limit: 50,
+                        offset: offset,
+                        productId: product.id
+                    });
+                    
+                    allPosts.push(...posts);
+                    hasMore = posts.length === 50;
+                    offset += 50;
+                }
+                
+                // Render content immediately - no delay
+                renderProductPage(product, company, allPosts);
+                attachReadMoreHandlers();
+                attachArrowIcons();
+                renderHeader();
+                
+                // Update navigation state (already updated on click, just ensure consistency)
+                autoExpandForRoute();
+                
+                // Re-render navigation tree immediately (selection already shown immediately on click)
+                // No delay - navigation state was already updated synchronously on click
+                renderNavigationTree();
+                
+            } catch (error) {
+                console.error('Error loading product page:', error);
+                showError('Failed to load product page. Please try again.');
+            } finally {
+                hideSkeletonLoading();
+            }
+        }
+
+        // Event listeners
+        elements.companyFilter.addEventListener('change', applyFilters);
+        elements.productFilter.addEventListener('change', applyFilters);
+        elements.categoryFilter.addEventListener('change', applyFilters);
+        elements.postTypeFilter.addEventListener('change', applyFilters);
+
+        elements.clearFiltersBtn.addEventListener('click', () => {
+            elements.companyFilter.value = '';
+            elements.productFilter.value = '';
+            elements.categoryFilter.value = '';
+            elements.postTypeFilter.value = '';
+            applyFilters();
+        });
+
+        elements.loadMoreBtn.addEventListener('click', loadMorePosts);
+
+        // Router setup
+        router.register('home', () => {
+            // Only update if not already set (to avoid clearing selection during navigation)
+            if (state.currentPage !== 'home') {
+            state.currentPage = 'home';
+            state.currentCompany = null;
+            state.currentProduct = null;
+            }
+            elements.filtersSection.classList.remove('hidden');
+            renderHeader();
+            loadPosts();
+            autoExpandForRoute();
+            // Ensure navigation tree reflects current state
+            renderNavigationTree();
+        });
+
+        router.register('companies', () => {
+            // Only update if not already set (to avoid clearing selection during navigation)
+            if (state.currentPage !== 'companies') {
+            state.currentPage = 'companies';
+            state.currentCompany = null;
+            state.currentProduct = null;
+            }
+            elements.filtersSection.classList.add('hidden');
+            renderHeader();
+            renderCompaniesPage();
+            autoExpandForRoute();
+            // Ensure navigation tree reflects current state
+            renderNavigationTree();
+        });
+
+        router.register('company', (slug) => {
+            // state.currentCompany already set immediately on click - DO NOT CLEAR IT
+            // state.currentPage already set immediately on click - DO NOT CLEAR IT
+            // Only clear product if it wasn't already set (should already be null from click handler)
+            if (!state.currentCompany) {
+                // If somehow company wasn't set, clear product
+            state.currentProduct = null;
+            }
+            // Ensure navigation tree reflects current state (already updated on click)
+            renderNavigationTree();
+            // Load content in background (state already updated for instant UI)
+            loadCompanyPage(slug);
+        });
+
+        router.register('products', () => {
+            // Only update if not already set (to avoid clearing selection during navigation)
+            if (state.currentPage !== 'products') {
+            state.currentPage = 'products';
+            state.currentCompany = null;
+            state.currentProduct = null;
+            }
+            elements.filtersSection.classList.add('hidden');
+            renderHeader();
+            renderProductsPage();
+            autoExpandForRoute();
+            // Ensure navigation tree reflects current state
+            renderNavigationTree();
+        });
+
+        router.register('product', (slug) => {
+            // state.currentProduct and state.currentCompany already set immediately on click - DO NOT CLEAR THEM
+            // state.currentPage already set immediately on click - DO NOT CLEAR IT
+            // Ensure navigation tree reflects current state (already updated on click)
+            renderNavigationTree();
+            // Load content in background (state already updated for instant UI)
+            loadProductPage(slug);
+        });
+
+        // Test Supabase connection
+        async function testSupabaseConnection() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('companies')
+                    .select('count')
+                    .limit(1);
+                
+                if (error) {
+                    console.error('Supabase connection test failed:', error);
+                    return false;
+                }
+                return true;
+            } catch (error) {
+                console.error('Supabase connection test error:', error);
+                return false;
+            }
+        }
+
+        // Background auto-refresh function
+        async function backgroundRefresh() {
+            // Only refresh if page is visible
+            if (document.hidden) {
+                return;
+            }
+            
+            try {
+                console.log('Background refresh started...');
+                
+                // Refresh filters (companies and products)
+                await populateFilters(false);
+                
+                // Refresh current page data
+                if (state.currentPage === 'home') {
+                    // Refresh posts on home page
+                    const currentOffset = state.pagination.offset;
+                    state.pagination.offset = 0;
+                    await loadPosts(false);
+                    // Restore offset if user was loading more
+                    if (currentOffset > 0 && state.posts.length < currentOffset) {
+                        state.pagination.offset = currentOffset;
+                    }
+                    attachReadMoreHandlers();
+                    attachArrowIcons();
+                } else if (state.currentPage === 'company' && state.currentCompany) {
+                    // Refresh company page
+                    const company = state.currentCompany;
+                    const products = await fetchProductsByCompany(company.id);
+                    
+                    const allPosts = [];
+                    let offset = 0;
+                    let hasMore = true;
+                    
+                    while (hasMore) {
+                        const posts = await fetchPosts({
+                            limit: 50,
+                            offset: offset,
+                            companyId: company.id
+                        });
+                        
+                        allPosts.push(...posts);
+                        hasMore = posts.length === 50;
+                        offset += 50;
+                    }
+                    
+                    renderCompanyPage(company, products, allPosts);
+                    attachReadMoreHandlers();
+                    attachArrowIcons();
+                } else if (state.currentPage === 'product' && state.currentProduct) {
+                    // Refresh product page
+                    const product = state.currentProduct;
+                    const company = await fetchCompanyById(product.company_id);
+                    
+                    const allPosts = [];
+                    let offset = 0;
+                    let hasMore = true;
+                    
+                    while (hasMore) {
+                        const posts = await fetchPosts({
+                            limit: 50,
+                            offset: offset,
+                            productId: product.id
+                        });
+                        
+                        allPosts.push(...posts);
+                        hasMore = posts.length === 50;
+                        offset += 50;
+                    }
+                    
+                    renderProductPage(product, company, allPosts);
+                    attachReadMoreHandlers();
+                    attachArrowIcons();
+                    autoExpandForRoute();
+                }
+                
+                console.log('Background refresh completed');
+            } catch (error) {
+                console.error('Background refresh error:', error);
+                // Silently fail - don't show errors to user
+            }
+        }
+
+        // Navigation tree renderer
+        function getNavItemState(itemType, itemId = null) {
+            const currentRoute = router.getCurrentRoute();
+            
+            // Normalize IDs - handle both string and number
+            const normalizeId = (id) => {
+                if (id === null || id === undefined) return null;
+                return typeof id === 'string' ? parseInt(id, 10) : Number(id);
+            };
+            
+            const itemIdNum = itemId ? normalizeId(itemId) : null;
+            
+            // Check selection state - ensure we compare IDs correctly
+            let isSelected = false;
+            if (itemType === 'feed' && currentRoute === 'home') {
+                isSelected = true;
+            } else if (itemType === 'companies' && currentRoute === 'companies') {
+                isSelected = true;
+            } else if (itemType === 'products' && currentRoute === 'products') {
+                isSelected = true;
+            } else if (itemType === 'company' && currentRoute === 'company' && state.currentCompany && itemIdNum !== null) {
+                // Compare both as numbers to ensure match
+                const companyId = normalizeId(state.currentCompany.id);
+                const itemIdNormalized = normalizeId(itemIdNum);
+                isSelected = companyId === itemIdNormalized;
+                console.log('Checking company selection:', {
+                    itemType,
+                    currentRoute,
+                    companyId,
+                    itemIdNormalized,
+                    isSelected,
+                    currentCompany: state.currentCompany,
+                    itemId
+                });
+            } else if (itemType === 'product' && currentRoute === 'product' && state.currentProduct && itemIdNum !== null) {
+                // Compare both as numbers to ensure match
+                const productId = normalizeId(state.currentProduct.id);
+                const itemIdNormalized = normalizeId(itemIdNum);
+                isSelected = productId === itemIdNormalized;
+                console.log('Checking product selection:', {
+                    itemType,
+                    currentRoute,
+                    productId,
+                    itemIdNormalized,
+                    isSelected,
+                    currentProduct: state.currentProduct,
+                    itemId
+                });
+            }
+            
+            // Sub-selected: only show if a child item is selected
+            let isSubSelected = false;
+            if (itemType === 'companies' && !isSelected) {
+                // Companies folder should NOT be sub-selected if a product is selected (3 levels)
+                // Only sub-selected if a company is directly selected (2 levels), not when product is selected
+                const hasProductSelected = state.currentProduct && state.currentProduct.company_id;
+                if (state.currentCompany && !hasProductSelected && state.companies.some(c => normalizeId(c.id) === normalizeId(state.currentCompany.id))) {
+                    isSubSelected = state.navigation.companiesExpanded;
+                }
+            } else if (itemType === 'products' && !isSelected) {
+                // Check if any product is selected
+                if (state.currentProduct && state.products.some(p => normalizeId(p.id) === normalizeId(state.currentProduct.id))) {
+                    isSubSelected = state.navigation.productsExpanded;
+                }
+            } else if (itemType === 'company' && itemIdNum !== null && !isSelected) {
+                // Check if any product of this company is selected
+                if (state.currentProduct && state.currentProduct.company_id) {
+                    const productCompanyId = normalizeId(state.currentProduct.company_id);
+                    const companyId = normalizeId(itemIdNum);
+                    isSubSelected = productCompanyId === companyId;
+                }
+            }
+            
+            return { isSelected, isSubSelected };
+        }
+
+        function renderNavItem(itemType, label, iconPath, href, itemId = null, hasChildren = false, isExpanded = false, indentLevel = 0) {
+            const { isSelected, isSubSelected } = getNavItemState(itemType, itemId);
+            const classes = ['nav-item'];
+            if (isSelected) {
+                classes.push('nav-item-selected');
+                console.log(`✓ ${itemType} "${label}" is SELECTED (id: ${itemId})`);
+            }
+            if (isSubSelected) {
+                classes.push('nav-item-sub-selected');
+                console.log(`→ ${itemType} "${label}" is SUB-SELECTED (id: ${itemId})`);
+            }
+            if (hasChildren && isExpanded) classes.push('nav-folder-expanded');
+            if (indentLevel === 1) classes.push('nav-item-indented');
+            if (indentLevel === 2) classes.push('nav-item-indented-2');
+            
+            // Show chevron only if item has children (products)
+            // Chevron will be visible on hover via CSS (opacity: 0 by default, opacity: 1 on hover)
+            const shouldShowChevron = hasChildren;
+            const chevronVisible = shouldShowChevron ? '' : 'nav-item-chevron-hidden';
+            // Add nav-item-expanded class to chevron container when expanded
+            const chevronClasses = [chevronVisible];
+            if (isExpanded) {
+                chevronClasses.push('nav-item-expanded');
+            }
+            
+            // Show icon for all levels including products
+            const showIcon = true;
+            
+            // Add has-children class for CSS targeting
+            if (hasChildren) {
+                classes.push('has-children');
+            }
+            
+            console.log('renderNavItem:', { itemType, label, hasChildren, shouldShowChevron, isSelected, isSubSelected, indentLevel });
+            
+            return `
+                <div class="${classes.join(' ')}" data-item-type="${itemType}" data-item-id="${itemId || ''}" data-href="${href || ''}">
+                    <div class="nav-item-label" data-action="navigate" title="Click to navigate to page">
+                        ${showIcon ? `
+                        <div class="nav-item-icon">
+                            <img src="${iconPath || '/Folder_default.svg'}" alt="" onerror="if (this.src && this.src.indexOf && this.src.indexOf('Folder_default') === -1) { console.error('Icon failed to load:', this.src); this.src='/Folder_default.svg'; } this.onerror=null;" style="display: block !important; width: 100%; height: 100%; object-fit: contain; min-width: 16px; min-height: 16px;">
+                        </div>
+                        ` : ''}
+                        <span class="nav-item-text">${label}</span>
+                    </div>
+                    ${shouldShowChevron ? `
+                        <div class="nav-item-chevron-area" data-action="toggle" title="Click to expand/collapse list">
+                        <div class="nav-item-chevron ${chevronClasses.join(' ')}">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7.73442 11.8891L3.11014 7.26908C2.96329 7.12116 2.96329 6.88198 3.11014 6.73407L3.72879 6.11094C3.87564 5.96302 4.11311 5.96302 4.25996 6.11094L8 9.84028L11.74 6.11094C11.8869 5.96302 12.1244 5.96302 12.2712 6.11094L12.8899 6.73407C13.0367 6.88198 13.0367 7.12116 12.8899 7.26908L8.26558 11.8891C8.11873 12.037 7.88127 12.037 7.73442 11.8891Z" fill="currentColor"/>
+                            </svg>
+                            </div>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        }
+
+        // Normalize IDs helper (available globally)
+        function normalizeId(id) {
+            if (id === null || id === undefined) return null;
+            return typeof id === 'string' ? parseInt(id, 10) : Number(id);
+        }
+
+        function renderNavigationTree() {
+            if (!elements.navTree) {
+                console.error('nav-tree element not found!');
+                return;
+            }
+            
+            const companiesExpanded = state.navigation.companiesExpanded;
+            const productsExpanded = state.navigation.productsExpanded;
+            
+            let html = '';
+            
+            // Feed - always show (use absolute path from root)
+            html += renderNavItem('feed', 'Feed', '/Feed_Icon.svg', '/', null, false, false, 0);
+            
+            // Check if Companies folder should show selected items outside when collapsed
+            const companiesHasSelected = state.currentCompany || (state.currentProduct && state.currentProduct.company_id);
+            const companiesCollapsedWithSelection = !companiesExpanded && companiesHasSelected;
+            
+            // Check if there's a product selected (3 levels) - means company is sub-selected
+            const hasProductSelected = state.currentProduct && state.currentProduct.company_id;
+            
+            // Determine folder icon for Companies
+            let companiesIcon = '/Folder_default.svg';
+            if (companiesExpanded) {
+                // When expanded, use Folder_open.svg (even if product is selected - default state, not sub-selected)
+                companiesIcon = '/Folder_open.svg';
+            } else if (companiesCollapsedWithSelection) {
+                // Only use Folder_sub.svg when collapsed with selection
+                companiesIcon = '/Folder_sub.svg';
+            }
+            
+            // Companies folder - always show, even if empty (use absolute path from root)
+            html += renderNavItem('companies', 'Companies', companiesIcon, '/companies', null, true, companiesExpanded, 0);
+            
+            // Show selected company/product outside if Companies folder is collapsed
+            if (companiesCollapsedWithSelection && state.companies.length > 0) {
+                const currentRoute = router.getCurrentRoute();
+                if (currentRoute === 'company' && state.currentCompany) {
+                    // Show selected company outside when Companies folder is collapsed
+                    const company = state.currentCompany;
+                    html += renderNavItem('company', company.name, company.logo_url || '/Folder_default.svg', `/company/${company.slug}`, company.id, false, false, 1);
+                } else if (currentRoute === 'product' && state.currentProduct && state.currentProduct.company_id) {
+                    // Show selected product outside with level 2 indentation
+                    const product = state.currentProduct;
+                    html += renderNavItem('product', product.name, '/Folder_sub.svg', `/product/${product.slug}`, product.id, false, false, 2);
+                }
+            }
+            
+            if (companiesExpanded && state.companies.length > 0) {
+                html += '<div class="nav-folder-children">';
+                
+                state.companies.forEach(company => {
+                    // Normalize ID comparison - handle both string and number
+                    const companyId = typeof company.id === 'string' ? parseInt(company.id, 10) : Number(company.id);
+                    const companyExpanded = Array.from(state.navigation.expandedCompanies).some(id => {
+                        const expandedId = typeof id === 'string' ? parseInt(id, 10) : Number(id);
+                        return expandedId === companyId;
+                    });
+                    
+                    // Check if this company has selected item inside when collapsed
+                    const isSelected = state.currentCompany && normalizeId(state.currentCompany.id) === companyId;
+                    const hasSelectedProduct = state.currentProduct && state.currentProduct.company_id && normalizeId(state.currentProduct.company_id) === companyId;
+                    const companyCollapsedWithSelection = !companyExpanded && (isSelected || hasSelectedProduct);
+                    
+                    // Filter products - handle both string and number IDs, and null/undefined
+                    const companyProducts = state.products.filter(p => {
+                        if (!p.company_id) return false;
+                        const pCompanyId = typeof p.company_id === 'string' ? parseInt(p.company_id, 10) : Number(p.company_id);
+                        return pCompanyId === companyId;
+                    });
+                    const hasProducts = companyProducts.length > 0;
+                    
+                    // Determine folder icon for company
+                    // Keep company logo when selected and collapsed
+                    // Only use Folder_sub.svg when a product is selected (not when company is selected)
+                    let companyIcon = company.logo_url || '/Folder_default.svg';
+                    if (companyCollapsedWithSelection && hasSelectedProduct && !isSelected) {
+                        // Only change to Folder_sub.svg when product is selected (not company)
+                        companyIcon = '/Folder_sub.svg';
+                    }
+                    
+                    // Show chevron if company has products
+                    html += renderNavItem('company', company.name, companyIcon, `/company/${company.slug}`, company.id, hasProducts, companyExpanded, 1);
+                    
+                    // Show selected product outside if company is collapsed (only products, not companies)
+                    // Companies stay selected inside when collapsed
+                    if (companyCollapsedWithSelection) {
+                        const currentRoute = router.getCurrentRoute();
+                        // Only show product outside, not company
+                        if (currentRoute === 'product' && hasSelectedProduct) {
+                            // Show selected product outside with level 2 indentation
+                            html += renderNavItem('product', state.currentProduct.name, '/Folder_sub.svg', `/product/${state.currentProduct.slug}`, state.currentProduct.id, false, false, 2);
+                        }
+                    }
+                    
+                    if (companyExpanded && hasProducts) {
+                        html += '<div class="nav-folder-children" style="display: flex !important; visibility: visible !important; opacity: 1 !important;">';
+                        companyProducts.forEach(product => {
+                            // Don't render if it's the selected product and company is collapsed (already shown outside)
+                            const isSelectedProduct = state.currentProduct && normalizeId(state.currentProduct.id) === normalizeId(product.id);
+                            if (!companyCollapsedWithSelection || !isSelectedProduct) {
+                                html += renderNavItem('product', product.name, '/Folder_sub.svg', `/product/${product.slug}`, product.id, false, false, 2);
+                            }
+                        });
+                        html += '</div>';
+                    }
+                });
+                html += '</div>';
+            }
+            
+            // Products folder - always show, even if empty (use absolute path from root)
+            // Products folder should not have chevron
+            html += renderNavItem('products', 'Products', productsExpanded ? '/Folder_open.svg' : '/Folder_default.svg', '/products', null, false, productsExpanded, 0);
+            
+            // Update sidebar immediately for smooth transitions (no delay)
+            elements.navTree.innerHTML = html;
+            // Attach event listeners
+            attachNavigationListeners();
+        }
+
+        function attachNavigationListeners() {
+            if (!elements.navTree) return;
+            
+            // Remove existing listeners by cloning
+            const newTree = elements.navTree.cloneNode(true);
+            elements.navTree.parentNode.replaceChild(newTree, elements.navTree);
+            elements.navTree = newTree;
+            
+            elements.navTree.addEventListener('click', (e) => {
+                const navItem = e.target.closest('.nav-item');
+                if (!navItem) return;
+                
+                // Check if this item has a chevron area (has children that can expand)
+                const chevronArea = navItem.querySelector('.nav-item-chevron-area');
+                const hasChevronArea = chevronArea !== null;
+                
+                // If item has no chevron (Feed, Products), make entire button clickable for navigation
+                if (!hasChevronArea) {
+                    // Entire nav-item is clickable - navigate
+                    const itemType = navItem.getAttribute('data-item-type');
+                    const itemId = navItem.getAttribute('data-item-id');
+                    const href = navItem.getAttribute('data-href');
+                    
+                    if (href) {
+                        e.preventDefault();
+                        // Continue to navigation logic below
+                    } else {
+                        return;
+                    }
+                } else {
+                    // Item has chevron - use split click areas (left = navigate, right = expand/collapse)
+                    // Improved click area detection - prioritize element-based detection
+                    const chevronAreaEl = e.target.closest('.nav-item-chevron-area');
+                    const chevronSvg = e.target.closest('.nav-item-chevron, .nav-item-chevron svg, .nav-item-chevron svg path');
+                    const labelArea = e.target.closest('.nav-item-label');
+                    const labelText = e.target.closest('.nav-item-text');
+                    const labelIcon = e.target.closest('.nav-item-icon');
+                    
+                    // If clicking directly on chevron area or chevron SVG, always expand/collapse
+                    if (chevronAreaEl !== null || chevronSvg !== null) {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        const itemType = navItem.getAttribute('data-item-type');
+                        const itemId = navItem.getAttribute('data-item-id');
+                        // Use requestAnimationFrame for smooth interaction
+                        requestAnimationFrame(() => {
+                        toggleFolderExpansion(itemType, itemId);
+                        });
+                        return;
+                    }
+                    
+                    // If clicking on label area (icon, text, or label container), navigate
+                    if (labelArea !== null || labelText !== null || labelIcon !== null) {
+                        // This is a navigation click - continue to navigation logic below
+                    } else {
+                        // Fallback: use position-based detection for edge cases
+                        const rect = navItem.getBoundingClientRect();
+                        const clickX = e.clientX - rect.left;
+                        const itemWidth = rect.width;
+                        const rightAreaStart = itemWidth * 0.55; // Right 45% is for expand/collapse
+                        
+                        if (clickX >= rightAreaStart) {
+                            // Right side clicked - expand/collapse
+                                e.stopPropagation();
+                                e.preventDefault();
+                                const itemType = navItem.getAttribute('data-item-type');
+                                const itemId = navItem.getAttribute('data-item-id');
+                            requestAnimationFrame(() => {
+                                toggleFolderExpansion(itemType, itemId);
+                            });
+                                return;
+                            }
+                        // If click is on left side but not on label, navigate anyway
+                        // Continue to navigation logic below
+                    }
+                }
+                
+                const itemType = navItem.getAttribute('data-item-type');
+                const itemId = navItem.getAttribute('data-item-id');
+                const href = navItem.getAttribute('data-href');
+                
+                // Navigate and update state
+                if (href) {
+                    e.preventDefault();
+                    
+                    // STEP 1: Update selection state IMMEDIATELY (before any data loading)
+                    if (itemType === 'feed' || itemType === 'home') {
+                        state.currentCompany = null;
+                        state.currentProduct = null;
+                        state.currentPage = 'home';
+                    } else if (itemType === 'companies') {
+                        state.currentCompany = null;
+                        state.currentProduct = null;
+                        state.currentPage = 'companies';
+                        if (!state.navigation.companiesExpanded) {
+                            state.navigation.companiesExpanded = true;
+                        }
+                    } else if (itemType === 'products') {
+                        state.currentCompany = null;
+                        state.currentProduct = null;
+                        state.currentPage = 'products';
+                        if (!state.navigation.productsExpanded) {
+                            state.navigation.productsExpanded = true;
+                        }
+                    } else if (itemType === 'company') {
+                        // Find company from existing data and set immediately
+                        const companyId = itemId ? normalizeId(itemId) : null;
+                        const company = state.companies.find(c => normalizeId(c.id) === companyId);
+                        if (company) {
+                            state.currentCompany = company;
+                            state.currentProduct = null;
+                            state.currentPage = 'company';
+                        }
+                        // Auto-expand Companies folder and the specific company
+                        if (!state.navigation.companiesExpanded) {
+                            state.navigation.companiesExpanded = true;
+                        }
+                        if (companyId && !Array.from(state.navigation.expandedCompanies).some(id => normalizeId(id) === companyId)) {
+                            state.navigation.expandedCompanies.add(companyId);
+                        }
+                    } else if (itemType === 'product') {
+                        // Find product and company from existing data and set immediately
+                        const productId = itemId ? normalizeId(itemId) : null;
+                        const product = state.products.find(p => normalizeId(p.id) === productId);
+                        if (product) {
+                            state.currentProduct = product;
+                            // Find the company for this product
+                            const companyId = normalizeId(product.company_id);
+                            const company = state.companies.find(c => normalizeId(c.id) === companyId);
+                            if (company) {
+                                state.currentCompany = company;
+                            }
+                            state.currentPage = 'product';
+                        }
+                        // Auto-expand Companies folder and the parent company
+                        if (!state.navigation.companiesExpanded) {
+                            state.navigation.companiesExpanded = true;
+                        }
+                        if (product && product.company_id) {
+                            const companyId = normalizeId(product.company_id);
+                            if (!Array.from(state.navigation.expandedCompanies).some(id => normalizeId(id) === companyId)) {
+                                state.navigation.expandedCompanies.add(companyId);
+                            }
+                        }
+                    }
+                    
+                    // STEP 2: Update navigation tree IMMEDIATELY (synchronous for instant feedback)
+                    // Render synchronously for instant visual update - no delay, no animation frame
+                    renderNavigationTree();
+                    
+                    // Force a synchronous reflow to ensure the DOM is updated and selection state is visible
+                    // This ensures the selected state appears instantly before any async operations
+                    void elements.navTree.offsetHeight;
+                    
+                    // STEP 3: Navigate and load content in background (async, doesn't block UI)
+                    // Use setTimeout(0) to push to next event loop tick, allowing UI to render first
+                    setTimeout(() => {
+                    router.navigate(href);
+                    }, 0);
+                }
+            });
+        }
+
+        function toggleFolderExpansion(itemType, itemId) {
+            if (itemType === 'companies') {
+                state.navigation.companiesExpanded = !state.navigation.companiesExpanded;
+            } else if (itemType === 'products') {
+                state.navigation.productsExpanded = !state.navigation.productsExpanded;
+            } else if (itemType === 'company' && itemId) {
+                // Handle both string and number itemId
+                const companyId = normalizeId(itemId);
+                if (isNaN(companyId)) {
+                    return;
+                }
+                // Normalize all IDs in the Set for comparison
+                const normalizedExpanded = Array.from(state.navigation.expandedCompanies).map(id => normalizeId(id));
+                const isExpanded = normalizedExpanded.includes(companyId);
+                
+                // Toggle the company expansion
+                if (isExpanded) {
+                    // Remove - need to find the actual ID in the Set (might be stored as string)
+                    const toRemove = Array.from(state.navigation.expandedCompanies).find(id => normalizeId(id) === companyId);
+                    if (toRemove !== undefined) {
+                        state.navigation.expandedCompanies.delete(toRemove);
+                    }
+                } else {
+                    state.navigation.expandedCompanies.add(companyId);
+                }
+            }
+            // Re-render immediately for instant visual feedback
+            // CSS transitions will handle smooth animations
+            renderNavigationTree();
+        }
+
+        function autoExpandForRoute() {
+            const currentRoute = router.getCurrentRoute();
+            
+            if (currentRoute === 'home') {
+                // Don't auto-expand on home, but preserve manual expansions
+                state.navigation.productsExpanded = false;
+            } else if (currentRoute === 'companies') {
+                state.navigation.companiesExpanded = true;
+                state.navigation.productsExpanded = false;
+                // Don't clear expandedCompanies - preserve manually expanded companies
+            } else if (currentRoute === 'products') {
+                // Don't change companiesExpanded - preserve its current state
+                state.navigation.productsExpanded = true;
+                // Don't clear expandedCompanies - preserve manually expanded companies
+            } else if (currentRoute === 'company' && state.currentCompany) {
+                // Company page: expand Companies folder and the specific company
+                // Don't clear expandedCompanies - preserve manually expanded companies
+                state.navigation.companiesExpanded = true;
+                state.navigation.productsExpanded = false;
+                // Only ensure current company is expanded, don't clear others
+                if (!state.navigation.expandedCompanies.has(state.currentCompany.id)) {
+                state.navigation.expandedCompanies.add(state.currentCompany.id);
+                }
+            } else if (currentRoute === 'product' && state.currentProduct && state.currentCompany) {
+                // Product page: expand Companies folder and parent company, product is selected
+                // Don't clear expandedCompanies - preserve manually expanded companies
+                state.navigation.companiesExpanded = true;
+                state.navigation.productsExpanded = false;
+                // Only ensure parent company is expanded, don't clear others
+                if (!state.navigation.expandedCompanies.has(state.currentCompany.id)) {
+                state.navigation.expandedCompanies.add(state.currentCompany.id);
+                }
+            }
+            
+            // Smoothly update navigation tree without full reload
+            renderNavigationTree();
+        }
+
+        // Initialize app
+        async function init() {
+            try {
+                console.log('Starting initialization...');
+                
+                // Render navigation tree immediately
+                renderNavigationTree();
+                
+                // Wait for Supabase to load
+                const supabaseLib = await waitForSupabase();
+                supabaseClient = supabaseLib.createClient(SUPABASE_URL, SUPABASE_KEY);
+                
+                console.log('Supabase client initialized');
+                
+                // Test connection
+                const connected = await testSupabaseConnection();
+                if (!connected) {
+                    throw new Error('Could not connect to Supabase. Please check your credentials and RLS policies.');
+                }
+                
+                console.log('Supabase connection verified');
+                
+                // Show loading indicator
+                showLoading();
+                
+                // Setup event delegation for read more buttons (works with dynamic content)
+                setupReadMoreDelegation();
+                console.log('Read more event delegation setup');
+                
+                // Populate filters first
+                console.log('Populating filters...');
+                await populateFilters();
+                console.log('Filters populated');
+                
+                // Re-render navigation after data loads
+                renderNavigationTree();
+                autoExpandForRoute();
+                
+                // Render header
+                elements.headerContent = document.getElementById('header-content');
+                renderHeader();
+                
+                // Handle route and load posts
+                console.log('Handling route...');
+                router.handleRoute();
+                console.log('Route handled');
+                
+                // Render header again after route handling
+                renderHeader();
+                
+                // Start background auto-refresh (every 30 seconds)
+                setInterval(backgroundRefresh, 30000);
+                console.log('Background auto-refresh started (every 30 seconds)');
+            } catch (error) {
+                console.error('Initialization error:', error);
+                const errorMsg = error.message || 'Unknown error';
+                showError('Failed to initialize application: ' + errorMsg + '. Please check the browser console for details.');
+                hideLoading();
+            }
+        }
+
+        // Start the app when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+            })(); // End IIFE
+        }
+    </script>
+</body>
+</html>
+
