@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/Gary/$1" }
+  ],
+  "redirects": [
+    { "source": "/", "destination": "/Gary/Index.html", "permanent": false }
+  ]
+}
