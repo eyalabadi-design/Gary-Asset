@@ -159,7 +159,7 @@
             align-self: stretch;
             border-bottom: 1px solid #F5F5F5;
             background: #FFF;
-            min-height: 76px;
+            min-height: 100px;
             width: 100%;
         }
 
@@ -189,7 +189,7 @@
             align-self: stretch;
             border-bottom: 1px solid #F5F5F5;
             background: #FFF;
-            min-height: 76px;
+            min-height: 100px;
             width: 100%;
         }
 
@@ -784,7 +784,7 @@
             gap: 32px;
             flex: 1 0 0;
             align-self: stretch;
-            margin-top: -16px; /* Remove 16px space from header */
+            /* Removed negative margin for proper spacing */
             width: 100%;
             box-sizing: border-box;
         }
@@ -1606,19 +1606,20 @@
             }
         }
 
-        /* Category and Post Type specific styles */
-        .tag-llm { background-color: #ECDDFB; color: #56288A; }
-        .tag-video-editing { background-color: #fce7f3; color: #9f1239; }
-        .tag-image-editing { background-color: #fef3c7; color: #92400e; }
-        .tag-sound { background-color: #e0e7ff; color: #3730a3; }
-        .tag-research { background-color: #d1fae5; color: #065f46; }
-        .tag-development { background-color: #f3e8ff; color: #6b21a8; }
-        .tag-web-browsing { background-color: #fed7aa; color: #9a3412; }
-        .tag-automation { background-color: #ddd6fe; color: #5b21b6; }
-        .tag-design-tools { background-color: #fecdd3; color: #991b1b; }
-        .tag-security { background-color: #fee2e2; color: #991b1b; }
-        .tag-business { background-color: #cffafe; color: #164e63; }
-        .tag-general { background-color: #f1f5f9; color: #475569; }
+        /* Category styles - all same color */
+        .tag-category { background-color: #F0F5F9; color: #43566B; }
+        .tag-llm { background-color: #F0F5F9; color: #43566B; }
+        .tag-video-editing { background-color: #F0F5F9; color: #43566B; }
+        .tag-image-editing { background-color: #F0F5F9; color: #43566B; }
+        .tag-sound { background-color: #F0F5F9; color: #43566B; }
+        .tag-research { background-color: #F0F5F9; color: #43566B; }
+        .tag-development { background-color: #F0F5F9; color: #43566B; }
+        .tag-web-browsing { background-color: #F0F5F9; color: #43566B; }
+        .tag-automation { background-color: #F0F5F9; color: #43566B; }
+        .tag-design-tools { background-color: #F0F5F9; color: #43566B; }
+        .tag-security { background-color: #F0F5F9; color: #43566B; }
+        .tag-business { background-color: #F0F5F9; color: #43566B; }
+        .tag-general { background-color: #F0F5F9; color: #43566B; }
 
         .tag-news { background-color: #dbeafe; color: #1e40af; }
         .tag-product-launch { background-color: #fce7f3; color: #9f1239; }
