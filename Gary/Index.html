@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+1<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -82,9 +82,13 @@
         }
 
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 var(--spacing-md);
+            max-width: none;
+            margin: 0;
+            margin-left: 0;
+            padding: 0 16px;
+            box-sizing: border-box;
+            overflow-x: visible;
+            width: 100%;
         }
 
         /* Header */
@@ -132,7 +136,7 @@
             align-self: stretch;
             border-bottom: 1px solid #F5F5F5;
             background: #FFF;
-            min-height: 76px;
+            min-height: 100px; /* Match company header height with icon */
             width: 100%;
         }
 
@@ -155,6 +159,8 @@
             align-self: stretch;
             border-bottom: 1px solid #F5F5F5;
             background: #FFF;
+            min-height: 76px;
+            width: 100%;
         }
 
         .header-company-icon {
@@ -183,6 +189,8 @@
             align-self: stretch;
             border-bottom: 1px solid #F5F5F5;
             background: #FFF;
+            min-height: 76px;
+            width: 100%;
         }
 
         .header-product-title {
@@ -759,74 +767,322 @@
         /* Main Content */
         .main-content {
             min-height: calc(100vh - 200px);
-            padding: var(--spacing-lg) 0;
+            padding: 0 0;
             margin-left: 312px; /* 16px (wrapper padding) + 280px (sidebar width) + 16px (gap) */
             margin-top: 16px; /* 16px from top to match sidebar */
             margin-right: 16px; /* 16px from right edge */
+            box-sizing: border-box;
+            overflow-x: visible;
+            width: calc(100% - 312px - 16px);
+        }
+
+        /* Filters and Content Wrapper */
+        .filters-content-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 32px;
+            flex: 1 0 0;
+            align-self: stretch;
+            margin-top: -16px; /* Remove 16px space from header */
+            width: 100%;
+            box-sizing: border-box;
         }
 
         /* Filters Section */
         .filters-section {
-            background-color: var(--bg-color);
-            padding: var(--spacing-md);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            margin-bottom: var(--spacing-lg);
-        }
-
-        .filters-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: var(--spacing-md);
-            margin-bottom: var(--spacing-md);
-        }
-
-        .filter-group {
             display: flex;
+            padding: 24px 16px;
             flex-direction: column;
+            align-items: flex-start;
+            gap: 20px;
+            align-self: stretch;
+            border-bottom: 1px solid #E8E8E8;
+            background: #FFF;
+            margin-left: -16px;
+            margin-right: -16px;
+            width: calc(100% + 32px);
         }
 
-        .filter-group label {
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--text-light);
-            margin-bottom: var(--spacing-xs);
+        .filters-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            align-self: stretch;
         }
 
-        .filter-select {
-            padding: 0.625rem;
-            border: 1px solid var(--border-color);
-            border-radius: var(--border-radius);
-            font-size: 0.9375rem;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+        .category-button {
+            display: flex;
+            width: 200px;
+            height: 42px;
+            align-items: center;
+            gap: 16px;
+            border-radius: 99999px;
+            border: 1px solid var(--Greys-400, #E4E5E7);
+            background: #FFF;
+            padding: 0 12px;
             cursor: pointer;
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+
+        .category-button:hover {
+            border-color: #0067E9;
+        }
+
+        .category-button-text {
+            color: var(--Greys-1200, #222325);
+            font-family: Macan;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 24px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .category-chevron {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .category-chevron.rotated {
+            transform: rotate(180deg);
+        }
+            flex-shrink: 0;
+            display: block;
+        }
+
+        .category-filter-hidden {
+            display: none;
+        }
+
+        .search-input-wrapper {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 8px;
+            border-radius: 99999px;
+            border: 1px solid var(--Greys-400, #E4E5E7);
+            background: #FFF;
+            padding: 9px 12px;
+            width: 242px;
             transition: border-color 0.2s;
         }
 
-        .filter-select:hover {
-            border-color: var(--primary-color);
+        .search-input-wrapper:hover {
+            border-color: #0067E9;
         }
 
-        .filter-select:focus {
+        .search-icon {
+            flex-shrink: 0;
+            width: 16px;
+            height: 16px;
+        }
+
+        .search-input {
+            border: none;
+            background: transparent;
+            color: var(--Greys-900, #74767E);
+            font-family: Macan;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 24px;
+            flex: 1;
+            text-overflow: ellipsis;
+            overflow: hidden;
             outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
 
-        .btn-clear {
-            padding: 0.625rem 1.25rem;
-            background-color: var(--bg-light);
-            border: 1px solid var(--border-color);
-            border-radius: var(--border-radius);
-            color: var(--text-color);
-            font-weight: 500;
+        .search-input::placeholder {
+            color: var(--Greys-900, #74767E);
+        }
+
+        .search-input-wrapper:focus-within {
+            border-color: #0067E9;
+        }
+
+        .filters-types-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-pill {
+            display: flex;
+            padding: 5px 12px;
+            align-items: center;
+            gap: 4px;
+            border-radius: 99999px;
+            border: 1px solid var(--Greys-400, #E4E5E7);
+            background: #FFF;
+            color: var(--Greys-1200, #222325);
+            font-family: Macan;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 24px;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: background-color 0.2s;
+            white-space: nowrap;
+        }
+        
+        /* "All" filter - pill with no color or stroke, bold when selected, regular when not */
+        .filter-pill[data-post-type=""] {
+            border: none;
+            background: transparent;
+            padding: 5px 12px; /* Keep same padding as other pills */
+            font-weight: 400; /* Regular when not selected */
+            cursor: pointer;
+        }
+        
+        .filter-pill[data-post-type=""]:hover {
+            background: transparent;
+        }
+        
+        /* When "All" is selected, make it bold */
+        .filter-pill[data-post-type=""].selected {
+            font-weight: 700; /* Bold when selected */
         }
 
-        .btn-clear:hover {
-            background-color: var(--border-color);
+        .filter-pill:hover {
+            background-color: #F5F0F0;
+        }
+
+        .filter-pill.selected {
+            /* Keep border, will be overridden by type-specific colors */
+        }
+
+        /* Selected pill colors by type - stroke color matches fill color */
+        .filter-pill[data-post-type="News"].selected {
+            background-color: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #dbeafe; /* Same as background-color */
+        }
+
+        .filter-pill[data-post-type="Product Launch"].selected {
+            background-color: #fce7f3;
+            color: #9f1239;
+            border: 1px solid #fce7f3; /* Same as background-color */
+        }
+
+        .filter-pill[data-post-type="Update"].selected {
+            background-color: #D0F7E6;
+            color: #005C25;
+            border: 1px solid #D0F7E6; /* Same as background-color */
+        }
+
+        .filter-pill[data-post-type="Tutorial"].selected {
+            background-color: #d1fae5;
+            color: #065f46;
+            border: 1px solid #d1fae5; /* Same as background-color */
+        }
+
+        .filter-pill[data-post-type="Benchmark"].selected {
+            background-color: #e0e7ff;
+            color: #3730a3;
+            border: 1px solid #e0e7ff; /* Same as background-color */
+        }
+
+        .filter-pill[data-post-type="Opinion"].selected {
+            background-color: #f3e8ff;
+            color: #6b21a8;
+            border: 1px solid #f3e8ff; /* Same as background-color */
+        }
+
+        .filter-pill[data-post-type="General"].selected {
+            background-color: #f1f5f9;
+            color: #475569;
+            border: 1px solid #f1f5f9; /* Same as background-color */
+        }
+
+        /* Product Page Filters - Search and Type Tags in Same Row */
+        .filters-product-page {
+            display: flex;
+            padding: 24px 16px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 20px;
+            align-self: stretch;
+            border-bottom: 1px solid #E8E8E8;
+            background: #FFF;
+            margin-left: -16px;
+            margin-right: -16px;
+            width: calc(100% + 32px);
+        }
+
+        .filters-product-page-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            align-self: stretch;
+        }
+
+        /* Companies/Products List Page Filters - Search and Sort */
+        .filters-list-page {
+            display: flex;
+            padding: 24px 16px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 20px;
+            align-self: stretch;
+            border-bottom: 1px solid #E8E8E8;
+            background: #FFF;
+            margin-left: -16px;
+            margin-right: -16px;
+            width: calc(100% + 32px);
+        }
+
+        .filters-list-page-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            align-self: stretch;
+        }
+
+        .sort-button {
+            display: flex;
+            align-items: center;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .sort-button-text {
+            color: var(--Greys-1200, #222325);
+            font-family: Macan;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 24px;
+        }
+
+        .sort-button-value {
+            color: var(--Blacks-black, #0C0C0D);
+            font-family: Macan;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 24px;
+            margin-left: 8px; /* Space between "Sort by" and "A-Z" = 8px */
+        }
+
+        .sort-chevron {
+            width: 16px;
+            height: 16px;
+            margin-left: 4px; /* Space between "A-Z" and chevron = 4px */
+            flex-shrink: 0;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .sort-chevron.rotated {
+            transform: rotate(180deg);
         }
 
         /* Loading and Error */
@@ -852,13 +1108,25 @@
             display: none;
         }
 
-        /* Posts Grid */
+        /* Posts Grid - dynamically fits 2 or 3 cards based on available space */
         .posts-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            grid-template-columns: repeat(2, minmax(420px, 450px));
             gap: var(--spacing-md);
+            width: 100%;
             max-width: 100%;
             justify-items: start;
+            justify-content: start;
+            box-sizing: border-box;
+            overflow: visible;
+            min-width: 0; /* Allow grid to shrink */
+        }
+
+        /* Ensure cards don't exceed container width */
+        .posts-grid > * {
+            max-width: 100%;
+            box-sizing: border-box;
+            overflow: visible;
         }
 
         @media (max-width: 1000px) {
@@ -875,6 +1143,7 @@
         .post-card {
             width: 100%;
             max-width: 450px;
+            min-width: 420px;
             min-height: 318px;
             background-color: #FFFFFF;
             border-radius: 30px;
@@ -885,6 +1154,9 @@
             font-family: 'Macan', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             position: relative;
             transition: box-shadow 0.3s ease;
+            box-sizing: border-box;
+            overflow: visible;
+            flex-shrink: 0; /* Prevent cards from shrinking below min-width */
         }
 
         .post-card::before {
@@ -1376,35 +1648,42 @@
 
         <main class="main-content">
             <div class="container">
-                <!-- Filters Section -->
-                <div id="filters-section" class="filters-section">
-                    <div class="filters-grid">
-                        <div class="filter-group">
-                            <label for="company-filter">Company</label>
-                            <select id="company-filter" class="filter-select">
-                                <option value="">All Companies</option>
-                            </select>
-                        </div>
-                        <div class="filter-group">
-                            <label for="product-filter">Product</label>
-                            <select id="product-filter" class="filter-select">
-                                <option value="">All Products</option>
-                            </select>
-                        </div>
-                        <div class="filter-group">
-                            <label for="category-filter">Category</label>
-                            <select id="category-filter" class="filter-select">
+                <!-- Filters and Content Wrapper -->
+                <div id="filters-content-wrapper" class="filters-content-wrapper">
+                    <!-- Filters Section -->
+                    <div id="filters-section" class="filters-section">
+                        <div class="filters-top-row">
+                            <button id="category-button" class="category-button" type="button">
+                                <span class="category-button-text">Category</span>
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="category-chevron">
+                                    <path d="M7.73442 11.8891L3.11014 7.26908C2.96329 7.12116 2.96329 6.88198 3.11014 6.73407L3.72879 6.11094C3.87564 5.96302 4.11311 5.96302 4.25996 6.11094L8 9.84028L11.74 6.11094C11.8869 5.96302 12.1244 5.96302 12.2712 6.11094L12.8899 6.73407C13.0367 6.88198 13.0367 7.12116 12.8899 7.26908L8.26558 11.8891C8.11873 12.037 7.88127 12.037 7.73442 11.8891Z" fill="#222325"/>
+                                </svg>
+                            </button>
+                            <select id="category-filter" class="category-filter-hidden" style="display: none;">
                                 <option value="">All Categories</option>
                             </select>
+                            <div class="search-input-wrapper">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="search-icon">
+                                    <path d="M7.33333 12.6667C10.2789 12.6667 12.6667 10.2789 12.6667 7.33333C12.6667 4.38781 10.2789 2 7.33333 2C4.38781 2 2 4.38781 2 7.33333C2 10.2789 4.38781 12.6667 7.33333 12.6667Z" stroke="#74767E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M14 14L11.1 11.1" stroke="#74767E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <input type="text" id="search-input" class="search-input" placeholder="Search" />
+                            </div>
                         </div>
-                        <div class="filter-group">
-                            <label for="post-type-filter">Post Type</label>
-                            <select id="post-type-filter" class="filter-select">
-                                <option value="">All Types</option>
-                            </select>
+                        <div class="filters-types-row">
+                            <button class="filter-pill" data-post-type="">All</button>
+                            <button class="filter-pill" data-post-type="News">News</button>
+                            <button class="filter-pill" data-post-type="Product Launch">Product Launch</button>
+                            <button class="filter-pill" data-post-type="Update">Update</button>
+                            <button class="filter-pill" data-post-type="Tutorial">Tutorial</button>
+                            <button class="filter-pill" data-post-type="Benchmark">Benchmark</button>
+                            <button class="filter-pill" data-post-type="Opinion">Opinion</button>
+                            <button class="filter-pill" data-post-type="General">General</button>
                         </div>
                     </div>
-                    <button id="clear-filters" class="btn-clear">Clear Filters</button>
+
+                    <!-- Content Area -->
+                    <div id="content"></div>
                 </div>
 
                 <!-- Loading Indicator -->
@@ -1412,9 +1691,6 @@
 
                 <!-- Error Message -->
                 <div id="error" class="error hidden"></div>
-
-                <!-- Content Area -->
-                <div id="content"></div>
 
                 <!-- Load More Button -->
                 <div id="load-more-container" class="load-more-container hidden">
@@ -1520,6 +1796,113 @@
                         e.preventDefault();
                         const route = link.getAttribute('data-route');
                         const href = link.getAttribute('href');
+                        
+                        // If this is a product link with company context, set it before navigating
+                        if (route === 'product' && typeof state !== 'undefined') {
+                            const productId = link.getAttribute('data-product-id');
+                            const companyId = link.getAttribute('data-company-id');
+                            
+                            // Simple ID comparison (handle both string and number)
+                            const normalizeId = (id) => {
+                                if (id === null || id === undefined || id === '') return null;
+                                return typeof id === 'string' ? parseInt(id, 10) : Number(id);
+                            };
+                            
+                            // Try to find product from state
+                            if (productId && state.products && state.products.length > 0) {
+                                const product = state.products.find(p => {
+                                    const pId = normalizeId(p.id);
+                                    const targetId = normalizeId(productId);
+                                    return pId === targetId && pId !== null;
+                                });
+                                
+                                if (product) {
+                                    state.currentProduct = product;
+                                    state.currentPage = 'product';
+                                    
+                                    // Find company - try from companyId attribute first, then from product.company_id
+                                    let company = null;
+                                    if (companyId && companyId !== '') {
+                                        company = state.companies.find(c => {
+                                            const cId = normalizeId(c.id);
+                                            const targetId = normalizeId(companyId);
+                                            return cId === targetId && cId !== null;
+                                        });
+                                    }
+                                    
+                                    // If company not found from attribute, try from product.company_id
+                                    if (!company && product.company_id) {
+                                        const productCompanyId = normalizeId(product.company_id);
+                                        company = state.companies.find(c => {
+                                            const cId = normalizeId(c.id);
+                                            return cId === productCompanyId && cId !== null;
+                                        });
+                                    }
+                                    
+                                    if (company) {
+                                        state.currentCompany = company;
+                                        console.log('Set product and company from article link:', {
+                                            productName: product.name,
+                                            companyName: company.name,
+                                            productId: product.id,
+                                            companyId: company.id
+                                        });
+                                    } else {
+                                        console.warn('Company not found for product from article link:', {
+                                            productName: product.name,
+                                            productCompanyId: product.company_id,
+                                            companyIdFromAttr: companyId,
+                                            companiesCount: state.companies.length
+                                        });
+                                    }
+                                } else {
+                                    // Product not found in state, but try to set company context from attribute
+                                    // This ensures we have company context when fetching the product (critical for duplicate slugs)
+                                    if (companyId && companyId !== '' && state.companies && state.companies.length > 0) {
+                                        const company = state.companies.find(c => {
+                                            const cId = normalizeId(c.id);
+                                            const targetId = normalizeId(companyId);
+                                            return cId === targetId && cId !== null;
+                                        });
+                                        if (company) {
+                                            state.currentCompany = company;
+                                            console.log('Product not in state, but set company context from article link attribute:', {
+                                                productId,
+                                                companyName: company.name,
+                                                companyId: company.id
+                                            });
+                                        }
+                                    }
+                                    console.warn('Product not found in state from article link:', {
+                                        productId,
+                                        productsCount: state.products.length
+                                    });
+                                }
+                            } else if (productId) {
+                                // Product ID provided but state.products not loaded yet
+                                // Still try to set company context from attribute if available
+                                if (companyId && companyId !== '' && state.companies && state.companies.length > 0) {
+                                    const normalizeId = (id) => {
+                                        if (id === null || id === undefined || id === '') return null;
+                                        return typeof id === 'string' ? parseInt(id, 10) : Number(id);
+                                    };
+                                    const company = state.companies.find(c => {
+                                        const cId = normalizeId(c.id);
+                                        const targetId = normalizeId(companyId);
+                                        return cId === targetId && cId !== null;
+                                    });
+                                    if (company) {
+                                        state.currentCompany = company;
+                                        console.log('State.products not loaded, but set company context from article link attribute:', {
+                                            productId,
+                                            companyName: company.name,
+                                            companyId: company.id
+                                        });
+                                    }
+                                }
+                            }
+                        }
+                        
                         this.navigate(href || route);
                     }
                 });
@@ -1621,7 +2004,8 @@
                 companyId = null,
                 productId = null,
                 category = null,
-                postType = null
+                postType = null,
+                search = null
             } = options;
 
             // If filtering by company, first get all product IDs for that company
@@ -1671,6 +2055,10 @@
                 query = query.eq('post_type', postType);
             }
 
+            if (search) {
+                query = query.or(`title.ilike.%${search}%,summary.ilike.%${search}%`);
+            }
+
             const { data, error } = await query;
 
             if (error) {
@@ -1678,7 +2066,7 @@
                 throw error;
             }
 
-            return data.map(post => ({
+            let posts = data.map(post => ({
                 ...post,
                 company: post.products.companies,
                 product: {
@@ -1688,6 +2076,17 @@
                     company_id: post.products.company_id
                 }
             }));
+
+            // Client-side search filtering if search term provided (for better matching)
+            if (search) {
+                const searchLower = search.toLowerCase();
+                posts = posts.filter(post => 
+                    post.title.toLowerCase().includes(searchLower) ||
+                    (post.summary && post.summary.toLowerCase().includes(searchLower))
+                );
+            }
+
+            return posts;
         }
 
         async function fetchCompanies() {
@@ -1733,15 +2132,42 @@
             return data;
         }
 
-        async function fetchProductBySlug(slug) {
-            const { data, error } = await supabaseClient
+        async function fetchProductBySlug(slug, companyId = null) {
+            let query = supabaseClient
                 .from('products')
                 .select('id, slug, name, company_id')
-                .eq('slug', slug)
-                .single();
+                .eq('slug', slug);
+            
+            // If company context is available, filter by company_id to get the correct product
+            if (companyId) {
+                query = query.eq('company_id', companyId);
+            } else if (state.currentCompany && state.currentCompany.id) {
+                // If company context is not provided but state has it, use it
+                query = query.eq('company_id', state.currentCompany.id);
+            }
+            
+            const { data, error } = await query.single();
 
             if (error) {
                 console.error('Error fetching product:', error);
+                // If single() fails because multiple results exist, try without company filter
+                // This handles cases where company context wasn't set but multiple products exist
+                if (error.code === 'PGRST116' || error.message?.includes('multiple')) {
+                    // If we were filtering by company, try without the filter
+                    if (companyId || (state.currentCompany && state.currentCompany.id)) {
+                        const { data: fallbackData, error: fallbackError } = await supabaseClient
+                            .from('products')
+                            .select('id, slug, name, company_id')
+                            .eq('slug', slug)
+                            .limit(1)
+                            .maybeSingle();
+                        
+                        if (!fallbackError && fallbackData) {
+                            console.warn('Multiple products with same slug found, returning first match');
+                            return fallbackData;
+                        }
+                    }
+                }
                 throw error;
             }
 
@@ -1772,8 +2198,14 @@
                 companyId: null,
                 productId: null,
                 category: null,
-                postType: null
+                postType: null,
+                search: null
             },
+            selectedPostType: null,
+            companiesSortOrder: 'A-Z',
+            companiesSearch: '',
+            productsSortOrder: 'A-Z',
+            productsSearch: '',
             pagination: {
                 offset: 0,
                 limit: 50,
@@ -1796,11 +2228,10 @@
             loading: document.getElementById('loading'),
             error: document.getElementById('error'),
             filtersSection: document.getElementById('filters-section'),
-            companyFilter: document.getElementById('company-filter'),
-            productFilter: document.getElementById('product-filter'),
+            categoryButton: document.getElementById('category-button'),
+            categoryButtonText: document.querySelector('.category-button-text'),
             categoryFilter: document.getElementById('category-filter'),
-            postTypeFilter: document.getElementById('post-type-filter'),
-            clearFiltersBtn: document.getElementById('clear-filters'),
+            searchInput: document.getElementById('search-input'),
             loadMoreContainer: document.getElementById('load-more-container'),
             loadMoreBtn: document.getElementById('load-more'),
             navTree: document.getElementById('nav-tree'),
@@ -1906,7 +2337,7 @@
                                     </a>
                                 ` : ''}
                                 ${showProduct && post.product ? `
-                                    <a href="/product/${post.product.slug}" class="post-product-btn" data-route="product">
+                                    <a href="/product/${post.product.slug}" class="post-product-btn" data-route="product" data-product-id="${post.product.id}" data-company-id="${post.product.company_id || ''}">
                                         <span>${post.product.name}</span>
                                     </a>
                                 ` : ''}
@@ -1953,17 +2384,85 @@
             return posts.map(post => renderPostCard(post, options)).join('');
         }
 
+        function updateGridColumns() {
+            const postsGrid = document.querySelector('.posts-grid');
+            if (!postsGrid) return;
+            
+            // Get the filters-content-wrapper as reference for available width
+            const wrapper = postsGrid.closest('.filters-content-wrapper');
+            const container = postsGrid.closest('.container');
+            
+            let availableWidth;
+            if (wrapper) {
+                // Use wrapper width (it's already full width within container)
+                const wrapperRect = wrapper.getBoundingClientRect();
+                availableWidth = wrapperRect.width;
+            } else if (container) {
+                // Use container width minus padding
+                const containerRect = container.getBoundingClientRect();
+                const containerStyle = window.getComputedStyle(container);
+                const paddingLeft = parseFloat(containerStyle.paddingLeft) || 0;
+                const paddingRight = parseFloat(containerStyle.paddingRight) || 0;
+                availableWidth = containerRect.width - paddingLeft - paddingRight;
+            } else {
+                return;
+            }
+            
+            // Card sizes: min 420px, default/max 450px
+            const minCardWidth = 420;
+            const maxCardWidth = 450;
+            
+            // Get actual gap from computed style
+            const gridStyle = window.getComputedStyle(postsGrid);
+            const gap = parseFloat(gridStyle.gap) || 24;
+            
+            // Calculate how many cards fit
+            // For 3 cards at max size (450px): 3 × 450 + 2 × gap = 1350 + 48 = 1398px needed
+            // For 3 cards at min size (420px): 3 × 420 + 2 × gap = 1260 + 48 = 1308px needed
+            // For 2 cards: 2 × 450 + 1 × gap = 900 + 24 = 924px needed
+            const widthFor3CardsMin = (3 * minCardWidth) + (2 * gap);
+            
+            let columns;
+            // Show 3 cards if we can fit them at minimum size (420px)
+            // On 1700px screen: available width ~1372px (1700 - 312 sidebar - 16 margin)
+            // 1372px >= 1308px, so 3 cards will fit at 420px minimum
+            if (availableWidth >= widthFor3CardsMin) {
+                columns = 3;
+            } else {
+                columns = 2;
+            }
+            
+            // Update grid columns - default 450px, can shrink to 420px minimum
+            postsGrid.style.gridTemplateColumns = `repeat(${columns}, minmax(${minCardWidth}px, ${maxCardWidth}px))`;
+        }
+
         function renderHomeFeed() {
-            const postsHtml = renderPosts(state.posts, {
-                showCompany: true,
-                showProduct: true
-            });
+            // Always use current filter state (should be null/reset when navigating from other pages)
+            // Filter posts by type if selected
+            let filteredPosts = state.posts;
+            if (state.selectedPostType) {
+                filteredPosts = state.posts.filter(post => post.post_type === state.selectedPostType);
+            }
+            
+            // Update pill selection to match current filter state (should be '' if reset)
+            updatePillSelection(state.selectedPostType || '');
+            
+            // Render filtered posts or "No posts found" message
+            const filteredPostsHtml = filteredPosts.length > 0 
+                ? renderPosts(filteredPosts, { showCompany: true, showProduct: true })
+                : '<div style="padding: 48px; text-align: center; color: #64748b; font-size: 16px;">No posts found.</div>';
             
             elements.content.innerHTML = `
                 <div class="posts-grid">
-                    ${postsHtml}
+                    ${filteredPostsHtml}
                 </div>
             `;
+            
+            // Update grid columns based on container width
+            requestAnimationFrame(() => {
+                updateGridColumns();
+            });
+            
             // Smooth content fade-in
             elements.content.classList.add('content-loading');
             requestAnimationFrame(() => {
@@ -2148,26 +2647,131 @@
         }
 
         function renderCompanyPage(company, products, posts) {
-            const companyInfo = `
-                <div class="page-header">
-                    <h1 class="page-title">${company.name}</h1>
-                    ${company.logo_url ? `<img src="${company.logo_url}" alt="${company.name} logo" class="company-logo">` : ''}
-                    ${company.summary ? `<p class="page-summary">${company.summary}</p>` : ''}
-                </div>
-            `;
+            hideSkeletonLoading();
             
+            // Reset filter state when rendering company page
+            state.selectedPostType = null;
+            state.filters.postType = null;
+            
+            // Ensure variant 1 (full filters) is shown - restore if needed
+            const filtersContentWrapper = document.getElementById('filters-content-wrapper');
+            if (filtersContentWrapper) {
+                const currentFilters = filtersContentWrapper.querySelector('.filters-list-page, .filters-product-page');
+                const existingFiltersSection = filtersContentWrapper.querySelector('#filters-section');
+                
+                // If filters-section doesn't exist or wrong variant is shown, restore it
+                if (!existingFiltersSection || currentFilters) {
+                    if (currentFilters) {
+                        currentFilters.outerHTML = `
+                            <div id="filters-section" class="filters-section">
+                                <div class="filters-top-row">
+                                    <button id="category-button" class="category-button" type="button">
+                                        <span class="category-button-text">Category</span>
+                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="category-chevron">
+                                            <path d="M7.73442 11.8891L3.11014 7.26908C2.96329 7.12116 2.96329 6.88198 3.11014 6.73407L3.72879 6.11094C3.87564 5.96302 4.11311 5.96302 4.25996 6.11094L8 9.84028L11.74 6.11094C11.8869 5.96302 12.1244 5.96302 12.2712 6.11094L12.8899 6.73407C13.0367 6.88198 13.0367 7.12116 12.8899 7.26908L8.26558 11.8891C8.11873 12.037 7.88127 12.037 7.73442 11.8891Z" fill="#222325"/>
+                                        </svg>
+                                    </button>
+                                    <select id="category-filter" class="category-filter-hidden" style="display: none;">
+                                        <option value="">All Categories</option>
+                                        ${CATEGORIES.map(c => `<option value="${c}">${c}</option>`).join('')}
+                                    </select>
+                                    <div class="search-input-wrapper">
+                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="search-icon">
+                                            <path d="M7.33333 12.6667C10.2789 12.6667 12.6667 10.2789 12.6667 7.33333C12.6667 4.38781 10.2789 2 7.33333 2C4.38781 2 2 4.38781 2 7.33333C2 10.2789 4.38781 12.6667 7.33333 12.6667Z" stroke="#74767E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M14 14L11.1 11.1" stroke="#74767E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        <input type="text" id="search-input" class="search-input" placeholder="Search" />
+                                    </div>
+                                </div>
+                                <div class="filters-types-row">
+                                    <button class="filter-pill" data-post-type="">All</button>
+                                    <button class="filter-pill" data-post-type="News">News</button>
+                                    <button class="filter-pill" data-post-type="Product Launch">Product Launch</button>
+                                    <button class="filter-pill" data-post-type="Update">Update</button>
+                                    <button class="filter-pill" data-post-type="Tutorial">Tutorial</button>
+                                    <button class="filter-pill" data-post-type="Benchmark">Benchmark</button>
+                                    <button class="filter-pill" data-post-type="Opinion">Opinion</button>
+                                    <button class="filter-pill" data-post-type="General">General</button>
+                                </div>
+                            </div>
+                        `;
+                    }
+                    // Re-attach elements
+                    elements.filtersSection = document.getElementById('filters-section');
+                    elements.categoryButton = document.getElementById('category-button');
+                    elements.categoryFilter = document.getElementById('category-filter');
+                    elements.searchInput = document.getElementById('search-input');
+                    
+                    // Re-setup category button
+                    setupCategoryButton();
+                }
+            }
+            
+            // Store original posts for filtering
+            state.companyPagePosts = posts;
+            
+            // Always show all posts initially (no filter)
             const postsHtml = renderPosts(posts, {
                 showCompany: false,
                 showProduct: true
             });
             
-            hideSkeletonLoading();
+            // Use exact same structure as feed page - only render posts into content div
             elements.content.innerHTML = `
-                ${companyInfo}
                 <div class="posts-grid">
                     ${postsHtml}
                 </div>
             `;
+            
+            // Show filters section (same as feed page)
+            if (elements.filtersSection) {
+                elements.filtersSection.classList.remove('hidden');
+            }
+            
+            // Initialize and attach filter pill handlers for company page - always start with "All" selected
+            updatePillSelection('');
+            const filtersTypesRow = elements.filtersSection ? elements.filtersSection.querySelector('.filters-types-row') : null;
+            if (filtersTypesRow) {
+                // Remove any existing listeners by cloning
+                const newFiltersTypesRow = filtersTypesRow.cloneNode(true);
+                filtersTypesRow.parentNode.replaceChild(newFiltersTypesRow, filtersTypesRow);
+                
+                newFiltersTypesRow.addEventListener('click', (e) => {
+                    const pill = e.target.closest('.filter-pill');
+                    if (pill) {
+                        const postType = pill.getAttribute('data-post-type');
+                        state.selectedPostType = postType || null;
+                        updatePillSelection(postType);
+                        
+                        // Filter posts by type
+                        let filtered = state.companyPagePosts || [];
+                        if (state.selectedPostType) {
+                            filtered = filtered.filter(post => post.post_type === state.selectedPostType);
+                        }
+                        
+                        // Re-render with filtered posts
+                        const filteredHtml = filtered.length > 0 
+                            ? renderPosts(filtered, { showCompany: false, showProduct: true })
+                            : '<div style="padding: 48px; text-align: center; color: #64748b; font-size: 16px;">No posts found.</div>';
+                        
+                        elements.content.innerHTML = `
+                            <div class="posts-grid">
+                                ${filteredHtml}
+                            </div>
+                        `;
+                        
+                        // Re-attach handlers
+                        attachReadMoreHandlers();
+                        attachArrowIcons();
+                    }
+                });
+            }
+            
+            // Update grid columns based on container width
+            requestAnimationFrame(() => {
+                updateGridColumns();
+            });
+            
             // Smooth content fade-in
             elements.content.classList.add('content-loading');
             requestAnimationFrame(() => {
@@ -2180,7 +2784,6 @@
             // Attach arrow icons dynamically
             attachArrowIcons();
             
-            elements.filtersSection.classList.add('hidden');
             elements.loadMoreContainer.classList.add('hidden');
             
             // Update header
@@ -2188,23 +2791,120 @@
         }
 
         function renderProductPage(product, company, posts) {
-            const productInfo = `
-                <div class="page-header">
-                </div>
-            `;
+            hideSkeletonLoading();
             
+            // Reset filter state when rendering product page
+            state.selectedPostType = null;
+            state.filters.postType = null;
+            
+            // Store original posts for filtering
+            state.productPagePosts = posts;
+            
+            // Always show all posts initially (no filter)
             const postsHtml = renderPosts(posts, {
                 showCompany: false,
                 showProduct: false
             });
             
-            hideSkeletonLoading();
+            // Replace any filter variant with product-specific filters (variant 3: no category, search + type pills in same row)
+            const filtersContentWrapper = document.getElementById('filters-content-wrapper');
+            if (filtersContentWrapper) {
+                // Check for any existing filter variant and replace it
+                const existingFiltersSection = filtersContentWrapper.querySelector('#filters-section');
+                const existingListFilters = filtersContentWrapper.querySelector('.filters-list-page');
+                const existingProductFilters = filtersContentWrapper.querySelector('.filters-product-page');
+                
+                const filterToReplace = existingFiltersSection || existingListFilters || existingProductFilters;
+                if (filterToReplace) {
+                    filterToReplace.outerHTML = `
+                        <div class="filters-product-page">
+                            <div class="filters-product-page-row">
+                                <div class="filters-types-row">
+                                    <button class="filter-pill" data-post-type="">All</button>
+                                    <button class="filter-pill" data-post-type="News">News</button>
+                                    <button class="filter-pill" data-post-type="Product Launch">Product Launch</button>
+                                    <button class="filter-pill" data-post-type="Update">Update</button>
+                                    <button class="filter-pill" data-post-type="Tutorial">Tutorial</button>
+                                    <button class="filter-pill" data-post-type="Benchmark">Benchmark</button>
+                                    <button class="filter-pill" data-post-type="Opinion">Opinion</button>
+                                    <button class="filter-pill" data-post-type="General">General</button>
+                                </div>
+                                <div class="search-input-wrapper">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="search-icon">
+                                        <path d="M7.33333 12.6667C10.2789 12.6667 12.6667 10.2789 12.6667 7.33333C12.6667 4.38781 10.2789 2 7.33333 2C4.38781 2 2 4.38781 2 7.33333C2 10.2789 4.38781 12.6667 7.33333 12.6667Z" stroke="#74767E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M14 14L11.1 11.1" stroke="#74767E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <input type="text" id="search-input-product" class="search-input" placeholder="Search" />
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+            
+            // Render only posts into content (same structure as feed)
             elements.content.innerHTML = `
-                ${productInfo}
                 <div class="posts-grid">
                     ${postsHtml}
                 </div>
             `;
+            
+            // Attach search input handler
+            const searchInput = document.getElementById('search-input-product');
+            if (searchInput) {
+                let searchTimeout;
+                searchInput.addEventListener('input', () => {
+                    clearTimeout(searchTimeout);
+                    searchTimeout = setTimeout(() => {
+                        applyFilters();
+                    }, 300);
+                });
+            }
+            
+            // Initialize and attach filter pill handlers - always start with "All" selected
+            updatePillSelection('');
+            const filtersTypesRow = document.querySelector('.filters-product-page .filters-types-row');
+            if (filtersTypesRow) {
+                // Remove any existing listeners by cloning
+                const newFiltersTypesRow = filtersTypesRow.cloneNode(true);
+                filtersTypesRow.parentNode.replaceChild(newFiltersTypesRow, filtersTypesRow);
+                
+                newFiltersTypesRow.addEventListener('click', (e) => {
+                    const pill = e.target.closest('.filter-pill');
+                    if (pill) {
+                        const postType = pill.getAttribute('data-post-type');
+                        state.selectedPostType = postType || null;
+                        updatePillSelection(postType);
+                        
+                        // Filter posts by type
+                        let filtered = state.productPagePosts || [];
+                        if (state.selectedPostType) {
+                            filtered = filtered.filter(post => post.post_type === state.selectedPostType);
+                        }
+                        
+                        // Re-render with filtered posts
+                        const filteredHtml = filtered.length > 0 
+                            ? renderPosts(filtered, { showCompany: false, showProduct: false })
+                            : '<div style="padding: 48px; text-align: center; color: #64748b; font-size: 16px;">No posts found.</div>';
+                        
+                        elements.content.innerHTML = `
+                            <div class="posts-grid">
+                                ${filteredHtml}
+                            </div>
+                        `;
+                        
+                        // Re-attach handlers
+                        attachReadMoreHandlers();
+                        attachArrowIcons();
+                    }
+                });
+            }
+            
+            // Update grid columns based on container width
+            requestAnimationFrame(() => {
+                updateGridColumns();
+            });
+            
             // Smooth content fade-in
             elements.content.classList.add('content-loading');
             requestAnimationFrame(() => {
@@ -2217,7 +2917,6 @@
             // Attach arrow icons dynamically
             attachArrowIcons();
             
-            elements.filtersSection.classList.add('hidden');
             elements.loadMoreContainer.classList.add('hidden');
             
             // Update header
@@ -2225,7 +2924,29 @@
         }
 
         function renderCompaniesPage() {
-            const companiesList = state.companies.map(company => {
+            // Get sort order from state or default to A-Z
+            const sortOrder = state.companiesSortOrder || 'A-Z';
+            
+            let companiesList = [...state.companies];
+            
+            // Apply sorting
+            if (sortOrder === 'A-Z') {
+                companiesList.sort((a, b) => a.name.localeCompare(b.name));
+            } else {
+                companiesList.sort((a, b) => b.name.localeCompare(a.name));
+            }
+            
+            // Apply search filter if exists
+            const searchTerm = state.companiesSearch || '';
+            if (searchTerm) {
+                const searchLower = searchTerm.toLowerCase();
+                companiesList = companiesList.filter(company => 
+                    company.name.toLowerCase().includes(searchLower) ||
+                    (company.summary && company.summary.toLowerCase().includes(searchLower))
+                );
+            }
+            
+            const companiesHtml = companiesList.map(company => {
                 const companyProducts = state.products.filter(p => p.company_id === company.id);
                 return `
                     <div style="padding: 16px; border-bottom: 1px solid #e2e8f0;">
@@ -2244,15 +2965,80 @@
             }).join('');
             
             hideSkeletonLoading();
+            // Use existing filters-content-wrapper structure - replace any filter variant with list page filters (variant 2)
+            const filtersContentWrapper = document.getElementById('filters-content-wrapper');
+            if (filtersContentWrapper) {
+                // Check for any existing filter variant and replace it
+                const existingFiltersSection = filtersContentWrapper.querySelector('#filters-section');
+                const existingListFilters = filtersContentWrapper.querySelector('.filters-list-page');
+                const existingProductFilters = filtersContentWrapper.querySelector('.filters-product-page');
+                
+                const filterToReplace = existingFiltersSection || existingListFilters || existingProductFilters;
+                if (filterToReplace) {
+                    filterToReplace.outerHTML = `
+                        <div class="filters-list-page">
+                            <div class="filters-list-page-row">
+                                <button class="sort-button" id="companies-sort-btn" type="button">
+                                    <span class="sort-button-text">Sort by</span>
+                                    <span class="sort-button-value">${sortOrder}</span>
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="sort-chevron ${sortOrder === 'Z-A' ? 'rotated' : ''}">
+                                        <path d="M7.73442 11.8891L3.11014 7.26908C2.96329 7.12116 2.96329 6.88198 3.11014 6.73407L3.72879 6.11094C3.87564 5.96302 4.11311 5.96302 4.25996 6.11094L8 9.84028L11.74 6.11094C11.8869 5.96302 12.1244 5.96302 12.2712 6.11094L12.8899 6.73407C13.0367 6.88198 13.0367 7.12116 12.8899 7.26908L8.26558 11.8891C8.11873 12.037 7.88127 12.037 7.73442 11.8891Z" fill="#222325"/>
+                                    </svg>
+                                </button>
+                                <div class="search-input-wrapper">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="search-icon">
+                                        <path d="M7.33333 12.6667C10.2789 12.6667 12.6667 10.2789 12.6667 7.33333C12.6667 4.38781 10.2789 2 7.33333 2C4.38781 2 2 4.38781 2 7.33333C2 10.2789 4.38781 12.6667 7.33333 12.6667Z" stroke="#74767E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M14 14L11.1 11.1" stroke="#74767E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <input type="text" id="companies-search-input" class="search-input" placeholder="Search" value="${searchTerm}" />
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+            
+            // Render only list content into content div (same structure as feed)
             elements.content.innerHTML = `
-                <div class="page-header">
-                    <h1 class="page-title">Companies</h1>
-                    <p class="page-summary">Browse all companies</p>
-                </div>
-                <div style="background: #fff; border-radius: 8px; margin-top: 24px;">
-                    ${companiesList || '<p style="padding: 24px; text-align: center; color: #64748b;">No companies found.</p>'}
+                <div style="background: #fff; border-radius: 8px; width: 100%; box-sizing: border-box;">
+                    ${companiesHtml || '<p style="padding: 24px; text-align: center; color: #64748b;">No companies found.</p>'}
                 </div>
             `;
+            
+            // Attach event listeners
+            const sortBtn = document.getElementById('companies-sort-btn');
+            if (sortBtn) {
+                sortBtn.addEventListener('click', () => {
+                    state.companiesSortOrder = state.companiesSortOrder === 'A-Z' ? 'Z-A' : 'A-Z';
+                    // Update button text and chevron immediately
+                    const sortValue = sortBtn.querySelector('.sort-button-value');
+                    const sortChevron = sortBtn.querySelector('.sort-chevron');
+                    if (sortValue) {
+                        sortValue.textContent = state.companiesSortOrder;
+                    }
+                    if (sortChevron) {
+                        if (state.companiesSortOrder === 'Z-A') {
+                            sortChevron.classList.add('rotated');
+                        } else {
+                            sortChevron.classList.remove('rotated');
+                        }
+                    }
+                    renderCompaniesPage();
+                });
+            }
+            
+            const searchInput = document.getElementById('companies-search-input');
+            if (searchInput) {
+                let searchTimeout;
+                searchInput.addEventListener('input', () => {
+                    clearTimeout(searchTimeout);
+                    searchTimeout = setTimeout(() => {
+                        state.companiesSearch = searchInput.value.trim();
+                        renderCompaniesPage();
+                    }, 300);
+                });
+            }
+            
             // Smooth content fade-in
             elements.content.classList.add('content-loading');
             requestAnimationFrame(() => {
@@ -2261,12 +3047,33 @@
         }
 
         function renderProductsPage() {
-            const productsList = state.products.map(product => {
+            // Get sort order from state or default to A-Z
+            const sortOrder = state.productsSortOrder || 'A-Z';
+            
+            let productsList = [...state.products];
+            
+            // Apply sorting
+            if (sortOrder === 'A-Z') {
+                productsList.sort((a, b) => a.name.localeCompare(b.name));
+            } else {
+                productsList.sort((a, b) => b.name.localeCompare(a.name));
+            }
+            
+            // Apply search filter if exists
+            const searchTerm = state.productsSearch || '';
+            if (searchTerm) {
+                const searchLower = searchTerm.toLowerCase();
+                productsList = productsList.filter(product => 
+                    product.name.toLowerCase().includes(searchLower)
+                );
+            }
+            
+            const productsHtml = productsList.map(product => {
                 const company = state.companies.find(c => c.id === product.company_id);
                 return `
                     <div style="padding: 16px; border-bottom: 1px solid #e2e8f0;">
                         <h2 style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">
-                            <a href="/product/${product.slug}" style="color: #222325; text-decoration: none;" data-route="product">
+                            <a href="/product/${product.slug}" style="color: #222325; text-decoration: none;" data-route="product" data-product-id="${product.id}" data-company-id="${product.company_id || ''}">
                                 ${product.name}
                             </a>
                         </h2>
@@ -2280,15 +3087,80 @@
             }).join('');
             
             hideSkeletonLoading();
+            // Use existing filters-content-wrapper structure - replace any filter variant with list page filters (variant 2)
+            const filtersContentWrapper = document.getElementById('filters-content-wrapper');
+            if (filtersContentWrapper) {
+                // Check for any existing filter variant and replace it
+                const existingFiltersSection = filtersContentWrapper.querySelector('#filters-section');
+                const existingListFilters = filtersContentWrapper.querySelector('.filters-list-page');
+                const existingProductFilters = filtersContentWrapper.querySelector('.filters-product-page');
+                
+                const filterToReplace = existingFiltersSection || existingListFilters || existingProductFilters;
+                if (filterToReplace) {
+                    filterToReplace.outerHTML = `
+                        <div class="filters-list-page">
+                            <div class="filters-list-page-row">
+                                <button class="sort-button" id="products-sort-btn" type="button">
+                                    <span class="sort-button-text">Sort by</span>
+                                    <span class="sort-button-value">${sortOrder}</span>
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="sort-chevron ${sortOrder === 'Z-A' ? 'rotated' : ''}">
+                                        <path d="M7.73442 11.8891L3.11014 7.26908C2.96329 7.12116 2.96329 6.88198 3.11014 6.73407L3.72879 6.11094C3.87564 5.96302 4.11311 5.96302 4.25996 6.11094L8 9.84028L11.74 6.11094C11.8869 5.96302 12.1244 5.96302 12.2712 6.11094L12.8899 6.73407C13.0367 6.88198 13.0367 7.12116 12.8899 7.26908L8.26558 11.8891C8.11873 12.037 7.88127 12.037 7.73442 11.8891Z" fill="#222325"/>
+                                    </svg>
+                                </button>
+                                <div class="search-input-wrapper">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="search-icon">
+                                        <path d="M7.33333 12.6667C10.2789 12.6667 12.6667 10.2789 12.6667 7.33333C12.6667 4.38781 10.2789 2 7.33333 2C4.38781 2 2 4.38781 2 7.33333C2 10.2789 4.38781 12.6667 7.33333 12.6667Z" stroke="#74767E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M14 14L11.1 11.1" stroke="#74767E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <input type="text" id="products-search-input" class="search-input" placeholder="Search" value="${searchTerm}" />
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+            
+            // Render only list content into content div (same structure as feed)
             elements.content.innerHTML = `
-                <div class="page-header">
-                    <h1 class="page-title">Products</h1>
-                    <p class="page-summary">Browse all products</p>
-                </div>
-                <div style="background: #fff; border-radius: 8px; margin-top: 24px;">
-                    ${productsList || '<p style="padding: 24px; text-align: center; color: #64748b;">No products found.</p>'}
+                <div style="background: #fff; border-radius: 8px; width: 100%; box-sizing: border-box;">
+                    ${productsHtml || '<p style="padding: 24px; text-align: center; color: #64748b;">No products found.</p>'}
                 </div>
             `;
+            
+            // Attach event listeners
+            const sortBtn = document.getElementById('products-sort-btn');
+            if (sortBtn) {
+                sortBtn.addEventListener('click', () => {
+                    state.productsSortOrder = state.productsSortOrder === 'A-Z' ? 'Z-A' : 'A-Z';
+                    // Update button text and chevron immediately
+                    const sortValue = sortBtn.querySelector('.sort-button-value');
+                    const sortChevron = sortBtn.querySelector('.sort-chevron');
+                    if (sortValue) {
+                        sortValue.textContent = state.productsSortOrder;
+                    }
+                    if (sortChevron) {
+                        if (state.productsSortOrder === 'Z-A') {
+                            sortChevron.classList.add('rotated');
+                        } else {
+                            sortChevron.classList.remove('rotated');
+                        }
+                    }
+                    renderProductsPage();
+                });
+            }
+            
+            const searchInput = document.getElementById('products-search-input');
+            if (searchInput) {
+                let searchTimeout;
+                searchInput.addEventListener('input', () => {
+                    clearTimeout(searchTimeout);
+                    searchTimeout = setTimeout(() => {
+                        state.productsSearch = searchInput.value.trim();
+                        renderProductsPage();
+                    }, 300);
+                });
+            }
+            
             // Smooth content fade-in
             elements.content.classList.add('content-loading');
             requestAnimationFrame(() => {
@@ -2298,40 +3170,24 @@
 
         // Filter functions
         async function populateFilters(showErrors = true) {
-            // Always populate category and post type filters (they're static)
+            // Always populate category filter (they're static)
             elements.categoryFilter.innerHTML = '<option value="">All Categories</option>' +
                 CATEGORIES.map(c => `<option value="${c}">${c}</option>`).join('');
 
-            elements.postTypeFilter.innerHTML = '<option value="">All Types</option>' +
-                POST_TYPES.map(t => `<option value="${t}">${t}</option>`).join('');
+            // Update category button text based on current selection
+            updateCategoryButtonText();
 
             try {
                 console.log('Fetching companies...');
                 const companies = await fetchCompanies();
                 console.log('Companies fetched:', companies.length);
                 state.companies = companies;
-                
-                // Preserve current selection
-                const currentCompanyId = elements.companyFilter.value;
-                elements.companyFilter.innerHTML = '<option value="">All Companies</option>' +
-                    companies.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
-                if (currentCompanyId) {
-                    elements.companyFilter.value = currentCompanyId;
-                }
 
                 console.log('Fetching products...');
                 const products = await fetchProducts();
                 console.log('Products fetched:', products.length);
                 console.log('Products data:', products);
                 state.products = products;
-                
-                // Preserve current selection
-                const currentProductId = elements.productFilter.value;
-                elements.productFilter.innerHTML = '<option value="">All Products</option>' +
-                    products.map(p => `<option value="${p.id}">${p.name}</option>`).join('');
-                if (currentProductId) {
-                    elements.productFilter.value = currentProductId;
-                }
 
                 console.log('All filters populated successfully');
                 
@@ -2342,16 +3198,39 @@
                 console.error('Error populating filters:', error);
                 if (showErrors) {
                     const errorMsg = error.message || 'Unknown error';
-                    showError('Failed to load company/product filters: ' + errorMsg + '. Category and Post Type filters are available.');
+                    showError('Failed to load filters: ' + errorMsg);
                 }
             }
         }
 
+        function updateCategoryButtonText() {
+            const selectedValue = elements.categoryFilter.value;
+            if (selectedValue) {
+                elements.categoryButtonText.textContent = selectedValue;
+            } else {
+                elements.categoryButtonText.textContent = 'Category';
+            }
+        }
+
+        function updatePillSelection(selectedType) {
+            const pills = document.querySelectorAll('.filter-pill');
+            pills.forEach(pill => {
+                pill.classList.remove('selected');
+                if (pill.getAttribute('data-post-type') === selectedType) {
+                    pill.classList.add('selected');
+                }
+            });
+        }
+
         function applyFilters() {
-            state.filters.companyId = elements.companyFilter.value || null;
-            state.filters.productId = elements.productFilter.value || null;
-            state.filters.category = elements.categoryFilter.value || null;
-            state.filters.postType = elements.postTypeFilter.value || null;
+            // Only update filters if elements exist (they might not exist on all pages)
+            if (elements.categoryFilter) {
+                state.filters.category = elements.categoryFilter.value || null;
+            }
+            state.filters.postType = state.selectedPostType || null;
+            if (elements.searchInput) {
+                state.filters.search = elements.searchInput.value.trim() || null;
+            }
             
             state.pagination.offset = 0;
             state.posts = [];
@@ -2367,9 +3246,13 @@
             hideError();
             
             try {
+                // Ensure postType filter is synced with selectedPostType
+                state.filters.postType = state.selectedPostType || null;
+                
                 console.log('Loading posts...', {
                     offset: state.pagination.offset,
-                    filters: state.filters
+                    filters: state.filters,
+                    selectedPostType: state.selectedPostType
                 });
                 
                 const posts = await fetchPosts({
@@ -2378,7 +3261,8 @@
                     companyId: state.filters.companyId,
                     productId: state.filters.productId,
                     category: state.filters.category,
-                    postType: state.filters.postType
+                    postType: state.filters.postType,
+                    search: state.filters.search
                 });
                 
                 console.log('Posts fetched:', posts.length);
@@ -2467,12 +3351,160 @@
             hideError();
             
             try {
-                // Fetch fresh data (state.currentProduct and state.currentCompany already set immediately on click)
-                const product = await fetchProductBySlug(slug);
+                // If we already have the product from the click handler, use it directly
+                // This avoids duplicate slug issues when navigating from sidebar
+                let product = state.currentProduct;
+                let company = state.currentCompany;
+                
+                // Only fetch if we don't have the product or if the slug doesn't match
+                if (!product || product.slug !== slug) {
+                    // Fetch fresh data - use company_id from state if available to ensure correct product when slugs are duplicated
+                    // CRITICAL: state.currentCompany should be set by click handler, but if not, try to get it from product.company_id
+                    let companyId = state.currentCompany ? state.currentCompany.id : null;
+                    
+                    // If we have a product but no company, try to find the company from the product's company_id
+                    if (!companyId && product && product.company_id) {
+                        const normalizeId = (id) => {
+                            if (id === null || id === undefined) return null;
+                            return typeof id === 'string' ? parseInt(id, 10) : Number(id);
+                        };
+                        const company = state.companies.find(c => {
+                            return normalizeId(c.id) === normalizeId(product.company_id);
+                        });
+                        if (company) {
+                            companyId = company.id;
+                            state.currentCompany = company;
+                            console.log('Found company from product.company_id:', {
+                                companyName: company.name,
+                                companyId: companyId
+                            });
+                        }
+                    }
+                    
+                    // CRITICAL FALLBACK: If we still don't have company context, try to find it from state.products
+                    // This handles cases where product wasn't found in state but we need company context for duplicate slugs
+                    if (!companyId) {
+                        const normalizeId = (id) => {
+                            if (id === null || id === undefined) return null;
+                            return typeof id === 'string' ? parseInt(id, 10) : Number(id);
+                        };
+                        // Try to find a product with the same slug in state.products to get company context
+                        const productWithSameSlug = state.products.find(p => p.slug === slug);
+                        if (productWithSameSlug && productWithSameSlug.company_id) {
+                            const company = state.companies.find(c => {
+                                return normalizeId(c.id) === normalizeId(productWithSameSlug.company_id);
+                            });
+                            if (company) {
+                                companyId = company.id;
+                                state.currentCompany = company;
+                                console.log('Found company context from state.products by slug (for duplicate slug handling):', {
+                                    slug,
+                                    companyName: company.name,
+                                    companyId: companyId,
+                                    productName: productWithSameSlug.name
+                                });
+                            }
+                        }
+                    }
+                    
+                    const fetchedProduct = await fetchProductBySlug(slug, companyId);
+                    
+                    if (!fetchedProduct) {
+                        // If fetch failed and we have company context, log it
+                        console.error('Product not found:', {
+                            slug,
+                            companyId,
+                            companyName: state.currentCompany ? state.currentCompany.name : 'none',
+                            hasProductInState: !!product,
+                            productCompanyId: product ? product.company_id : null,
+                            stateProductsCount: state.products.length,
+                            stateCompaniesCount: state.companies.length
+                        });
+                        throw new Error('Product not found');
+                    }
+                    
+                    // Try to find the product in state.products first to maintain ID consistency
+                    const normalizeId = (id) => {
+                        if (id === null || id === undefined) return null;
+                        return typeof id === 'string' ? parseInt(id, 10) : Number(id);
+                    };
+                    const fetchedProductId = normalizeId(fetchedProduct.id);
+                    const stateProduct = state.products.find(p => {
+                        const pId = normalizeId(p.id);
+                        return pId === fetchedProductId && pId !== null;
+                    });
+                    
+                    // Use product from state if found, otherwise use fetched product
+                    product = stateProduct || fetchedProduct;
                 state.currentProduct = product;
                 
-                const company = await fetchCompanyById(product.company_id);
-                state.currentCompany = company;
+                    // Only fetch company if we don't already have it or if it's different
+                    if (!state.currentCompany || state.currentCompany.id !== product.company_id) {
+                        company = await fetchCompanyById(product.company_id);
+                        state.currentCompany = company;
+                    } else {
+                        company = state.currentCompany;
+                    }
+                } else {
+                    // We already have the product from click handler, but ensure it's from state.products for ID consistency
+                    const normalizeId = (id) => {
+                        if (id === null || id === undefined || id === '') return null;
+                        if (typeof id === 'string') {
+                            const parsed = parseInt(id, 10);
+                            return isNaN(parsed) ? null : parsed;
+                        }
+                        if (typeof id === 'number') {
+                            return isNaN(id) ? null : id;
+                        }
+                        const num = Number(id);
+                        return isNaN(num) ? null : num;
+                    };
+                    if (product && product.id !== null && product.id !== undefined) {
+                        const productId = normalizeId(product.id);
+                        const stateProduct = state.products.find(p => {
+                            if (!p || !p.id) return false;
+                            const pId = normalizeId(p.id);
+                            return pId !== null && productId !== null && pId === productId;
+                        });
+                        if (stateProduct) {
+                            // Use product from state.products to ensure ID consistency
+                            product = stateProduct;
+                            state.currentProduct = product;
+                            console.log('Using product from state.products for ID consistency:', {
+                                productId: product.id,
+                                productName: product.name,
+                                idType: typeof product.id,
+                                originalProductId: product.id
+                            });
+                        } else {
+                            // Product not in state.products - keep the one we have but log warning
+                            state.currentProduct = product;
+                            console.warn('Product not found in state.products, using fetched product:', {
+                                productId: product.id,
+                                productName: product.name,
+                                idType: typeof product.id,
+                                stateProductsCount: state.products.length
+                            });
+                        }
+                    } else {
+                        console.error('Product has no valid ID:', product);
+                    }
+                    // We already have the product, just ensure company is set
+                    if (!company && product && product.company_id) {
+                        company = await fetchCompanyById(product.company_id);
+                        state.currentCompany = company;
+                    }
+                }
+                
+                // Ensure we have valid product and company before proceeding
+                if (!product) {
+                    throw new Error('Product not found');
+                }
+                if (!company && product.company_id) {
+                    // If company is missing but product has company_id, fetch it
+                    company = await fetchCompanyById(product.company_id);
+                    state.currentCompany = company;
+                }
                 
                 const allPosts = [];
                 let offset = 0;
@@ -2488,6 +3520,34 @@
                     allPosts.push(...posts);
                     hasMore = posts.length === 50;
                     offset += 50;
+                }
+                
+                // Ensure state.currentProduct is set with the correct product before rendering
+                // This ensures ID consistency for selection checking
+                if (product) {
+                    // Double-check: try to find product in state.products to ensure ID consistency
+                    const normalizeId = (id) => {
+                        if (id === null || id === undefined) return null;
+                        return typeof id === 'string' ? parseInt(id, 10) : Number(id);
+                    };
+                    const productId = normalizeId(product.id);
+                    const stateProduct = state.products.find(p => {
+                        const pId = normalizeId(p.id);
+                        return pId === productId && pId !== null;
+                    });
+                    if (stateProduct) {
+                        // Use product from state.products to ensure ID consistency
+                        product = stateProduct;
+                        state.currentProduct = product;
+                    } else {
+                        state.currentProduct = product;
+                    }
+                    console.log('Final state.currentProduct before renderNavigationTree:', {
+                        productId: state.currentProduct.id,
+                        productName: state.currentProduct.name,
+                        idType: typeof state.currentProduct.id,
+                        fromStateProducts: !!stateProduct
+                    });
                 }
                 
                 // Render content immediately - no delay
@@ -2512,29 +3572,284 @@
         }
 
         // Event listeners
-        elements.companyFilter.addEventListener('change', applyFilters);
-        elements.productFilter.addEventListener('change', applyFilters);
-        elements.categoryFilter.addEventListener('change', applyFilters);
-        elements.postTypeFilter.addEventListener('change', applyFilters);
+        // Category button - opens hidden select dropdown
+        function setupCategoryButton() {
+            const categoryButton = document.getElementById('category-button');
+            const categoryFilter = document.getElementById('category-filter');
+            
+            if (!categoryButton || !categoryFilter) return;
+            
+            // Remove existing listeners by cloning
+            const newButton = categoryButton.cloneNode(true);
+            categoryButton.parentNode.replaceChild(newButton, categoryButton);
+            
+            // Make entire button clickable - use mousedown to ensure it works
+            newButton.addEventListener('mousedown', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+            });
+            
+            newButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const rect = newButton.getBoundingClientRect();
+                const chevron = newButton.querySelector('.category-chevron');
+                
+                // Check if already open
+                const isCurrentlyOpen = categoryFilter.style.display === 'block' && 
+                                       categoryFilter.style.opacity !== '0';
+                
+                // If already open, close it
+                if (isCurrentlyOpen) {
+                    if (chevron) {
+                        chevron.classList.remove('rotated');
+                    }
+                    categoryFilter.style.display = 'none';
+                    categoryFilter.style.opacity = '0';
+                    categoryFilter.style.pointerEvents = 'none';
+                    return;
+                }
+                
+                // Rotate chevron immediately
+                if (chevron) {
+                    chevron.classList.add('rotated');
+                }
+                
+                // Position the hidden select below the button (not covering it)
+                categoryFilter.style.position = 'fixed';
+                categoryFilter.style.left = rect.left + 'px';
+                categoryFilter.style.top = (rect.bottom + 4) + 'px'; // 4px gap below button
+                categoryFilter.style.width = rect.width + 'px';
+                categoryFilter.style.height = rect.height + 'px';
+                categoryFilter.style.opacity = '0';
+                categoryFilter.style.pointerEvents = 'auto';
+                categoryFilter.style.zIndex = '10000';
+                categoryFilter.style.cursor = 'pointer';
+                categoryFilter.style.display = 'block';
+                
+                // Trigger dropdown immediately - use a more direct approach
+                const triggerDropdown = () => {
+                    // First, ensure the select is visible and positioned
+                    categoryFilter.style.visibility = 'visible';
+                    
+                    // Try to open the dropdown by clicking directly on the select
+                    // Use a small delay to ensure positioning is complete
+                    setTimeout(() => {
+                        // Create a synthetic click event at the center of the select
+                        const selectRect = categoryFilter.getBoundingClientRect();
+                        const clickX = selectRect.left + selectRect.width / 2;
+                        const clickY = selectRect.top + selectRect.height / 2;
+                        
+                        // Focus first
+                        categoryFilter.focus();
+                        
+                        // Then dispatch mousedown and click events
+                        const mouseDownEvent = new MouseEvent('mousedown', {
+                            view: window,
+                            bubbles: true,
+                            cancelable: true,
+                            buttons: 1,
+                            clientX: clickX,
+                            clientY: clickY
+                        });
+                        categoryFilter.dispatchEvent(mouseDownEvent);
+                        
+                        // Also try mouseup and click
+                        setTimeout(() => {
+                            const mouseUpEvent = new MouseEvent('mouseup', {
+                                view: window,
+                                bubbles: true,
+                                cancelable: true,
+                                buttons: 1,
+                                clientX: clickX,
+                                clientY: clickY
+                            });
+                            categoryFilter.dispatchEvent(mouseUpEvent);
+                            
+                            const clickEvent = new MouseEvent('click', {
+                                view: window,
+                                bubbles: true,
+                                cancelable: true,
+                                buttons: 1,
+                                clientX: clickX,
+                                clientY: clickY
+                            });
+                            categoryFilter.dispatchEvent(clickEvent);
+                        }, 10);
+                    }, 10);
+                };
+                
+                // Use requestAnimationFrame to ensure the element is positioned before triggering
+                requestAnimationFrame(() => {
+                    triggerDropdown();
+                });
+                
+                // Hide after selection or click outside
+                const hideSelect = () => {
+                    categoryFilter.style.display = 'none';
+                    categoryFilter.style.opacity = '0';
+                    categoryFilter.style.pointerEvents = 'none';
+                    // Reset chevron rotation
+                    if (chevron) {
+                        chevron.classList.remove('rotated');
+                    }
+                };
+                
+                const handleChange = () => {
+                    hideSelect();
+                    categoryFilter.removeEventListener('change', handleChange);
+                };
+                
+                const handleClickOutside = (event) => {
+                    if (!newButton.contains(event.target) && 
+                        event.target !== categoryFilter &&
+                        !categoryFilter.contains(event.target)) {
+                        hideSelect();
+                        document.removeEventListener('click', handleClickOutside);
+                    }
+                };
+                
+                categoryFilter.addEventListener('change', handleChange);
+                setTimeout(() => {
+                    document.addEventListener('click', handleClickOutside);
+                }, 200);
+            });
+        }
+        
+        if (elements.categoryButton) {
+            setupCategoryButton();
+        }
 
-        elements.clearFiltersBtn.addEventListener('click', () => {
-            elements.companyFilter.value = '';
-            elements.productFilter.value = '';
-            elements.categoryFilter.value = '';
-            elements.postTypeFilter.value = '';
+        elements.categoryFilter.addEventListener('change', () => {
+            updateCategoryButtonText();
             applyFilters();
         });
 
+        // Search input - debounced
+        let searchTimeout;
+        elements.searchInput.addEventListener('input', () => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                applyFilters();
+            }, 300);
+        });
+
+        // Filter pills - use event delegation for dynamic content
+        const filtersTypesRow = document.querySelector('.filters-types-row');
+        if (filtersTypesRow) {
+            filtersTypesRow.addEventListener('click', (e) => {
+                const pill = e.target.closest('.filter-pill');
+                if (pill) {
+                    const postType = pill.getAttribute('data-post-type');
+                    state.selectedPostType = postType || null;
+                    updatePillSelection(postType);
+                    applyFilters();
+                }
+            });
+        }
+
+        // Initialize pill selection
+        updatePillSelection('');
+
         elements.loadMoreBtn.addEventListener('click', loadMorePosts);
+
+        // Update grid columns on window resize
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                updateGridColumns();
+            }, 150);
+        });
 
         // Router setup
         router.register('home', () => {
-            // Only update if not already set (to avoid clearing selection during navigation)
-            if (state.currentPage !== 'home') {
+            // Always reset filters when navigating to home page (from any other page)
+            const previousPage = state.currentPage;
             state.currentPage = 'home';
             state.currentCompany = null;
             state.currentProduct = null;
+            
+            // Always reset filters when navigating from a different page
+            state.selectedPostType = null;
+            state.filters.postType = null;
+            
+            // Reset visual pill selection immediately
+            updatePillSelection('');
+            
+            // Restore original filters-section if it was replaced
+            const filtersContentWrapper = document.getElementById('filters-content-wrapper');
+            if (filtersContentWrapper) {
+                const currentFilters = filtersContentWrapper.querySelector('.filters-list-page, .filters-product-page');
+                if (currentFilters && !filtersContentWrapper.querySelector('#filters-section')) {
+                    // Restore original filters-section
+                    currentFilters.outerHTML = `
+                        <div id="filters-section" class="filters-section">
+                            <div class="filters-top-row">
+                                <button id="category-button" class="category-button" type="button">
+                                    <span class="category-button-text">Category</span>
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="category-chevron">
+                                        <path d="M7.73442 11.8891L3.11014 7.26908C2.96329 7.12116 2.96329 6.88198 3.11014 6.73407L3.72879 6.11094C3.87564 5.96302 4.11311 5.96302 4.25996 6.11094L8 9.84028L11.74 6.11094C11.8869 5.96302 12.1244 5.96302 12.2712 6.11094L12.8899 6.73407C13.0367 6.88198 13.0367 7.12116 12.8899 7.26908L8.26558 11.8891C8.11873 12.037 7.88127 12.037 7.73442 11.8891Z" fill="#222325"/>
+                                    </svg>
+                                </button>
+                                <select id="category-filter" class="category-filter-hidden" style="display: none;">
+                                    <option value="">All Categories</option>
+                                </select>
+                                <div class="search-input-wrapper">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="search-icon">
+                                        <path d="M7.33333 12.6667C10.2789 12.6667 12.6667 10.2789 12.6667 7.33333C12.6667 4.38781 10.2789 2 7.33333 2C4.38781 2 2 4.38781 2 7.33333C2 10.2789 4.38781 12.6667 7.33333 12.6667Z" stroke="#74767E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M14 14L11.1 11.1" stroke="#74767E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <input type="text" id="search-input" class="search-input" placeholder="Search" />
+                                </div>
+                            </div>
+                            <div class="filters-types-row">
+                                <button class="filter-pill" data-post-type="">All</button>
+                                <button class="filter-pill" data-post-type="News">News</button>
+                                <button class="filter-pill" data-post-type="Product Launch">Product Launch</button>
+                                <button class="filter-pill" data-post-type="Update">Update</button>
+                                <button class="filter-pill" data-post-type="Tutorial">Tutorial</button>
+                                <button class="filter-pill" data-post-type="Benchmark">Benchmark</button>
+                                <button class="filter-pill" data-post-type="Opinion">Opinion</button>
+                                <button class="filter-pill" data-post-type="General">General</button>
+                            </div>
+                        </div>
+                    `;
+                    // Re-populate category filter
+                    const categoryFilter = document.getElementById('category-filter');
+                    if (categoryFilter) {
+                        categoryFilter.innerHTML = '<option value="">All Categories</option>' +
+                            CATEGORIES.map(c => `<option value="${c}">${c}</option>`).join('');
+                    }
+                    // Re-attach elements
+                    elements.filtersSection = document.getElementById('filters-section');
+                    elements.categoryButton = document.getElementById('category-button');
+                    elements.categoryFilter = document.getElementById('category-filter');
+                    elements.searchInput = document.getElementById('search-input');
+                    
+                    // Re-setup category button
+                    setupCategoryButton();
+                    
+                    // Re-attach filter pill listeners
+                    const filtersTypesRow = elements.filtersSection.querySelector('.filters-types-row');
+                    if (filtersTypesRow) {
+                        filtersTypesRow.addEventListener('click', (e) => {
+                            const pill = e.target.closest('.filter-pill');
+                            if (pill) {
+                                const postType = pill.getAttribute('data-post-type');
+                                state.selectedPostType = postType || null;
+                                updatePillSelection(postType);
+                                applyFilters();
+                            }
+                        });
+                    }
+                    
+                    // Reset visual state after restoring filters
+                    updatePillSelection('');
+                }
             }
+            
             elements.filtersSection.classList.remove('hidden');
             renderHeader();
             loadPosts();
@@ -2549,8 +3864,10 @@
             state.currentPage = 'companies';
             state.currentCompany = null;
             state.currentProduct = null;
+            // Reset filters when navigating to a different page type
+            state.selectedPostType = null;
+            state.filters.postType = null;
             }
-            elements.filtersSection.classList.add('hidden');
             renderHeader();
             renderCompaniesPage();
             autoExpandForRoute();
@@ -2566,6 +3883,12 @@
                 // If somehow company wasn't set, clear product
             state.currentProduct = null;
             }
+            // Reset filters when navigating to company page
+            const previousPage = state.currentPage;
+            if (previousPage !== 'company') {
+                state.selectedPostType = null;
+                state.filters.postType = null;
+            }
             // Ensure navigation tree reflects current state (already updated on click)
             renderNavigationTree();
             // Load content in background (state already updated for instant UI)
@@ -2578,6 +3901,9 @@
             state.currentPage = 'products';
             state.currentCompany = null;
             state.currentProduct = null;
+            // Reset filters when navigating to a different page type
+            state.selectedPostType = null;
+            state.filters.postType = null;
             }
             elements.filtersSection.classList.add('hidden');
             renderHeader();
@@ -2591,9 +3917,18 @@
             // state.currentProduct and state.currentCompany already set immediately on click - DO NOT CLEAR THEM
             // state.currentPage already set immediately on click - DO NOT CLEAR IT
             // Ensure navigation tree reflects current state (already updated on click)
+            // Re-render to ensure selection state is visible
             renderNavigationTree();
+            // Reset filters when navigating to product page
+            const previousPage = state.currentPage;
+            if (previousPage !== 'product') {
+                state.selectedPostType = null;
+                state.filters.postType = null;
+            }
             // Load content in background (state already updated for instant UI)
             loadProductPage(slug);
+            // After loadProductPage completes, state.currentProduct should be set correctly
+            // renderNavigationTree() is called again in loadProductPage to ensure selection is shown
         });
 
         // Test Supabase connection
@@ -2702,13 +4037,30 @@
         function getNavItemState(itemType, itemId = null) {
             const currentRoute = router.getCurrentRoute();
             
-            // Normalize IDs - handle both string and number
+            // Normalize IDs - handle both string and number, with better error handling
             const normalizeId = (id) => {
                 if (id === null || id === undefined) return null;
-                return typeof id === 'string' ? parseInt(id, 10) : Number(id);
+                if (typeof id === 'string') {
+                    const parsed = parseInt(id, 10);
+                    return isNaN(parsed) ? null : parsed;
+                }
+                if (typeof id === 'number') {
+                    return isNaN(id) ? null : id;
+                }
+                // Try to convert to number
+                const num = Number(id);
+                return isNaN(num) ? null : num;
             };
             
-            const itemIdNum = itemId ? normalizeId(itemId) : null;
+            // Normalize itemId - handle both string and number, and ensure it's a valid number
+            let itemIdNum = null;
+            if (itemId !== null && itemId !== undefined && itemId !== '') {
+                const normalized = normalizeId(itemId);
+                // Only use if it's a valid number (not NaN)
+                if (normalized !== null && !isNaN(normalized) && typeof normalized === 'number') {
+                    itemIdNum = normalized;
+                }
+            }
             
             // Check selection state - ensure we compare IDs correctly
             let isSelected = false;
@@ -2732,20 +4084,70 @@
                     currentCompany: state.currentCompany,
                     itemId
                 });
-            } else if (itemType === 'product' && currentRoute === 'product' && state.currentProduct && itemIdNum !== null) {
-                // Compare both as numbers to ensure match
-                const productId = normalizeId(state.currentProduct.id);
-                const itemIdNormalized = normalizeId(itemIdNum);
-                isSelected = productId === itemIdNormalized;
-                console.log('Checking product selection:', {
-                    itemType,
-                    currentRoute,
-                    productId,
-                    itemIdNormalized,
-                    isSelected,
-                    currentProduct: state.currentProduct,
-                    itemId
-                });
+            } else if (itemType === 'product') {
+                // Check if this product is selected - use state.currentProduct as source of truth
+                // Handle both numeric IDs and string IDs (like UUIDs)
+                isSelected = false;
+                
+                if (state.currentProduct && state.currentProduct.id !== null && state.currentProduct.id !== undefined && itemId !== null && itemId !== undefined) {
+                    const productId = state.currentProduct.id;
+                    const itemIdValue = itemId;
+                    
+                    // METHOD 1: Direct equality (works for same type - fastest)
+                    if (productId === itemIdValue) {
+                        isSelected = true;
+                    }
+                    
+                    // METHOD 2: Normalized number comparison (if both are numeric)
+                    if (!isSelected && itemIdNum !== null) {
+                        const normalizedProductId = normalizeId(productId);
+                        if (normalizedProductId !== null && itemIdNum !== null && 
+                            !isNaN(normalizedProductId) && !isNaN(itemIdNum) &&
+                            typeof normalizedProductId === 'number' && typeof itemIdNum === 'number') {
+                            isSelected = normalizedProductId === itemIdNum;
+                        }
+                    }
+                    
+                    // METHOD 3: String comparison (handles UUIDs, string IDs, and type mismatches)
+                    if (!isSelected) {
+                        const productIdStr = String(productId).trim();
+                        const itemIdStr = String(itemIdValue).trim();
+                        if (productIdStr !== '' && itemIdStr !== '' && productIdStr === itemIdStr) {
+                            isSelected = true;
+                        }
+                    }
+                }
+                
+                // Always log for debugging - helps identify why selection fails
+                if (state.currentProduct) {
+                    const productId = normalizeId(state.currentProduct.id);
+                    console.log('Checking product selection:', {
+                        itemType,
+                        currentRoute,
+                        currentPage: state.currentPage,
+                        stateProductId: state.currentProduct.id,
+                        stateProductIdType: typeof state.currentProduct.id,
+                        normalizedStateProductId: productId,
+                        itemId: itemId,
+                        itemIdNum: itemIdNum,
+                        itemIdType: typeof itemId,
+                        normalizedItemId: itemIdNum,
+                        isSelected,
+                        productName: state.currentProduct.name,
+                        comparison: `${productId} === ${itemIdNum} = ${productId === itemIdNum}`,
+                        bothNumbers: typeof productId === 'number' && typeof itemIdNum === 'number',
+                        bothValid: !isNaN(productId) && !isNaN(itemIdNum)
+                    });
+                } else {
+                    console.log('Checking product selection - NO currentProduct:', {
+                        itemType,
+                        currentRoute,
+                        currentPage: state.currentPage,
+                        itemId: itemId,
+                        itemIdNum: itemIdNum,
+                        isSelected: false
+                    });
+                }
             }
             
             // Sub-selected: only show if a child item is selected
@@ -3081,16 +4483,51 @@
                     } else if (itemType === 'product') {
                         // Find product and company from existing data and set immediately
                         const productId = itemId ? normalizeId(itemId) : null;
-                        const product = state.products.find(p => normalizeId(p.id) === productId);
+                        const product = state.products.find(p => {
+                            const pId = normalizeId(p.id);
+                            return pId === productId && pId !== null;
+                        });
                         if (product) {
+                            // Ensure we use the product from state.products to maintain ID consistency
                             state.currentProduct = product;
-                            // Find the company for this product
+                            // CRITICAL: Find the company for this product and set it BEFORE navigating
+                            // This ensures fetchProductBySlug can filter correctly for duplicate slugs like "General"
                             const companyId = normalizeId(product.company_id);
-                            const company = state.companies.find(c => normalizeId(c.id) === companyId);
+                            const company = state.companies.find(c => {
+                                const cId = normalizeId(c.id);
+                                return cId === companyId && cId !== null;
+                            });
                             if (company) {
                                 state.currentCompany = company;
+                                console.log('Product selected from sidebar - company context set:', {
+                                    productId: product.id,
+                                    productIdType: typeof product.id,
+                                    productName: product.name,
+                                    productSlug: product.slug,
+                                    companyId: company.id,
+                                    companyName: company.name,
+                                    companySlug: company.slug
+                                });
+                            } else {
+                                console.warn('Company not found in state for product:', {
+                                    productName: product.name,
+                                    productCompanyId: product.company_id,
+                                    companiesCount: state.companies.length
+                                });
                             }
                             state.currentPage = 'product';
+                        } else {
+                            console.error('Product not found in state.products:', {
+                                productId: itemId,
+                                productsCount: state.products.length,
+                                productIds: state.products.map(p => ({ id: p.id, name: p.name }))
+                            });
+                            console.warn('Product not found in state.products:', {
+                                itemId,
+                                productId,
+                                productsCount: state.products.length,
+                                productIds: state.products.map(p => ({ id: p.id, name: p.name, idType: typeof p.id }))
+                            });
                         }
                         // Auto-expand Companies folder and the parent company
                         if (!state.navigation.companiesExpanded) {
