@@ -1388,6 +1388,7 @@
             line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
+            cursor: pointer;
         }
 
         .post-summary-truncated::after {
@@ -1406,6 +1407,7 @@
             -webkit-line-clamp: unset;
             line-clamp: unset;
             overflow: visible;
+            cursor: pointer;
         }
 
         .post-summary-expanded::after {
@@ -2495,18 +2497,34 @@
             if (contentElement) {
                 // Use a single event listener on the content container
                 contentElement.addEventListener('click', function(e) {
+                    // Check if clicked on read-more button or on the summary text itself
                     const button = e.target.closest('.read-more-btn');
-                    if (!button) return;
+                    const summaryClicked = e.target.closest('.post-summary');
+                    
+                    if (!button && !summaryClicked) return;
                     
                     e.preventDefault();
                     e.stopPropagation();
                     
-                    const postId = button.getAttribute('data-post-id');
-                    const summaryElement = document.getElementById(`post-${postId}-summary`);
-                    if (!summaryElement) return;
+                    let summaryElement, readMoreBtn;
+                    
+                    if (button) {
+                        // Clicked on the button
+                        const postId = button.getAttribute('data-post-id');
+                        summaryElement = document.getElementById(`post-${postId}-summary`);
+                        readMoreBtn = button;
+                    } else {
+                        // Clicked on the summary text
+                        summaryElement = summaryClicked;
+                        // Find the associated read-more button
+                        const wrapper = summaryElement.closest('.post-summary-wrapper');
+                        readMoreBtn = wrapper ? wrapper.querySelector('.read-more-btn') : null;
+                    }
+                    
+                    if (!summaryElement || !readMoreBtn) return;
                     
                     const cardElement = summaryElement.closest('.post-card');
-                    const isExpanded = button.getAttribute('data-expanded') === 'true';
+                    const isExpanded = readMoreBtn.getAttribute('data-expanded') === 'true';
                     
                     if (isExpanded) {
                         // Collapse
@@ -2515,8 +2533,8 @@
                         if (cardElement) {
                             cardElement.classList.remove('post-card-expanded');
                         }
-                        button.textContent = 'READ MORE';
-                        button.setAttribute('data-expanded', 'false');
+                        readMoreBtn.textContent = 'READ MORE';
+                        readMoreBtn.setAttribute('data-expanded', 'false');
                     } else {
                         // Expand
                         summaryElement.classList.remove('post-summary-truncated');
@@ -2524,8 +2542,8 @@
                         if (cardElement) {
                             cardElement.classList.add('post-card-expanded');
                         }
-                        button.textContent = 'READ LESS';
-                        button.setAttribute('data-expanded', 'true');
+                        readMoreBtn.textContent = 'READ LESS';
+                        readMoreBtn.setAttribute('data-expanded', 'true');
                     }
                 });
                 
