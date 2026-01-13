@@ -1501,6 +1501,149 @@
             font-size: 1.125rem;
         }
 
+        /* Company Cards Grid */
+        .companies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(324px, 1fr));
+            gap: 24px;
+            width: 100%;
+        }
+
+        /* Company Card */
+        .company-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 16px;
+            background: #FFF;
+            border-radius: 30px;
+            box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.13), 0px 1.28px 5.579px 0px rgba(0, 0, 0, 0.08), 0px 0.08px 2.557px 0px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            height: 292px;
+            box-sizing: border-box;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .company-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0px 6px 16px 0px rgba(0, 0, 0, 0.15), 0px 2px 8px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        .company-card-content {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .company-card-header {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            height: 44px;
+            overflow: hidden;
+        }
+
+        .company-card-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 0 8px 8px;
+            background: #F9F9F9;
+            border-radius: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .company-card-logo img {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+
+        .company-card-logo-placeholder {
+            width: 28px;
+            height: 28px;
+            background: #E4E5E7;
+            border-radius: 6px;
+            flex-shrink: 0;
+        }
+
+        .company-card-name {
+            font-family: 'Macan', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 22px;
+            color: #62646A;
+            white-space: nowrap;
+            padding-right: 12px;
+        }
+
+        .company-card-description {
+            font-family: 'Macan', sans-serif;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 24px;
+            color: #707581;
+            display: -webkit-box;
+            -webkit-line-clamp: 5;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin: 0;
+        }
+
+        .company-card-footer {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .company-card-products {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px 6px 6px;
+        }
+
+        .company-card-products-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        .company-card-products-text {
+            font-family: 'Macan', sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 22px;
+            color: #222325;
+        }
+
+        .company-card-products-text span {
+            font-weight: 700;
+        }
+
+        .company-card-arrow {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .company-card-arrow svg {
+            width: 32px;
+            height: 32px;
+            transition: transform 0.3s ease;
+        }
+
+        .company-card:hover .company-card-arrow svg {
+            transform: rotate(-25deg);
+        }
+
         /* Page Header */
         .page-header {
             background-color: var(--bg-color);
@@ -2967,19 +3110,38 @@
             
             const companiesHtml = companiesList.map(company => {
                 const companyProducts = state.products.filter(p => p.company_id === company.id);
+                const description = company.summary || 'No description available.';
                 return `
-                    <div style="padding: 16px; border-bottom: 1px solid #e2e8f0;">
-                        <h2 style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">
-                            <a href="/company/${company.slug}" style="color: #222325; text-decoration: none;" data-route="company">
-                                ${company.logo_url ? `<img src="${company.logo_url}" alt="${company.name}" style="width: 24px; height: 24px; vertical-align: middle; margin-right: 8px;">` : ''}
-                                ${company.name}
-                            </a>
-                        </h2>
-                        <p style="color: #64748b; font-size: 14px; margin-bottom: 8px;">${company.summary || 'No description available.'}</p>
-                        <div style="font-size: 14px; color: #64748b;">
-                            Products: ${companyProducts.length}
+                    <article class="company-card" data-company-slug="${company.slug}" data-route="company">
+                        <div class="company-card-content">
+                            <div class="company-card-header">
+                                <div class="company-card-logo">
+                                    ${company.logo_url 
+                                        ? `<img src="${company.logo_url}" alt="${company.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                                           <div class="company-card-logo-placeholder" style="display: none;"></div>`
+                                        : `<div class="company-card-logo-placeholder"></div>`
+                                    }
+                                    <span class="company-card-name">${company.name}</span>
+                                </div>
+                            </div>
+                            <p class="company-card-description">${description}</p>
                         </div>
-                    </div>
+                        <div class="company-card-footer">
+                            <div class="company-card-products">
+                                <svg class="company-card-products-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M6.66667 8.66667C6.95297 9.04943 7.31826 9.36612 7.73771 9.59529C8.15716 9.82446 8.62102 9.96075 9.09778 9.99489C9.57454 10.029 10.0531 9.96024 10.5009 9.79319C10.9487 9.62613 11.3554 9.36471 11.6933 9.02667L13.6933 7.02667C14.3005 6.39799 14.6365 5.55598 14.6289 4.68199C14.6213 3.808 14.2708 2.97196 13.6527 2.35394C13.0347 1.73591 12.1987 1.38535 11.3247 1.37775C10.4507 1.37016 9.60869 1.70614 8.98001 2.31333L7.83334 3.45333" stroke="#222325" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M9.33334 7.33333C9.04704 6.95058 8.68175 6.63388 8.2623 6.40471C7.84285 6.17554 7.37899 6.03925 6.90223 6.00511C6.42547 5.97097 5.94695 6.03976 5.49911 6.20682C5.05128 6.37387 4.6446 6.63529 4.30668 6.97333L2.30668 8.97333C1.69948 9.60201 1.3635 10.444 1.3711 11.318C1.3787 12.192 1.72926 13.028 2.34729 13.6461C2.96531 14.2641 3.80135 14.6147 4.67534 14.6223C5.54933 14.6299 6.39134 14.2939 7.02001 13.6867L8.16001 12.5467" stroke="#222325" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <span class="company-card-products-text"><span>${companyProducts.length}</span> products</span>
+                            </div>
+                            <div class="company-card-arrow">
+                                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M6.66669 16H25.3334" stroke="#222325" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M16 6.66667L25.3333 16L16 25.3333" stroke="#222325" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </article>
                 `;
             }).join('');
             
@@ -3017,12 +3179,32 @@
                 }
             }
             
-            // Render only list content into content div (same structure as feed)
+            // Set content width to 100% for proper grid layout
+            elements.content.style.width = '100%';
+            
+            // Render companies grid into content div
             elements.content.innerHTML = `
-                <div style="background: #fff; border-radius: 8px; width: 100%; box-sizing: border-box;">
-                    ${companiesHtml || '<p style="padding: 24px; text-align: center; color: #64748b;">No companies found.</p>'}
+                <div class="companies-grid">
+                    ${companiesHtml || '<p style="padding: 24px; text-align: center; color: #64748b; grid-column: 1 / -1;">No companies found.</p>'}
                 </div>
             `;
+            
+            // Add click handlers for company cards
+            const companyCards = document.querySelectorAll('.company-card');
+            companyCards.forEach(card => {
+                card.addEventListener('click', (e) => {
+                    const slug = card.getAttribute('data-company-slug');
+                    if (slug) {
+                        const company = state.companies.find(c => c.slug === slug);
+                        if (company) {
+                            state.currentCompany = company;
+                            state.currentPage = 'company';
+                            renderNavigationTree();
+                            router.navigate(`/company/${slug}`);
+                        }
+                    }
+                });
+            });
             
             // Attach event listeners
             const sortBtn = document.getElementById('companies-sort-btn');
