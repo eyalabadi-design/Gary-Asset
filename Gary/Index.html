@@ -664,40 +664,48 @@
         }
         
         .skeleton-card {
-            background: #fff;
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 24px;
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            pointer-events: none;
         }
         
         .skeleton-line {
             height: 16px;
             margin-bottom: 12px;
             border-radius: 4px;
+            background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 37%, #f3f4f6 63%);
+            background-size: 400% 100%;
+            animation: shimmer 1.2s ease-in-out infinite;
         }
         
         .skeleton-line:last-child {
             margin-bottom: 0;
         }
         
-        .skeleton-line.short {
-            width: 60%;
-        }
-        
-        .skeleton-line.medium {
-            width: 80%;
-        }
-        
-        .skeleton-line.long {
-            width: 100%;
-        }
+        .skeleton-line.short { width: 40%; }
+        .skeleton-line.medium { width: 70%; }
+        .skeleton-line.long { width: 100%; }
         
         .skeleton-header {
             height: 24px;
-            width: 200px;
+            width: 60%;
             margin-bottom: 16px;
-            border-radius: 4px;
+            border-radius: 6px;
+            background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 37%, #f3f4f6 63%);
+            background-size: 400% 100%;
+            animation: shimmer 1.2s ease-in-out infinite;
+        }
+        
+        .skeleton-card.post-card {
+            min-height: 260px;
+        }
+        
+        .skeleton-card.company-card {
+            height: 292px;
+            box-sizing: border-box;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -200px 0; }
+            100% { background-position: 200px 0; }
         }
         
         .content-loading {
@@ -1090,10 +1098,6 @@
             text-align: center;
             padding: var(--spacing-lg);
             font-size: 1.125rem;
-        }
-
-        .loading {
-            color: var(--text-light);
         }
 
         .error {
@@ -1689,30 +1693,41 @@
             margin-top: var(--spacing-sm);
         }
 
-        /* Load More */
-        .load-more-container {
-            text-align: center;
-            margin-top: var(--spacing-lg);
+        /* Infinite Scroll */
+        .infinite-scroll-sentinel {
+            height: 20px;
+            width: 100%;
+            margin-top: 24px;
         }
 
-        .btn-load-more {
-            padding: 0.875rem 2rem;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: var(--border-radius);
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s;
+        .infinite-loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 24px;
+            color: #707581;
+            font-size: 14px;
+            width: 100%;
         }
 
-        .btn-load-more:hover {
-            background-color: var(--primary-hover);
+        .infinite-loading-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #E4E5E7;
+            border-top: 2px solid #0067E9;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
         }
 
-        .btn-load-more:active {
-            transform: scale(0.98);
+        .infinite-scroll-sentinel.hidden,
+        .infinite-loading.hidden {
+            display: none !important;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         /* Footer */
@@ -1832,15 +1847,14 @@
                     <div id="content"></div>
                 </div>
 
-                <!-- Loading Indicator -->
-                <div id="loading" class="loading hidden">Loading...</div>
-
                 <!-- Error Message -->
                 <div id="error" class="error hidden"></div>
 
-                <!-- Load More Button -->
-                <div id="load-more-container" class="load-more-container hidden">
-                    <button id="load-more" class="btn-load-more">Load More</button>
+                <!-- Infinite Scroll Sentinel -->
+                <div id="infinite-scroll-sentinel" class="infinite-scroll-sentinel hidden"></div>
+                <div id="infinite-loading" class="infinite-loading hidden">
+                    <div class="infinite-loading-spinner"></div>
+                    <span>Loading more posts...</span>
                 </div>
             </div>
         </main>
@@ -2064,6 +2078,12 @@
             }
 
             handleRoute() {
+                try {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } catch (e) {
+                    window.scrollTo(0, 0);
+                }
+                
                 const path = window.location.pathname;
                 const pathParts = path.split('/').filter(p => p);
 
@@ -2357,6 +2377,7 @@
                 limit: 50,
                 hasMore: true
             },
+            isLoadingMore: false,
             currentPage: 'home',
             currentCompany: null,
             currentProduct: null,
@@ -2378,51 +2399,90 @@
             categoryButtonText: document.querySelector('.category-button-text'),
             categoryFilter: document.getElementById('category-filter'),
             searchInput: document.getElementById('search-input'),
-            loadMoreContainer: document.getElementById('load-more-container'),
-            loadMoreBtn: document.getElementById('load-more'),
+            infiniteSentinel: document.getElementById('infinite-scroll-sentinel'),
+            infiniteLoading: document.getElementById('infinite-loading'),
             navTree: document.getElementById('nav-tree'),
             headerContent: document.getElementById('header-content')
         };
 
         // Utility functions
-        function showLoading() {
-            elements.loading.classList.remove('hidden');
-        }
-
-        function hideLoading() {
-            elements.loading.classList.add('hidden');
-        }
-        
         function showSkeletonLoading() {
             if (!elements.content) return;
-            const skeletonHtml = `
-                <div class="skeleton-card">
+            
+            const route = state.currentPage || ((typeof router !== 'undefined' && router.getCurrentRoute) ? router.getCurrentRoute() : null) || 'home';
+            const makePostSkeleton = () => `
+                <article class="post-card skeleton-card">
                     <div class="skeleton skeleton-header"></div>
                     <div class="skeleton skeleton-line long"></div>
                     <div class="skeleton skeleton-line long"></div>
                     <div class="skeleton skeleton-line medium"></div>
-                </div>
-                <div class="skeleton-card">
+                </article>
+            `;
+            
+            const makeCompanySkeleton = () => `
+                <article class="company-card skeleton-card">
+                    <div class="company-card-content">
+                        <div class="company-card-header">
+                            <div class="company-card-logo">
+                                <div class="skeleton skeleton-line short"></div>
+                            </div>
+                        </div>
+                        <div class="skeleton skeleton-line long"></div>
+                        <div class="skeleton skeleton-line long"></div>
+                        <div class="skeleton skeleton-line medium"></div>
+                    </div>
+                    <div class="company-card-footer">
+                        <div class="skeleton skeleton-line short"></div>
+                        <div class="skeleton skeleton-line short"></div>
+                    </div>
+                </article>
+            `;
+            
+            const makeProductListSkeleton = () => `
+                <div style="padding: 16px 0; border-bottom: 1px solid #e2e8f0;">
                     <div class="skeleton skeleton-header"></div>
-                    <div class="skeleton skeleton-line long"></div>
-                    <div class="skeleton skeleton-line long"></div>
                     <div class="skeleton skeleton-line medium"></div>
-                </div>
-                <div class="skeleton-card">
-                    <div class="skeleton skeleton-header"></div>
-                    <div class="skeleton skeleton-line long"></div>
-                    <div class="skeleton skeleton-line long"></div>
-                    <div class="skeleton skeleton-line medium"></div>
+                    <div class="skeleton skeleton-line short"></div>
                 </div>
             `;
+            
+            let skeletonHtml = '';
+            if (route === 'home' || route === 'company' || route === 'product') {
+                skeletonHtml = `
+                    <div class="posts-grid">
+                        ${Array(6).fill(makePostSkeleton()).join('')}
+                    </div>
+                `;
+            } else if (route === 'companies') {
+                skeletonHtml = `
+                    <div class="companies-grid">
+                        ${Array(6).fill(makeCompanySkeleton()).join('')}
+                    </div>
+                `;
+            } else if (route === 'products') {
+                skeletonHtml = `
+                    <div style="background: #fff; border-radius: 8px; width: 100%; box-sizing: border-box; padding: 16px;">
+                        ${Array(6).fill(makeProductListSkeleton()).join('')}
+                    </div>
+                `;
+            } else {
+                skeletonHtml = `
+                    <div class="posts-grid">
+                        ${Array(6).fill(makePostSkeleton()).join('')}
+                    </div>
+                `;
+            }
+            
             elements.content.innerHTML = skeletonHtml;
             elements.content.classList.remove('content-loading', 'show');
-            // Trigger reflow for smooth transition
             void elements.content.offsetWidth;
             elements.content.classList.add('content-loading');
-            setTimeout(() => {
+            requestAnimationFrame(() => {
                 elements.content.classList.add('show');
-            }, 10);
+            });
+            
+            if (elements.infiniteLoading) elements.infiniteLoading.classList.add('hidden');
+            if (elements.infiniteSentinel) elements.infiniteSentinel.classList.add('hidden');
         }
         
         function hideSkeletonLoading() {
@@ -2621,11 +2681,7 @@
             // Attach arrow icons dynamically
             attachArrowIcons();
             
-            if (state.pagination.hasMore) {
-                elements.loadMoreContainer.classList.remove('hidden');
-            } else {
-                elements.loadMoreContainer.classList.add('hidden');
-            }
+            // Infinite scroll visibility handled after data load
         }
 
         // Use event delegation for read more buttons - works with dynamically added content
@@ -2946,7 +3002,9 @@
             // Attach arrow icons dynamically
             attachArrowIcons();
             
-            elements.loadMoreContainer.classList.add('hidden');
+            // Hide infinite scroll elements for non-feed pages
+            if (elements.infiniteSentinel) elements.infiniteSentinel.classList.add('hidden');
+            if (elements.infiniteLoading) elements.infiniteLoading.classList.add('hidden');
             
             // Update header
             renderHeader();
@@ -3078,8 +3136,6 @@
             
             // Attach arrow icons dynamically
             attachArrowIcons();
-            
-            elements.loadMoreContainer.classList.add('hidden');
             
             // Update header
             renderHeader();
@@ -3245,6 +3301,10 @@
             requestAnimationFrame(() => {
                 elements.content.classList.add('show');
             });
+            
+            // Hide infinite scroll elements (companies page renders full dataset)
+            if (elements.infiniteSentinel) elements.infiniteSentinel.classList.add('hidden');
+            if (elements.infiniteLoading) elements.infiniteLoading.classList.add('hidden');
         }
 
         function renderProductsPage() {
@@ -3367,6 +3427,10 @@
             requestAnimationFrame(() => {
                 elements.content.classList.add('show');
             });
+            
+            // Hide infinite scroll elements (products page renders full dataset)
+            if (elements.infiniteSentinel) elements.infiniteSentinel.classList.add('hidden');
+            if (elements.infiniteLoading) elements.infiniteLoading.classList.add('hidden');
         }
 
         // Filter functions
@@ -3441,8 +3505,17 @@
 
         // Data loading functions
         async function loadPosts(showLoadingIndicator = true) {
-            if (showLoadingIndicator) {
-                showLoading();
+            if (state.isLoadingMore) return;
+            
+            const isInitialLoad = state.pagination.offset === 0;
+            
+            if (isInitialLoad && showLoadingIndicator) {
+                showSkeletonLoading();
+            } else if (!isInitialLoad) {
+                state.isLoadingMore = true;
+                if (elements.infiniteLoading && state.pagination.hasMore) {
+                    elements.infiniteLoading.classList.remove('hidden');
+                }
             }
             hideError();
             
@@ -3468,7 +3541,7 @@
                 
                 console.log('Posts fetched:', posts.length);
                 
-                if (state.pagination.offset === 0) {
+                if (isInitialLoad) {
                     state.posts = posts;
                 } else {
                     state.posts = [...state.posts, ...posts];
@@ -3489,14 +3562,45 @@
                     showError('Failed to load posts: ' + errorMsg + '. Check console for details.');
                 }
             } finally {
-                if (showLoadingIndicator) {
-                    hideLoading();
+                state.isLoadingMore = false;
+                if (isInitialLoad && showLoadingIndicator) {
+                    hideSkeletonLoading();
+                }
+                if (elements.infiniteLoading) {
+                    elements.infiniteLoading.classList.add('hidden');
+                }
+                if (elements.infiniteSentinel) {
+                    if (state.currentPage === 'home' && state.pagination.hasMore) {
+                        elements.infiniteSentinel.classList.remove('hidden');
+                        setupInfiniteScroll();
+                    } else {
+                        elements.infiniteSentinel.classList.add('hidden');
+                    }
                 }
             }
         }
 
-        async function loadMorePosts() {
-            await loadPosts();
+        let infiniteScrollObserver = null;
+        function setupInfiniteScroll() {
+            if (infiniteScrollObserver) {
+                infiniteScrollObserver.disconnect();
+            }
+
+            if (!elements.infiniteSentinel) return;
+
+            infiniteScrollObserver = new IntersectionObserver((entries) => {
+                const entry = entries[0];
+                if (entry.isIntersecting && state.pagination.hasMore && !state.isLoadingMore && state.currentPage === 'home') {
+                    console.log('Sentinel intersecting, loading more posts...');
+                    loadPosts(false);
+                }
+            }, {
+                root: null,
+                rootMargin: '200px',
+                threshold: 0.1
+            });
+
+            infiniteScrollObserver.observe(elements.infiniteSentinel);
         }
 
         async function loadCompanyPage(slug) {
@@ -3952,8 +4056,6 @@
 
         // Initialize pill selection
         updatePillSelection('');
-
-        elements.loadMoreBtn.addEventListener('click', loadMorePosts);
 
         // Update grid columns on window resize
         let resizeTimeout;
@@ -4850,8 +4952,8 @@
                 
                 console.log('Supabase connection verified');
                 
-                // Show loading indicator
-                showLoading();
+                // Show skeleton loading
+                showSkeletonLoading();
                 
                 // Setup event delegation for read more buttons (works with dynamic content)
                 setupReadMoreDelegation();
@@ -4885,7 +4987,7 @@
                 console.error('Initialization error:', error);
                 const errorMsg = error.message || 'Unknown error';
                 showError('Failed to initialize application: ' + errorMsg + '. Please check the browser console for details.');
-                hideLoading();
+                hideSkeletonLoading();
             }
         }
 
