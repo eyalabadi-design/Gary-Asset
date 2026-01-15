@@ -820,17 +820,18 @@
         }
 
         .category-button {
-            display: flex;
+            display: inline-flex;
             width: 200px;
             height: 42px;
             align-items: center;
-            gap: 16px;
+            justify-content: space-between;
             border-radius: 99999px;
             border: 1px solid var(--Greys-400, #E4E5E7);
             background: #FFF;
-            padding: 0 12px;
+            padding: 0 16px;
             cursor: pointer;
             transition: border-color 0.2s, background-color 0.2s;
+            position: relative;
         }
 
         .category-button:hover {
@@ -866,6 +867,48 @@
 
         .category-filter-hidden {
             display: none;
+        }
+
+        /* Category Dropdown Menu */
+        .category-dropdown {
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            width: 200px;
+            background: #FFF;
+            border: 1px solid var(--Greys-400, #E4E5E7);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 10000;
+            display: none;
+            flex-direction: column;
+            padding: 8px 0;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .category-dropdown.open {
+            display: flex;
+        }
+
+        .category-dropdown-item {
+            padding: 10px 16px;
+            cursor: pointer;
+            font-family: Macan;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 24px;
+            color: var(--Greys-1200, #222325);
+            transition: background-color 0.15s;
+        }
+
+        .category-dropdown-item:hover {
+            background-color: #F5F0F0;
+        }
+
+        .category-dropdown-item.selected {
+            background-color: #F0F5F9;
+            font-weight: 600;
         }
 
         .search-input-wrapper {
@@ -1814,12 +1857,15 @@
                     <!-- Filters Section -->
                     <div id="filters-section" class="filters-section">
                         <div class="filters-top-row">
-                            <button id="category-button" class="category-button" type="button">
-                                <span class="category-button-text">Category</span>
-                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="category-chevron">
-                                    <path d="M7.73442 11.8891L3.11014 7.26908C2.96329 7.12116 2.96329 6.88198 3.11014 6.73407L3.72879 6.11094C3.87564 5.96302 4.11311 5.96302 4.25996 6.11094L8 9.84028L11.74 6.11094C11.8869 5.96302 12.1244 5.96302 12.2712 6.11094L12.8899 6.73407C13.0367 6.88198 13.0367 7.12116 12.8899 7.26908L8.26558 11.8891C8.11873 12.037 7.88127 12.037 7.73442 11.8891Z" fill="#222325"/>
-                                </svg>
-                            </button>
+                            <div class="category-button-wrapper" style="position: relative;">
+                                <button id="category-button" class="category-button" type="button">
+                                    <span class="category-button-text">All categories</span>
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="category-chevron">
+                                        <path d="M7.73442 11.8891L3.11014 7.26908C2.96329 7.12116 2.96329 6.88198 3.11014 6.73407L3.72879 6.11094C3.87564 5.96302 4.11311 5.96302 4.25996 6.11094L8 9.84028L11.74 6.11094C11.8869 5.96302 12.1244 5.96302 12.2712 6.11094L12.8899 6.73407C13.0367 6.88198 13.0367 7.12116 12.8899 7.26908L8.26558 11.8891C8.11873 12.037 7.88127 12.037 7.73442 11.8891Z" fill="#222325"/>
+                                    </svg>
+                                </button>
+                                <div id="category-dropdown" class="category-dropdown"></div>
+                            </div>
                             <select id="category-filter" class="category-filter-hidden" style="display: none;">
                                 <option value="">All Categories</option>
                             </select>
@@ -2883,12 +2929,15 @@
                         currentFilters.outerHTML = `
                             <div id="filters-section" class="filters-section">
                                 <div class="filters-top-row">
-                                    <button id="category-button" class="category-button" type="button">
-                                        <span class="category-button-text">Category</span>
-                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="category-chevron">
-                                            <path d="M7.73442 11.8891L3.11014 7.26908C2.96329 7.12116 2.96329 6.88198 3.11014 6.73407L3.72879 6.11094C3.87564 5.96302 4.11311 5.96302 4.25996 6.11094L8 9.84028L11.74 6.11094C11.8869 5.96302 12.1244 5.96302 12.2712 6.11094L12.8899 6.73407C13.0367 6.88198 13.0367 7.12116 12.8899 7.26908L8.26558 11.8891C8.11873 12.037 7.88127 12.037 7.73442 11.8891Z" fill="#222325"/>
-                                        </svg>
-                                    </button>
+                                    <div class="category-button-wrapper" style="position: relative;">
+                                        <button id="category-button" class="category-button" type="button">
+                                            <span class="category-button-text">All categories</span>
+                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="category-chevron">
+                                                <path d="M7.73442 11.8891L3.11014 7.26908C2.96329 7.12116 2.96329 6.88198 3.11014 6.73407L3.72879 6.11094C3.87564 5.96302 4.11311 5.96302 4.25996 6.11094L8 9.84028L11.74 6.11094C11.8869 5.96302 12.1244 5.96302 12.2712 6.11094L12.8899 6.73407C13.0367 6.88198 13.0367 7.12116 12.8899 7.26908L8.26558 11.8891C8.11873 12.037 7.88127 12.037 7.73442 11.8891Z" fill="#222325"/>
+                                            </svg>
+                                        </button>
+                                        <div id="category-dropdown" class="category-dropdown"></div>
+                                    </div>
                                     <select id="category-filter" class="category-filter-hidden" style="display: none;">
                                         <option value="">All Categories</option>
                                         ${CATEGORIES.map(c => `<option value="${c}">${c}</option>`).join('')}
@@ -2928,6 +2977,51 @@
             // Store original posts for filtering
             state.companyPagePosts = posts;
             
+            // Helper function to filter and render company posts
+            const filterAndRenderCompanyPosts = () => {
+                let filtered = state.companyPagePosts || [];
+                
+                // Apply category filter
+                const categoryValue = elements.categoryFilter ? elements.categoryFilter.value : '';
+                if (categoryValue) {
+                    filtered = filtered.filter(post => post.category === categoryValue);
+                }
+                
+                // Apply post type filter
+                if (state.selectedPostType) {
+                    filtered = filtered.filter(post => post.post_type === state.selectedPostType);
+                }
+                
+                // Determine empty message
+                let emptyMessage = 'No posts found.';
+                if (categoryValue && state.selectedPostType) {
+                    emptyMessage = 'No posts in this category and type.';
+                } else if (categoryValue) {
+                    emptyMessage = 'No posts in this category.';
+                } else if (state.selectedPostType) {
+                    emptyMessage = 'No posts found for this filter.';
+                }
+                
+                // Re-render with filtered posts
+                const filteredHtml = filtered.length > 0 
+                    ? renderPosts(filtered, { showCompany: false, showProduct: true })
+                    : `<div style="padding: 48px; text-align: center; color: #64748b; font-size: 16px;">${emptyMessage}</div>`;
+                
+                elements.content.innerHTML = `
+                    <div class="posts-grid">
+                        ${filteredHtml}
+                    </div>
+                `;
+                
+                // Re-attach handlers
+                attachReadMoreHandlers();
+                attachArrowIcons();
+                updateGridColumns();
+            };
+            
+            // Store filter function for reuse
+            state.filterCompanyPosts = filterAndRenderCompanyPosts;
+            
             // Always show all posts initially (no filter)
             const postsHtml = renderPosts(posts, {
                 showCompany: false,
@@ -2959,30 +3053,25 @@
                     if (pill) {
                         const postType = pill.getAttribute('data-post-type');
                         state.selectedPostType = postType || null;
+                        state.filters.postType = postType || null;
                         updatePillSelection(postType);
                         
-                        // Filter posts by type
-                        let filtered = state.companyPagePosts || [];
-                        if (state.selectedPostType) {
-                            filtered = filtered.filter(post => post.post_type === state.selectedPostType);
+                        // Use unified filter function
+                        if (state.filterCompanyPosts) {
+                            state.filterCompanyPosts();
                         }
-                        
-                        // Re-render with filtered posts
-                        const filteredHtml = filtered.length > 0 
-                            ? renderPosts(filtered, { showCompany: false, showProduct: true })
-                            : '<div style="padding: 48px; text-align: center; color: #64748b; font-size: 16px;">No posts found.</div>';
-                        
-                        elements.content.innerHTML = `
-                            <div class="posts-grid">
-                                ${filteredHtml}
-                            </div>
-                        `;
-                        
-                        // Re-attach handlers
-                        attachReadMoreHandlers();
-                        attachArrowIcons();
                     }
                 });
+                
+                // Also add category filter change handler for company page
+                const categoryFilter = document.getElementById('category-filter');
+                if (categoryFilter) {
+                    categoryFilter.addEventListener('change', () => {
+                        if (state.filterCompanyPosts) {
+                            state.filterCompanyPosts();
+                        }
+                    });
+                }
             }
             
             // Update grid columns based on container width
@@ -3019,6 +3108,35 @@
             
             // Store original posts for filtering
             state.productPagePosts = posts;
+            
+            // Helper function to filter and render product posts
+            const filterAndRenderProductPosts = () => {
+                let filtered = state.productPagePosts || [];
+                
+                // Apply post type filter
+                if (state.selectedPostType) {
+                    filtered = filtered.filter(post => post.post_type === state.selectedPostType);
+                }
+                
+                // Re-render with filtered posts
+                const filteredHtml = filtered.length > 0 
+                    ? renderPosts(filtered, { showCompany: false, showProduct: false })
+                    : '<div style="padding: 48px; text-align: center; color: #64748b; font-size: 16px;">No posts found for this filter.</div>';
+                
+                elements.content.innerHTML = `
+                    <div class="posts-grid">
+                        ${filteredHtml}
+                    </div>
+                `;
+                
+                // Re-attach handlers
+                attachReadMoreHandlers();
+                attachArrowIcons();
+                updateGridColumns();
+            };
+            
+            // Store filter function for reuse
+            state.filterProductPosts = filterAndRenderProductPosts;
             
             // Always show all posts initially (no filter)
             const postsHtml = renderPosts(posts, {
@@ -3094,28 +3212,13 @@
                     if (pill) {
                         const postType = pill.getAttribute('data-post-type');
                         state.selectedPostType = postType || null;
+                        state.filters.postType = postType || null;
                         updatePillSelection(postType);
                         
-                        // Filter posts by type
-                        let filtered = state.productPagePosts || [];
-                        if (state.selectedPostType) {
-                            filtered = filtered.filter(post => post.post_type === state.selectedPostType);
+                        // Use unified filter function
+                        if (state.filterProductPosts) {
+                            state.filterProductPosts();
                         }
-                        
-                        // Re-render with filtered posts
-                        const filteredHtml = filtered.length > 0 
-                            ? renderPosts(filtered, { showCompany: false, showProduct: false })
-                            : '<div style="padding: 48px; text-align: center; color: #64748b; font-size: 16px;">No posts found.</div>';
-                        
-                        elements.content.innerHTML = `
-                            <div class="posts-grid">
-                                ${filteredHtml}
-                            </div>
-                        `;
-                        
-                        // Re-attach handlers
-                        attachReadMoreHandlers();
-                        attachArrowIcons();
                     }
                 });
             }
@@ -3469,11 +3572,48 @@
         }
 
         function updateCategoryButtonText() {
-            const selectedValue = elements.categoryFilter.value;
-            if (selectedValue) {
-                elements.categoryButtonText.textContent = selectedValue;
-            } else {
-                elements.categoryButtonText.textContent = 'Category';
+            const selectedValue = elements.categoryFilter ? elements.categoryFilter.value : '';
+            const buttonText = elements.categoryButtonText || document.querySelector('.category-button-text');
+            if (buttonText) {
+                buttonText.textContent = selectedValue ? selectedValue : 'All categories';
+            }
+            // Also update dropdown selection state if dropdown exists
+            const dropdown = document.getElementById('category-dropdown');
+            if (dropdown) {
+                dropdown.querySelectorAll('.category-dropdown-item').forEach(item => {
+                    const itemValue = item.getAttribute('data-value');
+                    item.classList.toggle('selected', itemValue === selectedValue);
+                });
+            }
+        }
+
+        // Reset category filter to "All categories" - called on navigation
+        function resetCategoryFilter() {
+            // Reset state
+            state.filters.category = null;
+            
+            // Reset hidden select
+            if (elements.categoryFilter) {
+                elements.categoryFilter.value = '';
+            }
+            const categoryFilter = document.getElementById('category-filter');
+            if (categoryFilter) {
+                categoryFilter.value = '';
+            }
+            
+            // Reset button text
+            const buttonText = document.querySelector('.category-button-text');
+            if (buttonText) {
+                buttonText.textContent = 'All categories';
+            }
+            
+            // Reset dropdown selection state
+            const dropdown = document.getElementById('category-dropdown');
+            if (dropdown) {
+                dropdown.querySelectorAll('.category-dropdown-item').forEach(item => {
+                    const itemValue = item.getAttribute('data-value');
+                    item.classList.toggle('selected', itemValue === '');
+                });
             }
         }
 
@@ -3877,148 +4017,112 @@
         }
 
         // Event listeners
-        // Category button - opens hidden select dropdown
+        // Category button - opens custom dropdown
         function setupCategoryButton() {
             const categoryButton = document.getElementById('category-button');
+            const categoryDropdown = document.getElementById('category-dropdown');
             const categoryFilter = document.getElementById('category-filter');
             
-            if (!categoryButton || !categoryFilter) return;
+            if (!categoryButton) return;
             
             // Remove existing listeners by cloning
             const newButton = categoryButton.cloneNode(true);
             categoryButton.parentNode.replaceChild(newButton, categoryButton);
             
-            // Make entire button clickable - use mousedown to ensure it works
-            newButton.addEventListener('mousedown', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-            });
+            const chevron = newButton.querySelector('.category-chevron');
+            const buttonText = newButton.querySelector('.category-button-text');
+            const wrapper = newButton.closest('.category-button-wrapper');
+            let dropdown = categoryDropdown || (wrapper ? wrapper.querySelector('.category-dropdown') : null);
             
+            // Create dropdown if it doesn't exist
+            if (!dropdown && wrapper) {
+                dropdown = document.createElement('div');
+                dropdown.id = 'category-dropdown';
+                dropdown.className = 'category-dropdown';
+                wrapper.appendChild(dropdown);
+            }
+            
+            if (!dropdown) return;
+            
+            // Build dropdown items from CATEGORIES
+            const buildDropdownItems = () => {
+                const items = ['All categories', ...CATEGORIES];
+                const currentValue = categoryFilter ? categoryFilter.value : '';
+                dropdown.innerHTML = items.map((cat, idx) => {
+                    const value = idx === 0 ? '' : cat;
+                    const isSelected = currentValue === value;
+                    return `<div class="category-dropdown-item${isSelected ? ' selected' : ''}" data-value="${value}">${cat}</div>`;
+                }).join('');
+            };
+            
+            buildDropdownItems();
+            
+            const showDropdown = () => {
+                buildDropdownItems(); // Refresh selection state
+                dropdown.classList.add('open');
+                if (chevron) chevron.classList.add('rotated');
+                
+                // Add click outside listener
+                setTimeout(() => {
+                    document.addEventListener('click', handleClickOutside);
+                }, 10);
+            };
+            
+            const hideDropdown = () => {
+                dropdown.classList.remove('open');
+                if (chevron) chevron.classList.remove('rotated');
+                document.removeEventListener('click', handleClickOutside);
+            };
+            
+            const handleClickOutside = (e) => {
+                if (wrapper && !wrapper.contains(e.target)) {
+                    hideDropdown();
+                }
+            };
+            
+            // Toggle dropdown on button click
             newButton.addEventListener('click', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                
-                const rect = newButton.getBoundingClientRect();
-                const chevron = newButton.querySelector('.category-chevron');
-                
-                // Check if already open
-                const isCurrentlyOpen = categoryFilter.style.display === 'block' && 
-                                       categoryFilter.style.opacity !== '0';
-                
-                // If already open, close it
-                if (isCurrentlyOpen) {
-                    if (chevron) {
-                        chevron.classList.remove('rotated');
-                    }
-                    categoryFilter.style.display = 'none';
-                    categoryFilter.style.opacity = '0';
-                    categoryFilter.style.pointerEvents = 'none';
-                    return;
+                if (dropdown.classList.contains('open')) {
+                    hideDropdown();
+                } else {
+                    showDropdown();
                 }
-                
-                // Rotate chevron immediately
-                if (chevron) {
-                    chevron.classList.add('rotated');
-                }
-                
-                // Position the hidden select below the button (not covering it)
-                categoryFilter.style.position = 'fixed';
-                categoryFilter.style.left = rect.left + 'px';
-                categoryFilter.style.top = (rect.bottom + 4) + 'px'; // 4px gap below button
-                categoryFilter.style.width = rect.width + 'px';
-                categoryFilter.style.height = rect.height + 'px';
-                categoryFilter.style.opacity = '0';
-                categoryFilter.style.pointerEvents = 'auto';
-                categoryFilter.style.zIndex = '10000';
-                categoryFilter.style.cursor = 'pointer';
-                categoryFilter.style.display = 'block';
-                
-                // Trigger dropdown immediately - use a more direct approach
-                const triggerDropdown = () => {
-                    // First, ensure the select is visible and positioned
-                    categoryFilter.style.visibility = 'visible';
+            });
+            
+            // Handle dropdown item selection
+            dropdown.addEventListener('click', (e) => {
+                const item = e.target.closest('.category-dropdown-item');
+                if (item) {
+                    const value = item.getAttribute('data-value');
                     
-                    // Try to open the dropdown by clicking directly on the select
-                    // Use a small delay to ensure positioning is complete
-                    setTimeout(() => {
-                        // Create a synthetic click event at the center of the select
-                        const selectRect = categoryFilter.getBoundingClientRect();
-                        const clickX = selectRect.left + selectRect.width / 2;
-                        const clickY = selectRect.top + selectRect.height / 2;
-                        
-                        // Focus first
-                        categoryFilter.focus();
-                        
-                        // Then dispatch mousedown and click events
-                        const mouseDownEvent = new MouseEvent('mousedown', {
-                            view: window,
-                            bubbles: true,
-                            cancelable: true,
-                            buttons: 1,
-                            clientX: clickX,
-                            clientY: clickY
-                        });
-                        categoryFilter.dispatchEvent(mouseDownEvent);
-                        
-                        // Also try mouseup and click
-                        setTimeout(() => {
-                            const mouseUpEvent = new MouseEvent('mouseup', {
-                                view: window,
-                                bubbles: true,
-                                cancelable: true,
-                                buttons: 1,
-                                clientX: clickX,
-                                clientY: clickY
-                            });
-                            categoryFilter.dispatchEvent(mouseUpEvent);
-                            
-                            const clickEvent = new MouseEvent('click', {
-                                view: window,
-                                bubbles: true,
-                                cancelable: true,
-                                buttons: 1,
-                                clientX: clickX,
-                                clientY: clickY
-                            });
-                            categoryFilter.dispatchEvent(clickEvent);
-                        }, 10);
-                    }, 10);
-                };
-                
-                // Use requestAnimationFrame to ensure the element is positioned before triggering
-                requestAnimationFrame(() => {
-                    triggerDropdown();
-                });
-                
-                // Hide after selection or click outside
-                const hideSelect = () => {
-                    categoryFilter.style.display = 'none';
-                    categoryFilter.style.opacity = '0';
-                    categoryFilter.style.pointerEvents = 'none';
-                    // Reset chevron rotation
-                    if (chevron) {
-                        chevron.classList.remove('rotated');
+                    // Update hidden select for compatibility
+                    if (categoryFilter) {
+                        categoryFilter.value = value;
                     }
-                };
-                
-                const handleChange = () => {
-                    hideSelect();
-                    categoryFilter.removeEventListener('change', handleChange);
-                };
-                
-                const handleClickOutside = (event) => {
-                    if (!newButton.contains(event.target) && 
-                        event.target !== categoryFilter &&
-                        !categoryFilter.contains(event.target)) {
-                        hideSelect();
-                        document.removeEventListener('click', handleClickOutside);
+                    
+                    // Update button label
+                    if (buttonText) {
+                        buttonText.textContent = value ? value : 'All categories';
                     }
-                };
-                
-                categoryFilter.addEventListener('change', handleChange);
-                setTimeout(() => {
-                    document.addEventListener('click', handleClickOutside);
-                }, 200);
+                    
+                    // Update selection state
+                    dropdown.querySelectorAll('.category-dropdown-item').forEach(i => i.classList.remove('selected'));
+                    item.classList.add('selected');
+                    
+                    // Apply filter - use page-specific filter function if available
+                    if (state.currentPage === 'company' && state.filterCompanyPosts) {
+                        state.filterCompanyPosts();
+                    } else if (state.currentPage === 'product' && state.filterProductPosts) {
+                        state.filterProductPosts();
+                    } else {
+                        applyFilters();
+                    }
+                    
+                    // Close dropdown
+                    hideDropdown();
+                }
             });
         }
         
@@ -4074,12 +4178,21 @@
             state.currentCompany = null;
             state.currentProduct = null;
             
-            // Always reset filters when navigating from a different page
+            // Always reset ALL filters when navigating from a different page
             state.selectedPostType = null;
             state.filters.postType = null;
+            state.filters.search = null;
+            
+            // Reset category filter completely (state, UI, dropdown)
+            resetCategoryFilter();
             
             // Reset visual pill selection immediately
             updatePillSelection('');
+            
+            // Reset search input
+            if (elements.searchInput) {
+                elements.searchInput.value = '';
+            }
             
             // Restore original filters-section if it was replaced
             const filtersContentWrapper = document.getElementById('filters-content-wrapper');
@@ -4090,12 +4203,15 @@
                     currentFilters.outerHTML = `
                         <div id="filters-section" class="filters-section">
                             <div class="filters-top-row">
-                                <button id="category-button" class="category-button" type="button">
-                                    <span class="category-button-text">Category</span>
-                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="category-chevron">
-                                        <path d="M7.73442 11.8891L3.11014 7.26908C2.96329 7.12116 2.96329 6.88198 3.11014 6.73407L3.72879 6.11094C3.87564 5.96302 4.11311 5.96302 4.25996 6.11094L8 9.84028L11.74 6.11094C11.8869 5.96302 12.1244 5.96302 12.2712 6.11094L12.8899 6.73407C13.0367 6.88198 13.0367 7.12116 12.8899 7.26908L8.26558 11.8891C8.11873 12.037 7.88127 12.037 7.73442 11.8891Z" fill="#222325"/>
-                                    </svg>
-                                </button>
+                                <div class="category-button-wrapper" style="position: relative;">
+                                    <button id="category-button" class="category-button" type="button">
+                                        <span class="category-button-text">All categories</span>
+                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="category-chevron">
+                                            <path d="M7.73442 11.8891L3.11014 7.26908C2.96329 7.12116 2.96329 6.88198 3.11014 6.73407L3.72879 6.11094C3.87564 5.96302 4.11311 5.96302 4.25996 6.11094L8 9.84028L11.74 6.11094C11.8869 5.96302 12.1244 5.96302 12.2712 6.11094L12.8899 6.73407C13.0367 6.88198 13.0367 7.12116 12.8899 7.26908L8.26558 11.8891C8.11873 12.037 7.88127 12.037 7.73442 11.8891Z" fill="#222325"/>
+                                        </svg>
+                                    </button>
+                                    <div id="category-dropdown" class="category-dropdown"></div>
+                                </div>
                                 <select id="category-filter" class="category-filter-hidden" style="display: none;">
                                     <option value="">All Categories</option>
                                 </select>
@@ -4186,12 +4302,22 @@
                 // If somehow company wasn't set, clear product
             state.currentProduct = null;
             }
-            // Reset filters when navigating to company page
-            const previousPage = state.currentPage;
-            if (previousPage !== 'company') {
-                state.selectedPostType = null;
-                state.filters.postType = null;
+            // Reset ALL filters when navigating to company page
+            state.selectedPostType = null;
+            state.filters.postType = null;
+            state.filters.search = null;
+            
+            // Reset category filter completely (state, UI, dropdown)
+            resetCategoryFilter();
+            
+            // Reset visual pill selection
+            updatePillSelection('');
+            
+            // Reset search input
+            if (elements.searchInput) {
+                elements.searchInput.value = '';
             }
+            
             // Ensure navigation tree reflects current state (already updated on click)
             renderNavigationTree();
             // Load content in background (state already updated for instant UI)
@@ -4222,12 +4348,22 @@
             // Ensure navigation tree reflects current state (already updated on click)
             // Re-render to ensure selection state is visible
             renderNavigationTree();
-            // Reset filters when navigating to product page
-            const previousPage = state.currentPage;
-            if (previousPage !== 'product') {
-                state.selectedPostType = null;
-                state.filters.postType = null;
+            // Reset ALL filters when navigating to product page
+            state.selectedPostType = null;
+            state.filters.postType = null;
+            state.filters.search = null;
+            
+            // Reset category filter completely (state, UI, dropdown)
+            resetCategoryFilter();
+            
+            // Reset visual pill selection
+            updatePillSelection('');
+            
+            // Reset search input
+            if (elements.searchInput) {
+                elements.searchInput.value = '';
             }
+            
             // Load content in background (state already updated for instant UI)
             loadProductPage(slug);
             // After loadProductPage completes, state.currentProduct should be set correctly
